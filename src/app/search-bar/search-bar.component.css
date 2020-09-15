@@ -1,0 +1,22 @@
+.search{
+  margin: auto;
+  width: 50em;
+  background-color: white;
+  border: solid darkgray;
+}
+
+.links{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mat-tab-label{
+  background-color:transparent;
+  color: darkgray;
+  font-weight: bold;
+  font-size: 1.3em;
+}
+
+.mat-tab-label.mat-tab-label-active {
+  color: black;
+}

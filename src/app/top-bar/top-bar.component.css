@@ -1,0 +1,30 @@
+#top_bar{
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  width: 80%;
+  height: 6em;
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: solid darkgray;
+  border-top: none;
+  justify-content: space-between;
+}
+
+#logo{
+  padding-left: 3em;
+}
+
+#log-in, #sign-up{
+  font-size: 16px;
+  background-color: #bcd30b;
+  color: #ffffff;
+}
+
+#account_buttons{
+  width: 12%;
+  padding-right: 3em;
+  display: flex;
+  justify-content: space-between;
+}
