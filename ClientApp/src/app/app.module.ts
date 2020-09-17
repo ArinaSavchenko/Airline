@@ -1,8 +1,3 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatButtonModule} from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -22,6 +17,11 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { FlightsComponent } from './flights/flights.component';
 import { FlightsSearchBarComponent } from './flights-search-bar/flights-search-bar.component';
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
