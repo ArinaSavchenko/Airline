@@ -1,0 +1,71 @@
+<div class="main_container">
+
+  <form class="input_container">
+
+    <mat-form-field class="direction_field">
+      <input type="text"
+             placeholder="From:"
+             aria-label="Number"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="direction_field">
+      <input type="text"
+             placeholder="To:"
+             aria-label="Number"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+
+  <mat-radio-group
+    aria-label="Select an option"
+    class="radio_buttons"
+    [(ngModel)]="ticketsType">
+    <mat-radio-button value="1">One way</mat-radio-button>
+    <mat-radio-button value="2">Return</mat-radio-button>
+  </mat-radio-group>
+
+  <div *ngIf="ticketsType">
+    <div class="dates">
+      <mat-form-field appearance="fill" class="datePicker">
+        <mat-label>Choose departure date</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="datePicker" *ngIf="ticketsType == 2">
+        <mat-label>Choose return date</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="ticketsAmount">
+      <mat-form-field class="example-full-width">
+        <mat-label>Enter tickets amount</mat-label>
+        <input matInput>
+      </mat-form-field>
+    </div>
+
+    <div class="submit_button">
+      <button mat-button class="search">Search</button>
+    </div>
+  </div>
+
+</div>
