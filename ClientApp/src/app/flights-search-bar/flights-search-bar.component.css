@@ -7,16 +7,10 @@
   flex-direction: column;
 }
 
-.input_container{
-  margin: auto;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.direction_field {
-  width: 40%;
+#search{
+  font-size: 16px;
+  background-color: #bcd30b;
+  color: #ffffff;
 }
 
 .mat-radio-button ~ .mat-radio-button {

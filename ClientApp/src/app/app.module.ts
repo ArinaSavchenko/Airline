@@ -10,9 +10,14 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule} from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+
+import { InMemoryDataService } from './in-memory-data.service';
 
 import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
@@ -22,6 +27,7 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
 import { FlightsComponent } from './flights/flights.component';
 import { FlightsSearchBarComponent } from './flights-search-bar/flights-search-bar.component';
 import { FlightSearchResultsComponent } from './flight-search-results/flight-search-results.component';
+import { AirportSearchComponent } from './airport-search/airport-search.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +38,8 @@ import { FlightSearchResultsComponent } from './flight-search-results/flight-sea
     SearchBarComponent,
     FlightsComponent,
     FlightsSearchBarComponent,
-    FlightSearchResultsComponent
+    FlightSearchResultsComponent,
+    AirportSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +55,12 @@ import { FlightSearchResultsComponent } from './flight-search-results/flight-sea
     MatAutocompleteModule,
     MatRadioModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule,
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]

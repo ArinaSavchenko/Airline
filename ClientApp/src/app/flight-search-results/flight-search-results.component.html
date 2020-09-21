@@ -1,1 +1,13 @@
-<p>flight-search-results works!</p>
+<div>
+  {{flightTo.departure}}, {{flightTo.arrival}}, {{flightTo.date}}, {{flightTo.amount}}
+<ul>
+  <li *ngFor="let flight of flightsTo$ | async">
+    lll {{flight.id}}
+  </li>
+</ul>
+  <ul>
+    <li *ngFor="let flight of flightsBack$ | async">
+      lll {{flight.id}}
+    </li>
+  </ul>
+</div>
