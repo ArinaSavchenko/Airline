@@ -1,13 +1,14 @@
 <div>
   {{flightTo.departure}}, {{flightTo.arrival}}, {{flightTo.date}}, {{flightTo.amount}}
-<ul>
-  <li *ngFor="let flight of flightsTo$ | async">
-    lll {{flight.id}}
-  </li>
-</ul>
+  <ul>
+    <li *ngFor="let flight of flightsTo$ | async">
+      Flights TO: {{flight.id}} {{flight.date}}
+    </li>
+  </ul>
+
   <ul>
     <li *ngFor="let flight of flightsBack$ | async">
-      lll {{flight.id}}
+      Flights BACK: {{flight.id}} {{flight.date}}
     </li>
   </ul>
 </div>

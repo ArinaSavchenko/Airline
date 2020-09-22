@@ -61,3 +61,19 @@
   background-color: #bcd30b;
   width: 30%;
 }
+
+.airports{
+  margin: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.direction_field {
+  width: 45%;
+}
+
+span{
+  font: 14px normal;
+}

@@ -13,20 +13,20 @@ export class SharedService {
     departure: 0,
     arrival: 0,
     date: new Date(),
-    amount: 0
+    amount: 1
   };
+
   empty2: FlightForSearch  = {
     departure: 0,
     arrival: 0,
     date: new Date(),
-    amount: 0
+    amount: 1
   };
+
   private flightTo = new BehaviorSubject(this.empty1);
   private flightBack = new BehaviorSubject(this.empty2);
   sharedFlightTo = this.flightTo.asObservable();
   sharedFlightBack = this.flightBack.asObservable();
-
-  constructor() { }
 
   nextFlightTo(flight: FlightForSearch): void {
     this.flightTo.next(flight);

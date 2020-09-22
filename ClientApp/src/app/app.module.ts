@@ -17,8 +17,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
-import { InMemoryDataService } from './in-memory-data.service';
-
 import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { MainPageComponent } from './main-page/main-page.component';
@@ -27,7 +25,7 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
 import { FlightsComponent } from './flights/flights.component';
 import { FlightsSearchBarComponent } from './flights-search-bar/flights-search-bar.component';
 import { FlightSearchResultsComponent } from './flight-search-results/flight-search-results.component';
-import { AirportSearchComponent } from './airport-search/airport-search.component';
+import { InMemoryDataService } from './in-memory-data.service';
 
 @NgModule({
   declarations: [
@@ -38,8 +36,7 @@ import { AirportSearchComponent } from './airport-search/airport-search.componen
     SearchBarComponent,
     FlightsComponent,
     FlightsSearchBarComponent,
-    FlightSearchResultsComponent,
-    AirportSearchComponent
+    FlightSearchResultsComponent
   ],
   imports: [
     BrowserModule,

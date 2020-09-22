@@ -25,7 +25,7 @@ export class FlightSearchResultsComponent implements OnInit {
   private searchTermsTo = new Subject<FlightForSearch>();
   private searchTermsBack = new Subject<FlightForSearch>();
 
-  constructor(private sharedService: SharedService, private flightService: FlightService) {  }
+  constructor(private sharedService: SharedService, private flightService: FlightService) { }
 
   search(): void {
     this.searchTermsTo.next(this.flightTo);
@@ -49,8 +49,4 @@ export class FlightSearchResultsComponent implements OnInit {
     ).subscribe( results => this.flightsBack$ = of(results));
     this.search();
   }
-
-
-
-
 }

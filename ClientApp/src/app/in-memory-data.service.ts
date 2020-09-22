@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import {Airport} from './Airport';
-import {Time} from '@angular/common';
-
-// import { Airport } from './Airport';
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class InMemoryDataService implements InMemoryDbService {
 
   createDb(): any {
@@ -24,6 +19,7 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 9, name: 'Airport9', city: 'Bangkok', country: 'Thailand' },
       { id: 10, name: 'Airport10', city: 'Washington', country: 'United States of America' },
     ];
+
     const flights = [
       {
         id: 1, departure: 1, arrival:  2, date: new Date(), departure_time: new Date(), arrival_time: new Date(),
@@ -34,10 +30,7 @@ export class InMemoryDataService implements InMemoryDbService {
         flight_length: 0, tickets_left: 0, price: 0
       },
     ];
+
     return {airports, flights};
   }
-
-  // genId(airports: Airport[]): number {
-  //   return airports.length > 0 ? Math.max(...airports.map(airport => airport.id)) + 1 : 11;
-  // }
 }
