@@ -1,4 +1,4 @@
-.main_container{
+.main_container {
   margin: auto;
   padding-top: 1em;
   width: 30em;
@@ -7,7 +7,62 @@
   flex-direction: column;
 }
 
-.input_container{
+#search {
+  font-size: 16px;
+  background-color: #bcd30b;
+  color: #ffffff;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 15px;
+}
+
+:host ::ng-deep .mat-radio-container {
+  height: 12px;
+  width: 12px;
+}
+
+:host ::ng-deep .mat-radio-outer-circle {
+  height: 12px;
+  width: 12px;
+}
+
+:host ::ng-deep .mat-radio-inner-circle {
+  height: 12px;
+  width: 12px;
+}
+
+:host ::ng-deep .mat-radio-button .mat-radio-ripple {
+  height: 20px;
+  width: 20px;
+  left: calc(50% - 10px);
+  top: calc(50% - 10px);
+}
+
+.datePicker {
+  background-color: transparent;
+  width: 45%;
+}
+
+.dates {
+  padding-top: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.submit_button {
+  text-align: center;
+}
+
+.search {
+  border: none;
+  color: white;
+  background-color: #bcd30b;
+  width: 30%;
+}
+
+.airports {
   margin: auto;
   width: 100%;
   display: flex;
@@ -16,54 +71,9 @@
 }
 
 .direction_field {
-  width: 40%;
-}
-
-.mat-radio-button ~ .mat-radio-button {
-  margin-left: 15px;
-}
-
-:host ::ng-deep .mat-radio-container{
-  height: 12px;
-  width: 12px;
-}
-
-:host ::ng-deep .mat-radio-outer-circle{
-  height: 12px;
-  width: 12px;
-}
-
-:host ::ng-deep .mat-radio-inner-circle{
-  height: 12px;
-  width: 12px;
-}
-
-:host ::ng-deep .mat-radio-button .mat-radio-ripple{
-  height: 20px;
-  width: 20px;
-  left: calc(50% - 10px);
-  top: calc(50% - 10px);
-}
-
-.datePicker{
-  background-color: transparent;
   width: 45%;
 }
 
-.dates{
-  padding-top: 1em;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.submit_button{
-  text-align: center;
-}
-
-.search{
-  border: none;
-  color: white;
-  background-color: #bcd30b;
-  width: 30%;
+span {
+  font: 14px normal;
 }

@@ -1,56 +1,68 @@
 <div class="main_container">
+  <form [formGroup]="myForm" (ngSubmit)="sendSearchRequest()">
+    <div class="airports">
+      <mat-form-field class="direction_field">
+        <input #departureInput
+               placeholder="From:"
+               matInput
+               formControlName="departure"
+               [matAutocomplete]="auto"
+               (click)="search('')"
+               (input)="search(departureInput.value)">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+                          (optionSelected)="setDeparture($event.option.value.id)">
+          <mat-option *ngFor="let airport of airports$ | async" [value]="airport" >
+            {{airport.city}}, {{airport.name}} {{airport.country}}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error>
+          The field is required
+        </mat-error>
+      </mat-form-field>
 
-  <form class="input_container">
+      <mat-form-field class="direction_field">
+        <input #arrivalInput
+               placeholder="To:"
+               matInput
+               formControlName="arrival"
+               [matAutocomplete]="auto2"
+               (click)="search('')"
+               (input)="search(arrivalInput.value)"
+        >
+        <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn"
+                          (optionSelected)="setArrival($event.option.value.id)">
+          <mat-option *ngFor="let airport of airports$ | async" [value]="airport">
+            {{airport.city}}, {{airport.name}}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error>
+          The field is required
+        </mat-error>
+      </mat-form-field>
+    </div>
 
-    <mat-form-field class="direction_field">
-      <input type="text"
-             placeholder="From:"
-             aria-label="Number"
-             matInput
-             [formControl]="myControl"
-             [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-          {{option}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
+    <mat-radio-group
+      aria-label="Select an option"
+      class="radio_buttons"
+      (ngModelChange)="OnTicketTypeChange($event)"
+      formControlName="ticketType">
+      <mat-radio-button value='OneWay'>One way</mat-radio-button>
+      <mat-radio-button value='Return'>Return</mat-radio-button>
+    </mat-radio-group>
 
-    <mat-form-field class="direction_field">
-      <input type="text"
-             placeholder="To:"
-             aria-label="Number"
-             matInput
-             [formControl]="myControl"
-             [matAutocomplete]="auto">
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-          {{option}}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-  </form>
-
-  <mat-radio-group
-    aria-label="Select an option"
-    class="radio_buttons"
-    [(ngModel)]="ticketsType">
-    <mat-radio-button value="1">One way</mat-radio-button>
-    <mat-radio-button value="2">Return</mat-radio-button>
-  </mat-radio-group>
-
-  <div *ngIf="ticketsType">
     <div class="dates">
       <mat-form-field appearance="fill" class="datePicker">
         <mat-label>Choose departure date</mat-label>
-        <input matInput [matDatepicker]="picker">
+        <input matInput [min]="today" [matDatepicker]="picker"
+               (ngModelChange)="setDateTo($event)" formControlName="dateTo">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="datePicker" *ngIf="ticketsType == 2">
+      <mat-form-field appearance="fill" class="datePicker" *ngIf="ticketType === 'Return'">
         <mat-label>Choose return date</mat-label>
-        <input matInput [matDatepicker]="picker">
+        <input matInput required [min]="flightForSearchTo.date" [matDatepicker]="picker"
+               (ngModelChange)="setDateBack($event)" formControlName="dateBack">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
@@ -59,13 +71,12 @@
     <div class="ticketsAmount">
       <mat-form-field class="example-full-width">
         <mat-label>Enter tickets amount</mat-label>
-        <input matInput>
+        <input matInput (ngModelChange)="setAmount($event)" [min]="1" formControlName="amount">
       </mat-form-field>
     </div>
 
     <div class="submit_button">
-      <button mat-button class="search">Search</button>
+      <button type="submit" mat-flat-button [disabled]="!myForm.valid" id="search" routerLink="/search">Search</button>
     </div>
-  </div>
-
+  </form>
 </div>

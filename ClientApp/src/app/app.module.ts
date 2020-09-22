@@ -10,17 +10,21 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule} from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
-import { FlightsComponent } from './flights/flights.component';
 import { FlightsSearchBarComponent } from './flights-search-bar/flights-search-bar.component';
+import { FlightSearchResultsComponent } from './flight-search-results/flight-search-results.component';
+import { InMemoryDataService } from './in-memory-data.service';
 
 @NgModule({
   declarations: [
@@ -29,8 +33,8 @@ import { FlightsSearchBarComponent } from './flights-search-bar/flights-search-b
     MainPageComponent,
     CarouselComponent,
     SearchBarComponent,
-    FlightsComponent,
-    FlightsSearchBarComponent
+    FlightsSearchBarComponent,
+    FlightSearchResultsComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +50,12 @@ import { FlightsSearchBarComponent } from './flights-search-bar/flights-search-b
     MatAutocompleteModule,
     MatRadioModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule,
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+    )
   ],
   providers: [],
   bootstrap: [AppComponent]
