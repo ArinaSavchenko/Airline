@@ -46,8 +46,8 @@
       class="radio_buttons"
       (ngModelChange)="OnTicketTypeChange($event)"
       formControlName="ticketType">
-      <mat-radio-button value="1" >One way</mat-radio-button>
-      <mat-radio-button value="2">Return</mat-radio-button>
+      <mat-radio-button value='OneWay'>One way</mat-radio-button>
+      <mat-radio-button value='Return'>Return</mat-radio-button>
     </mat-radio-group>
 
     <div class="dates">
@@ -59,7 +59,7 @@
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="datePicker" *ngIf="+ticketType === 2">
+      <mat-form-field appearance="fill" class="datePicker" *ngIf="ticketType === 'Return'">
         <mat-label>Choose return date</mat-label>
         <input matInput required [min]="flightForSearchTo.date" [matDatepicker]="picker"
                (ngModelChange)="setDateBack($event)" formControlName="dateBack">

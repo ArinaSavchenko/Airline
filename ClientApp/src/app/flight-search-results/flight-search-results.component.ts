@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import {Observable, of, Subject} from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
@@ -8,8 +8,7 @@ import {
 import { Flight } from '../Flight';
 import { FlightService } from '../flight.service';
 import { SharedService } from '../Shared.service';
-import {FlightForSearch} from '../FlightForSearch';
-import {removeSummaryDuplicates} from '@angular/compiler';
+import { FlightForSearch } from '../FlightForSearch';
 
 @Component({
   selector: 'app-flight-search-results',

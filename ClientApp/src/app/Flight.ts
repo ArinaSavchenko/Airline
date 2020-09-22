@@ -1,5 +1,4 @@
-import {Airport} from './Airport';
-import {Time} from '@angular/common';
+import { Time } from '@angular/common';
 
 export interface Flight{
   id: number;

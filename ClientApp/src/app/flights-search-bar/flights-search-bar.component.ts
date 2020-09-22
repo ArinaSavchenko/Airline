@@ -1,11 +1,11 @@
-import {AfterContentInit, AfterViewChecked, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, NgForm, PatternValidator, Validators} from '@angular/forms';
-
-import { FlightForSearch } from '../FlightForSearch';
-import { SharedService } from '../Shared.service';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
+
 import { Airport } from '../Airport';
+import { FlightForSearch } from '../FlightForSearch';
+import { SharedService } from '../Shared.service';
 import { AirportService } from '../airport.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
 
   flightForSearchTo: FlightForSearch;
   flightForSearchBack: FlightForSearch;
-  ticketType = '1';
+  ticketType = 'OneWay';
 
   myForm = new FormGroup({
     departure: new FormControl(null, Validators.required),
@@ -85,7 +85,7 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
 
   sendSearchRequest(): void{
     this.sharedService.nextFlightTo(this.flightForSearchTo);
-    if (+this.ticketType === 2){
+    if (this.ticketType === 'Return'){
       this.flightForSearchBack.departure = this.flightForSearchTo.arrival;
       this.flightForSearchBack.arrival = this.flightForSearchTo.departure;
       this.flightForSearchBack.amount = this.flightForSearchTo.amount;

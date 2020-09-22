@@ -22,7 +22,6 @@ import { TopBarComponent } from './top-bar/top-bar.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
-import { FlightsComponent } from './flights/flights.component';
 import { FlightsSearchBarComponent } from './flights-search-bar/flights-search-bar.component';
 import { FlightSearchResultsComponent } from './flight-search-results/flight-search-results.component';
 import { InMemoryDataService } from './in-memory-data.service';
@@ -34,7 +33,6 @@ import { InMemoryDataService } from './in-memory-data.service';
     MainPageComponent,
     CarouselComponent,
     SearchBarComponent,
-    FlightsComponent,
     FlightsSearchBarComponent,
     FlightSearchResultsComponent
   ],
