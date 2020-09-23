@@ -4,9 +4,8 @@ export interface Flight{
   id: number;
   departure: number;
   arrival: number;
-  date: Date;
-  departure_time: Date;
-  arrival_time: Date;
+  departure_date: Date;
+  arrival_date: Date;
   flight_length: Time;
   tickets_left: number;
   price: number;
