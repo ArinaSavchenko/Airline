@@ -12,15 +12,13 @@ export class SharedService {
   empty1: FlightForSearch  = {
     departure: 0,
     arrival: 0,
-    date: new Date(),
-    amount: 1
+    date: new Date()
   };
 
   empty2: FlightForSearch  = {
     departure: 0,
     arrival: 0,
-    date: new Date(),
-    amount: 1
+    date: new Date()
   };
 
   private flightTo = new BehaviorSubject(this.empty1);

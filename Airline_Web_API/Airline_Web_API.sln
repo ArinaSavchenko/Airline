@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airline_Web_API", "Airline_Web_API\Airline_Web_API.csproj", "{BEDA40FA-1919-496D-8F27-739002CD0D82}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Airlina_DB", "Airlina_DB\Airlina_DB.sqlproj", "{A8B12BCD-842E-44A2-96C9-225540FB1F80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,12 @@ Global
 		{BEDA40FA-1919-496D-8F27-739002CD0D82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEDA40FA-1919-496D-8F27-739002CD0D82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEDA40FA-1919-496D-8F27-739002CD0D82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8B12BCD-842E-44A2-96C9-225540FB1F80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8B12BCD-842E-44A2-96C9-225540FB1F80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8B12BCD-842E-44A2-96C9-225540FB1F80}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A8B12BCD-842E-44A2-96C9-225540FB1F80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8B12BCD-842E-44A2-96C9-225540FB1F80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8B12BCD-842E-44A2-96C9-225540FB1F80}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

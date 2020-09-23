@@ -1,5 +1,5 @@
 <div>
-  {{flightTo.departure}}, {{flightTo.arrival}}, {{flightTo.date}}, {{flightTo.amount}}
+  {{flightTo.departure}}, {{flightTo.arrival}}, {{flightTo.date}}
   <ul>
     <li *ngFor="let flight of flightsTo$ | async">
       Flights TO: {{flight.id}} {{flight.departure_date}}

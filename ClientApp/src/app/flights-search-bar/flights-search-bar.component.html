@@ -1,5 +1,5 @@
 <div class="main_container">
-  <form [formGroup]="myForm" (ngSubmit)="sendSearchRequest()">
+  <form [formGroup]="myForm" >
     <div class="airports">
       <mat-form-field class="direction_field">
         <input #departureInput
@@ -10,7 +10,7 @@
                (click)="search('')"
                (input)="search(departureInput.value)">
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
-                          (optionSelected)="setDeparture($event.option.value.id)">
+                          (optionSelected)="setDeparture($event.option)">
           <mat-option *ngFor="let airport of airports$ | async" [value]="airport" >
             {{airport.city}}, {{airport.name}} {{airport.country}}
           </mat-option>
@@ -30,7 +30,7 @@
                (input)="search(arrivalInput.value)"
         >
         <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn"
-                          (optionSelected)="setArrival($event.option.value.id)">
+                          (optionSelected)="setArrival($event.option)">
           <mat-option *ngFor="let airport of airports$ | async" [value]="airport">
             {{airport.city}}, {{airport.name}}
           </mat-option>
@@ -76,7 +76,9 @@
     </div>
 
     <div class="submit_button">
-      <button type="submit" mat-flat-button [disabled]="!myForm.valid" id="search" routerLink="/search">Search</button>
+      <button type="submit" mat-flat-button [disabled]="!myForm.valid" id="search" routerLink="/search"
+      (click)="sendSearchRequest()"
+      >Search</button>
     </div>
   </form>
 </div>

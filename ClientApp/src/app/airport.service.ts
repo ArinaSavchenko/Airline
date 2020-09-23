@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
 
 import { Airport } from './Airport';
 
@@ -12,7 +11,7 @@ import { Airport } from './Airport';
 
 export class AirportService{
 
-  private airportsUrl = 'api/airports';  // URL to web api
+  private airportsUrl = 'https://localhost:44392/api/airports';  // URL to web api
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -29,7 +28,7 @@ export class AirportService{
     if (!term.trim()){
       return this.getAirports();
     }
-    return  this.http.get<Airport[]>(`${this.airportsUrl}/?name=${term}`);
+    return  this.http.get<Airport[]>(`${this.airportsUrl}/?value=${term}`);
   }
 
 }

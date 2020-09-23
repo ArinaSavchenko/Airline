@@ -11,7 +11,7 @@ import {FlightForSearch} from './FlightForSearch';
 
 export class FlightService {
 
-  private flightsUrl = 'api/flights';
+  private flightsUrl = 'https://localhost:44392/api/flights';
 
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -35,6 +35,7 @@ export class FlightService {
     Object.keys(flight).forEach(key => {
       options.params = options.params.set(key, flight[key]);
     });
+
     console.log(options.params);
     return this.http.get<Flight[]>(this.flightsUrl, options);
   }
