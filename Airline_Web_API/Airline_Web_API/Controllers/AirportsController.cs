@@ -28,7 +28,9 @@ namespace Airline_Web_API.Controllers
 
             if (!string.IsNullOrEmpty(value))
             {
-                airports = airports.Where(airport => airport.Name.Contains(value));
+                var airportsByName = airports.Where(airport => airport.Name.Contains(value));
+                var airportsByCity = airports.Where(airport => airport.City.Contains(value));
+                airports = airportsByName.Union(airportsByCity);
             }
             return await airports.OrderBy(airport => airport.City).ToListAsync();
         }

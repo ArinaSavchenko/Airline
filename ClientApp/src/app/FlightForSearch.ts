@@ -1,6 +1,6 @@
 export interface FlightForSearch{
   departure?: number;
   arrival?: number;
-  date?: Date;
+  date?: any;
   // amount?: number;
 }

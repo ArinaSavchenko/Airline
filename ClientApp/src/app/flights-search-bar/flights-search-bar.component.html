@@ -10,7 +10,7 @@
                (click)="search('')"
                (input)="search(departureInput.value)">
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
-                          (optionSelected)="setDeparture($event.option)">
+                          (optionSelected)="setDeparture($event.option.value)">
           <mat-option *ngFor="let airport of airports$ | async" [value]="airport" >
             {{airport.city}}, {{airport.name}} {{airport.country}}
           </mat-option>
@@ -30,7 +30,7 @@
                (input)="search(arrivalInput.value)"
         >
         <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn"
-                          (optionSelected)="setArrival($event.option)">
+                          (optionSelected)="setArrival($event.option.value)">
           <mat-option *ngFor="let airport of airports$ | async" [value]="airport">
             {{airport.city}}, {{airport.name}}
           </mat-option>

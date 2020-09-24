@@ -20,19 +20,13 @@ namespace Airline_Web_API.Controllers
             _context = context;
         }
 
-        // GET: api/Flights
+        // GET: api/flights
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Flight>>> GetFlights([FromQuery] int departure, int arrival, DateTime date)
         {
             var flights = _context.Flights.AsQueryable();
-            flights = flights.Where(flight => flight.DepartureAirportId.Equals(departure) && flight.ArrivalAirportId.Equals(arrival) && flight.DepartureDate.Date.Equals(date.Date));
+            flights = flights.Where(flight => flight.DepartureAirportId == departure && flight.ArrivalAirportId == arrival && flight.DepartureDate == date);
             return await flights.OrderBy(flight => flight.FlightId).ToListAsync();
         }
-/*
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Flight>>> GetFlights()
-        {
-            return await _context.Flights.ToListAsync();
-        }*/
     }
 }

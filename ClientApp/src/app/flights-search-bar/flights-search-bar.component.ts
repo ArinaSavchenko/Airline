@@ -29,7 +29,6 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
     amount: new FormControl(1, Validators.required)
   });
 
-  amount = 1;
   airports$: Observable<Airport[]>;
   private searchTerms = new Subject<string>();
 
@@ -61,23 +60,23 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
   }
 
   setDeparture(subject): void{
-    this.flightForSearchTo.departure = subject.value.airportId;
+    this.flightForSearchTo.departure = subject.airportId;
   }
 
   setArrival(arrival): void{
-    this.flightForSearchTo.arrival = arrival.value.airportId;
+    this.flightForSearchTo.arrival = arrival.airportId;
   }
 
   setAmount(amount): void{
-    this.amount = +amount;
+    // this.flightForSearchTo.amount = +amount;
   }
 
   setDateTo(date): void{
-    this.flightForSearchTo.date = new Date(date);
+    this.flightForSearchTo.date = new Date(date).toUTCString();
   }
 
   setDateBack(date): void{
-    this.flightForSearchBack.date = new Date(date);
+    this.flightForSearchBack.date = new Date(date).toUTCString();
   }
 
   OnTicketTypeChange(value): void{
