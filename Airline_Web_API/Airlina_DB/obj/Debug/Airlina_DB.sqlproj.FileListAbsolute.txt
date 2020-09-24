@@ -1,6 +1,0 @@
-C:\Users\Aryna.Sauchanka\WebstormProjects\Airline\Airline_Web_API\Airlina_DB\bin\Debug\Airlina_DB.dacpac
-C:\Users\Aryna.Sauchanka\WebstormProjects\Airline\Airline_Web_API\Airlina_DB\bin\Debug\Airlina_DB.dll
-C:\Users\Aryna.Sauchanka\WebstormProjects\Airline\Airline_Web_API\Airlina_DB\bin\Debug\Airlina_DB.pdb
-C:\Users\Aryna.Sauchanka\WebstormProjects\Airline\Airline_Web_API\Airlina_DB\obj\Debug\Airlina_DB.sqlprojAssemblyReference.cache
-C:\Users\Aryna.Sauchanka\WebstormProjects\Airline\Airline_Web_API\Airlina_DB\obj\Debug\Airlina_DB.dll
-C:\Users\Aryna.Sauchanka\WebstormProjects\Airline\Airline_Web_API\Airlina_DB\obj\Debug\Airlina_DB.pdb
