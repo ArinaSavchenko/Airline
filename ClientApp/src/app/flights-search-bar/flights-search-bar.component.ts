@@ -59,24 +59,25 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
     return subject ? `${subject.city}, ${subject.country}` : undefined;
   }
 
-  setDeparture(departure): void{
-    this.flightForSearchTo.departure = departure;
+  setDeparture(subject): void{
+    this.flightForSearchTo.departure = subject.airportId;
   }
 
   setArrival(arrival): void{
-    this.flightForSearchTo.arrival = arrival;
+    this.flightForSearchTo.arrival = arrival.airportId;
   }
 
   setAmount(amount): void{
-    this.flightForSearchTo.amount = +amount;
+    // TODO: Delete comments, when Database tickets will be created
+    // this.flightForSearchTo.amount = +amount;
   }
 
   setDateTo(date): void{
-    this.flightForSearchTo.date = new Date(date);
+    this.flightForSearchTo.date = new Date(date).toUTCString();
   }
 
   setDateBack(date): void{
-    this.flightForSearchBack.date = new Date(date);
+    this.flightForSearchBack.date = new Date(date).toUTCString();
   }
 
   OnTicketTypeChange(value): void{
@@ -88,7 +89,8 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
     if (this.ticketType === 'Return'){
       this.flightForSearchBack.departure = this.flightForSearchTo.arrival;
       this.flightForSearchBack.arrival = this.flightForSearchTo.departure;
-      this.flightForSearchBack.amount = this.flightForSearchTo.amount;
+      // TODO: Delete comments, when Database tickets will be created
+      // this.flightForSearchBack.amount = this.flightForSearchTo.amount;
     }
     this.sharedService.nextFlightBack(this.flightForSearchBack);
   }

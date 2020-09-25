@@ -1,5 +1,5 @@
 export interface Airport{
-  id?: number;
+  airportId?: number;
   name?: string;
   city?: string;
   country?: string;

@@ -22,11 +22,11 @@ export class InMemoryDataService implements InMemoryDbService {
 
     const flights = [
       {
-        id: 1, departure: 1, arrival:  2, date: new Date(), departure_time: new Date(), arrival_time: new Date(),
+        id: 1, departure: 1, arrival:  2, departure_date: new Date(), arrival_date: new Date(),
         flight_length: 0, tickets_left: 0, price: 0
       },
       {
-        id: 2, departure: 2, arrival:  1, date: new Date(), departure_time: new Date(), arrival_time: new Date(),
+        id: 2, departure: 2, arrival:  1, departure_date: new Date(), arrival_date: new Date(),
         flight_length: 0, tickets_left: 0, price: 0
       },
     ];
