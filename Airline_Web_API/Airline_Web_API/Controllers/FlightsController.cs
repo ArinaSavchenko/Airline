@@ -24,20 +24,24 @@ namespace Airline_Web_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Flight>>> GetFlights([FromQuery] int departure, int arrival, DateTime date, int amount)
         {
-            var flights = _context.Flights.AsQueryable();
-            var tickets = _context.Tickets.AsQueryable();
-
-            flights = flights.Where(flight => 
-                flight.DepartureAirportId == departure 
-                && flight.ArrivalAirportId == arrival 
-                && flight.DepartureDate.Date == date.Date 
+            var flights = _context.Flights
+                .Include(flight => flight.DepartureAirport)
+                .Include(flight => flight.ArrivalAirport)
+                .Include(flight => flight.Tickets)
+                .AsQueryable();
+            flights = flights.Where(flight =>
+                flight.DepartureAirportId == departure
+                && flight.ArrivalAirportId == arrival
+                && flight.DepartureDate.Date == date.Date
                 && flight.Tickets
                     .Where(ticket => ticket.TicketsLeft >= amount)
                     .Count() > 0
             );
+                
             return await flights
                 .OrderBy(flight => flight.FlightId)
                 .ToListAsync();
+
         }
     }
 }
