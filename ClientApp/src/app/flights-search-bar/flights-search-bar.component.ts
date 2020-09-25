@@ -26,7 +26,7 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
     ticketType: new FormControl(this.ticketType),
     dateTo: new FormControl(null, Validators.required),
     dateBack: new FormControl(null),
-    amount: new FormControl(1, Validators.required)
+    amount: new FormControl(1, Validators.min(1))
   });
 
   airports$: Observable<Airport[]>;
@@ -68,8 +68,7 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
   }
 
   setAmount(amount): void{
-    // TODO: Delete comments, when Database tickets will be created
-    // this.flightForSearchTo.amount = +amount;
+    this.flightForSearchTo.amount = +amount;
   }
 
   setDateTo(date): void{
@@ -89,8 +88,7 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
     if (this.ticketType === 'Return'){
       this.flightForSearchBack.departure = this.flightForSearchTo.arrival;
       this.flightForSearchBack.arrival = this.flightForSearchTo.departure;
-      // TODO: Delete comments, when Database tickets will be created
-      // this.flightForSearchBack.amount = this.flightForSearchTo.amount;
+      this.flightForSearchBack.amount = this.flightForSearchTo.amount;
     }
     this.sharedService.nextFlightBack(this.flightForSearchBack);
   }

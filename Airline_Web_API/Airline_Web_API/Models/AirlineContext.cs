@@ -10,6 +10,8 @@ namespace Airline_Web_API.Models
     {
         public DbSet<Airport> Airports { get; set; }
         public DbSet<Flight> Flights { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<TicketType> TicketTypes { get; set; }
 
         public AirlineContext(DbContextOptions<AirlineContext> options):
             base(options)
@@ -27,6 +29,14 @@ namespace Airline_Web_API.Models
                 .HasOne<Airport>(f => f.ArrivalAirport)
                 .WithMany(a => a.FlightsTo)
                 .HasForeignKey(f => f.ArrivalAirportId);
+            modelBuilder.Entity<Ticket>()
+                .HasOne(t => t.Flight)
+                .WithMany(f => f.Tickets)
+                .HasForeignKey(t => t.FlightId);
+            modelBuilder.Entity<Ticket>()
+                .HasOne(t => t.TicketType)
+                .WithMany(tt => tt.Tickets)
+                .HasForeignKey(t => t.TicketTypeId);
         }
     }
 }

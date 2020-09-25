@@ -18,5 +18,7 @@ namespace Airline_Web_API.Models
 
         public Airport DepartureAirport { get; set; }
         public Airport ArrivalAirport { get; set; }
+
+        public ICollection<Ticket> Tickets { get; set; }
     }
 }
