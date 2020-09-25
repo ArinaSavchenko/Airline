@@ -1,9 +1,10 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 
-import {Flight} from './Flight';
-import {FlightForSearch} from './FlightForSearch';
+import { Flight } from './Flight';
+import { FlightForSearch } from './FlightForSearch';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ import {FlightForSearch} from './FlightForSearch';
 
 export class FlightService {
 
-  private flightsUrl = 'https://localhost:44392/api/flights';
+  private flightsUrl = environment.baseUrl + '/flights';
 
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})

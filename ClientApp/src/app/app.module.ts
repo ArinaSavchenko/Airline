@@ -15,7 +15,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
@@ -24,7 +23,6 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { FlightsSearchBarComponent } from './flights-search-bar/flights-search-bar.component';
 import { FlightSearchResultsComponent } from './flight-search-results/flight-search-results.component';
-import { InMemoryDataService } from './in-memory-data.service';
 
 @NgModule({
   declarations: [
@@ -52,10 +50,7 @@ import { InMemoryDataService } from './in-memory-data.service';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    HttpClientModule,
-    // HttpClientInMemoryWebApiModule.forRoot(
-    //   InMemoryDataService, { dataEncapsulation: false }
-    // )
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 import { Airport } from './Airport';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ import { Airport } from './Airport';
 
 export class AirportService{
 
-  private airportsUrl = 'https://localhost:44392/api/airports';  // URL to web api
+  private airportsUrl = environment.baseUrl + '/airports';  // URL to web api
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})

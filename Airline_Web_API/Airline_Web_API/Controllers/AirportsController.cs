@@ -32,7 +32,9 @@ namespace Airline_Web_API.Controllers
                 var airportsByCity = airports.Where(airport => airport.City.Contains(value));
                 airports = airportsByName.Union(airportsByCity);
             }
-            return await airports.OrderBy(airport => airport.City).ToListAsync();
+            return await airports
+                .OrderBy(airport => airport.City)
+                .ToListAsync();
         }
 
     }

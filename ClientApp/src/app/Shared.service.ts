@@ -9,20 +9,8 @@ import { FlightForSearch } from './FlightForSearch';
 
 export class SharedService {
 
-  empty1: FlightForSearch  = {
-    departure: 0,
-    arrival: 0,
-    // date: new Date()
-  };
-
-  empty2: FlightForSearch  = {
-    departure: 0,
-    arrival: 0,
-    // date: new Date()
-  };
-
-  private flightTo = new BehaviorSubject(this.empty1);
-  private flightBack = new BehaviorSubject(this.empty2);
+  private flightTo = new BehaviorSubject({});
+  private flightBack = new BehaviorSubject({});
   sharedFlightTo = this.flightTo.asObservable();
   sharedFlightBack = this.flightBack.asObservable();
 

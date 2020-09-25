@@ -68,6 +68,7 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
   }
 
   setAmount(amount): void{
+    // TODO: Delete comments, when Database tickets will be created
     // this.flightForSearchTo.amount = +amount;
   }
 
@@ -88,6 +89,7 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
     if (this.ticketType === 'Return'){
       this.flightForSearchBack.departure = this.flightForSearchTo.arrival;
       this.flightForSearchBack.arrival = this.flightForSearchTo.departure;
+      // TODO: Delete comments, when Database tickets will be created
       // this.flightForSearchBack.amount = this.flightForSearchTo.amount;
     }
     this.sharedService.nextFlightBack(this.flightForSearchBack);

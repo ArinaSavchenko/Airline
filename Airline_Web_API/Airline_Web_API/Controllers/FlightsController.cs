@@ -25,8 +25,14 @@ namespace Airline_Web_API.Controllers
         public async Task<ActionResult<IEnumerable<Flight>>> GetFlights([FromQuery] int departure, int arrival, DateTime date)
         {
             var flights = _context.Flights.AsQueryable();
-            flights = flights.Where(flight => flight.DepartureAirportId == departure && flight.ArrivalAirportId == arrival && flight.DepartureDate == date);
-            return await flights.OrderBy(flight => flight.FlightId).ToListAsync();
+            flights = flights.Where(flight => 
+                flight.DepartureAirportId == departure && 
+                flight.ArrivalAirportId == arrival && 
+                flight.DepartureDate == date
+            );
+            return await flights
+                .OrderBy(flight => flight.FlightId)
+                .ToListAsync();
         }
     }
 }

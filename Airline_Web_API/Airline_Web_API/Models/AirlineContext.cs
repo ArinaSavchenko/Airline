@@ -8,6 +8,9 @@ namespace Airline_Web_API.Models
 {
     public class AirlineContext: DbContext
     {
+        public DbSet<Airport> Airports { get; set; }
+        public DbSet<Flight> Flights { get; set; }
+
         public AirlineContext(DbContextOptions<AirlineContext> options):
             base(options)
         {
@@ -25,8 +28,5 @@ namespace Airline_Web_API.Models
                 .WithMany(a => a.FlightsTo)
                 .HasForeignKey(f => f.ArrivalAirportId);
         }
-
-        public DbSet<Airport> Airports { get; set; }
-        public DbSet<Flight> Flights { get; set; }
     }
 }
