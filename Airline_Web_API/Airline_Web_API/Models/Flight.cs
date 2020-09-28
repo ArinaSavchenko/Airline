@@ -16,9 +16,9 @@ namespace Airline_Web_API.Models
         public DateTime DepartureDate { get; set; }
         public DateTime ArrivalDate { get; set; }
 
-        public virtual Airport DepartureAirport { get; set; }
-        public virtual Airport ArrivalAirport { get; set; }
+        public Airport DepartureAirport { get; set; }
+        public Airport ArrivalAirport { get; set; }
 
-        public virtual ICollection<Ticket> Tickets { get; set; }
+        public ICollection<Ticket> Tickets { get; set; }
     }
 }

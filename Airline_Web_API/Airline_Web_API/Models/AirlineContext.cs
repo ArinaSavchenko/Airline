@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Airline_Web_API.ViewModels;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airline_Web_API.Models
@@ -12,6 +14,21 @@ namespace Airline_Web_API.Models
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TicketType> TicketTypes { get; set; }
+
+        public static Mapper mapper { get; set; }
+
+        static AirlineContext()
+        {
+            var config = new MapperConfiguration(config =>
+            {
+                config.CreateMap<Airport, AirportViewModel>();
+                config.CreateMap<TicketType, TicketTypeViewModel>();
+                config.CreateMap<Ticket, TicketsViewModel>();
+                config.CreateMap<Flight, FlightViewModel>();
+            }
+           );
+          mapper = new Mapper(config);
+        }
 
         public AirlineContext(DbContextOptions<AirlineContext> options):
             base(options)

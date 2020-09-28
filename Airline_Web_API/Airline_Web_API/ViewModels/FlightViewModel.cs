@@ -11,9 +11,9 @@ namespace Airline_Web_API.ViewModels
         public DateTime DepartureDate { get; set; }
         public DateTime ArrivalDate { get; set; }
 
-        public virtual AirportViewModel DepartureAirport { get; set; }
-        public virtual AirportViewModel ArrivalAirport { get; set; }
+        public AirportViewModel DepartureAirport { get; set; }
+        public AirportViewModel ArrivalAirport { get; set; }
 
-        public virtual ICollection<TicketsViewModel> Tickets { get; set; }
+        public ICollection<TicketsViewModel> Tickets { get; set; }
     }
 }

@@ -41,20 +41,11 @@ namespace Airline_Web_API.Controllers
                     .Count(ticket => ticket.TicketsLeftNumber >= ticketsNumber) > 0
             );
 
-            var flightsSearchResults = await flights.OrderBy(flight => flight.Id).ToListAsync();
+            var flightsSearchResults = await flights
+                                                .OrderBy(flight => flight.Id)
+                                                .ToListAsync();
 
-            var config = new MapperConfiguration(config =>
-            {
-                config.CreateMap<Airport, AirportViewModel>();
-                config.CreateMap<TicketType, TicketTypeViewModel>();
-                config.CreateMap<Ticket, TicketsViewModel>();
-                config.CreateMap<Flight, FlightViewModel>();
-            }
-           );
-
-            var mapper = new Mapper(config);
-
-            var results = mapper.Map<List<FlightViewModel>>(flightsSearchResults);
+            var results = AirlineContext.mapper.Map<List<FlightViewModel>>(flightsSearchResults);
 
             return Ok(results);
         }

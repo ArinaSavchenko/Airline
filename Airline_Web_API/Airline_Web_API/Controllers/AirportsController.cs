@@ -35,7 +35,9 @@ namespace Airline_Web_API.Controllers
                 airports = airportsByName.Union(airportsByCity);
             }
 
-            var airportsSearchResults = await airports.OrderBy(airport => airport.Id).ToListAsync();
+            var airportsSearchResults = await airports
+                                                .OrderBy(airport => airport.Id)
+                                                .ToListAsync();
 
             var config = new MapperConfiguration(config =>
             {
@@ -44,7 +46,7 @@ namespace Airline_Web_API.Controllers
 
             var mapper = new Mapper(config);
 
-            var results = mapper.Map<List<AirportViewModel>>(airportsSearchResults);
+            var results = AirlineContext.mapper.Map<List<AirportViewModel>>(airportsSearchResults);
             return Ok (results);
         }
 
