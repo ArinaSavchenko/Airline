@@ -1,11 +1,7 @@
-import { Airport } from './Airport';
-import { Ticket } from './Ticket';
-
 export interface Flight{
   flightId: number;
-  departureAirport: Airport;
-  arrivalAirport: Airport;
+  departureAirportId: number;
+  arrivalAirportId: number;
   departureDate: Date;
   arrivalDate: Date;
-  tickets: Ticket[];
 }
