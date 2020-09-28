@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Airline_Web_API.Models;
+using AutoMapper;
+using Airline_Web_API.ViewModels;
 
 namespace Airline_Web_API.Controllers
 {
@@ -28,7 +30,9 @@ namespace Airline_Web_API.Controllers
                 .Include(flight => flight.DepartureAirport)
                 .Include(flight => flight.ArrivalAirport)
                 .Include(flight => flight.Tickets)
+                    .ThenInclude(ticket => ticket.TicketType)
                 .AsQueryable();
+
             flights = flights.Where(flight =>
                 flight.DepartureAirportId == departureAirportId
                 && flight.ArrivalAirportId == arrivalAirportId
@@ -36,10 +40,23 @@ namespace Airline_Web_API.Controllers
                 && flight.Tickets
                     .Count(ticket => ticket.TicketsLeftNumber >= ticketsNumber) > 0
             );
-                
-            return await flights
-                .OrderBy(flight => flight.Id)
-                .ToListAsync();
+
+            var flightsSearchResults = await flights.OrderBy(flight => flight.Id).ToListAsync();
+
+            var config = new MapperConfiguration(config =>
+            {
+                config.CreateMap<Airport, AirportViewModel>();
+                config.CreateMap<TicketType, TicketTypeViewModel>();
+                config.CreateMap<Ticket, TicketsViewModel>();
+                config.CreateMap<Flight, FlightViewModel>();
+            }
+           );
+
+            var mapper = new Mapper(config);
+
+            var results = mapper.Map<List<FlightViewModel>>(flightsSearchResults);
+
+            return Ok(results);
         }
     }
 }

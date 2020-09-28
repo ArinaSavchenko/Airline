@@ -29,10 +29,6 @@ namespace Airline_Web_API
             services.AddDbContext<AirlineContext>(options
                => options.UseSqlServer(Configuration.GetConnectionString("AirlineDatabase")));
             services.AddControllers();
-            services.AddControllersWithViews()
-                    .AddNewtonsoftJson(options =>
-                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-                );
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
