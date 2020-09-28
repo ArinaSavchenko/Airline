@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Airline_Web_API.Models;
+using AutoMapper;
+using Airline_Web_API.ViewModels;
 
 namespace Airline_Web_API.Controllers
 {
@@ -32,9 +34,18 @@ namespace Airline_Web_API.Controllers
                 var airportsByCity = airports.Where(airport => airport.City.Contains(value));
                 airports = airportsByName.Union(airportsByCity);
             }
-            return await airports
-                .OrderBy(airport => airport.City)
-                .ToListAsync();
+
+            var airportsSearchResults = await airports.OrderBy(airport => airport.Id).ToListAsync();
+
+            var config = new MapperConfiguration(config =>
+            {
+                config.CreateMap<Airport, AirportViewModel>();
+            });
+
+            var mapper = new Mapper(config);
+
+            var results = mapper.Map<List<AirportViewModel>>(airportsSearchResults);
+            return Ok (results);
         }
 
     }
