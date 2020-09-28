@@ -22,7 +22,7 @@ namespace Airline_Web_API.Controllers
 
         // GET: api/flights
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Flight>>> GetFlights([FromQuery] int departure, int arrival, DateTime date, int amount)
+        public async Task<ActionResult<IEnumerable<Flight>>> GetFlights([FromQuery] int departureAirportId, int arrivalAirportId, DateTime date, int ticketsNumber)
         {
             var flights = _context.Flights
                 .Include(flight => flight.DepartureAirport)
@@ -30,18 +30,16 @@ namespace Airline_Web_API.Controllers
                 .Include(flight => flight.Tickets)
                 .AsQueryable();
             flights = flights.Where(flight =>
-                flight.DepartureAirportId == departure
-                && flight.ArrivalAirportId == arrival
+                flight.DepartureAirportId == departureAirportId
+                && flight.ArrivalAirportId == arrivalAirportId
                 && flight.DepartureDate.Date == date.Date
                 && flight.Tickets
-                    .Where(ticket => ticket.TicketsLeft >= amount)
-                    .Count() > 0
+                    .Count(ticket => ticket.TicketsLeftNumber >= ticketsNumber) > 0
             );
                 
             return await flights
-                .OrderBy(flight => flight.FlightId)
+                .OrderBy(flight => flight.Id)
                 .ToListAsync();
-
         }
     }
 }

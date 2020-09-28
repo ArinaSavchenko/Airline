@@ -2,15 +2,15 @@
   <form [formGroup]="myForm" >
     <div class="airports">
       <mat-form-field class="direction_field">
-        <input #departureInput
+        <input #departureAirportIdInput
                placeholder="From:"
                matInput
-               formControlName="departure"
+               formControlName="departureAirportId"
                [matAutocomplete]="auto"
                (click)="search('')"
-               (input)="search(departureInput.value)">
+               (input)="search(departureAirportIdInput.value)">
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
-                          (optionSelected)="setDeparture($event.option.value)">
+                          (optionSelected)="setDepartureAirportId($event.option.value)">
           <mat-option *ngFor="let airport of airports$ | async" [value]="airport" >
             {{airport.city}}, {{airport.name}} {{airport.country}}
           </mat-option>
@@ -21,16 +21,16 @@
       </mat-form-field>
 
       <mat-form-field class="direction_field">
-        <input #arrivalInput
+        <input #arrivalAirportIdInput
                placeholder="To:"
                matInput
-               formControlName="arrival"
+               formControlName="arrivalAirportId"
                [matAutocomplete]="auto2"
                (click)="search('')"
-               (input)="search(arrivalInput.value)"
+               (input)="search(arrivalAirportIdInput.value)"
         >
         <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn"
-                          (optionSelected)="setArrival($event.option.value)">
+                          (optionSelected)="setArrivalAirportId($event.option.value)">
           <mat-option *ngFor="let airport of airports$ | async" [value]="airport">
             {{airport.city}}, {{airport.name}}
           </mat-option>
@@ -68,10 +68,10 @@
       </mat-form-field>
     </div>
 
-    <div class="ticketsAmount">
+    <div class="ticketsNumber">
       <mat-form-field class="example-full-width">
-        <mat-label>Enter tickets amount</mat-label>
-        <input matInput (ngModelChange)="setAmount($event)" [min]="1" formControlName="amount">
+        <mat-label>Enter number of tickets</mat-label>
+        <input matInput (ngModelChange)="setTicketsNumber($event)" [min]="1" formControlName="ticketsNumber">
       </mat-form-field>
     </div>
 

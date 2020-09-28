@@ -28,7 +28,7 @@ export class FlightSearchResultsComponent implements OnInit {
 
   search(): void {
     this.searchTermsTo.next(this.flightTo);
-    if (this.flightBack.departure){
+    if (this.flightBack.departureAirportId){
       this.searchTermsBack.next(this.flightBack);
     }
   }

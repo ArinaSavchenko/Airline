@@ -21,12 +21,12 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
   ticketType = 'OneWay';
 
   myForm = new FormGroup({
-    departure: new FormControl(null, Validators.required),
-    arrival: new FormControl(null, Validators.required),
+    departureAirportId: new FormControl(null, Validators.required),
+    arrivalAirportId: new FormControl(null, Validators.required),
     ticketType: new FormControl(this.ticketType),
     dateTo: new FormControl(null, Validators.required),
     dateBack: new FormControl(null),
-    amount: new FormControl(1, Validators.min(1))
+    ticketsNumber: new FormControl(1, Validators.min(1))
   });
 
   airports$: Observable<Airport[]>;
@@ -59,19 +59,19 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
     return subject ? `${subject.city}, ${subject.country}` : undefined;
   }
 
-  setDeparture(subject): void{
-    this.flightForSearchTo.departure = subject.airportId;
+  setDepartureAirportId(subject): void{
+    this.flightForSearchTo.departureAirportId = subject.id;
   }
 
-  setArrival(arrival): void{
-    this.flightForSearchTo.arrival = arrival.airportId;
+  setArrivalAirportId(arrival): void{
+    this.flightForSearchTo.arrivalAirportId = arrival.id;
   }
 
-  setAmount(amount): void{
-    this.flightForSearchTo.amount = +amount;
+  setTicketsNumber(ticketsNumber): void{
+    this.flightForSearchTo.ticketsNumber = +ticketsNumber;
     if (this.ticketType === 'Return')
     {
-      this.flightForSearchBack.amount = +amount;
+      this.flightForSearchBack.ticketsNumber = +ticketsNumber;
     }
   }
 
@@ -90,8 +90,8 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
   sendSearchRequest(): void{
     this.sharedService.nextFlightTo(this.flightForSearchTo);
     if (this.ticketType === 'Return'){
-      this.flightForSearchBack.departure = this.flightForSearchTo.arrival;
-      this.flightForSearchBack.arrival = this.flightForSearchTo.departure;
+      this.flightForSearchBack.departureAirportId = this.flightForSearchTo.arrivalAirportId;
+      this.flightForSearchBack.arrivalAirportId = this.flightForSearchTo.departureAirportId;
     }
     this.sharedService.nextFlightBack(this.flightForSearchBack);
   }

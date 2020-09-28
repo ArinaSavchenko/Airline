@@ -7,7 +7,7 @@ namespace Airline_Web_API.Models
 {
     public class TicketType
     {
-        public int TicketTypeId { get; set; }
+        public int Id { get; set; }
 
         public ICollection<Ticket> Tickets { get; set; }
     }
