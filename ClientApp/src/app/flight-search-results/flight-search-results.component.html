@@ -1,7 +1,7 @@
 <div>
   <ul>
     <li *ngFor="let flight of flightsTo$ | async">
-      Flights TO: {{flight.flightId}} {{flight.departureDate}} {{flight.departureAirport.country}}
+      Flights TO: {{flight.flightId}} {{flight.departureDate}} {{flight.departureAirport.country}} {{flight.tickets[0].price}}
     </li>
   </ul>
 
@@ -10,4 +10,5 @@
       Flights BACK: {{flight.flightId}} {{flight.departureDate}} {{flight.departureAirport.country}}
     </li>
   </ul>
+  <>
 </div>
