@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Airline_Web_API.Models;
+using AutoMapper;
 
 namespace Airline_Web_API
 {
@@ -29,10 +30,6 @@ namespace Airline_Web_API
             services.AddDbContext<AirlineContext>(options
                => options.UseSqlServer(Configuration.GetConnectionString("AirlineDatabase")));
             services.AddControllers();
-            services.AddControllersWithViews()
-                    .AddNewtonsoftJson(options =>
-                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-                );
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
