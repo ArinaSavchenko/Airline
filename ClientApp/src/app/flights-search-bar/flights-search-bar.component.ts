@@ -3,10 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 
-import { Airport } from '../Airport';
-import { FlightForSearch } from '../FlightForSearch';
-import { SharedService } from '../Shared.service';
-import { AirportService } from '../airport.service';
+import { Airport } from '../Models/Airport';
+import { FlightForSearch } from '../Models/FlightForSearch';
+import { SharedService } from '../Services/Shared.service';
+import { AirportService } from '../Services/airport.service';
 
 @Component({
   selector: 'app-flights-search-bar',
@@ -69,6 +69,10 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
 
   setAmount(amount): void{
     this.flightForSearchTo.amount = +amount;
+    if (this.ticketType === 'Return')
+    {
+      this.flightForSearchBack.amount = +amount;
+    }
   }
 
   setDateTo(date): void{
@@ -88,7 +92,6 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
     if (this.ticketType === 'Return'){
       this.flightForSearchBack.departure = this.flightForSearchTo.arrival;
       this.flightForSearchBack.arrival = this.flightForSearchTo.departure;
-      this.flightForSearchBack.amount = this.flightForSearchTo.amount;
     }
     this.sharedService.nextFlightBack(this.flightForSearchBack);
   }
