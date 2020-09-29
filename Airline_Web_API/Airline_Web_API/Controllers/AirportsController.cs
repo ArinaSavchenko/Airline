@@ -16,10 +16,12 @@ namespace Airline_Web_API.Controllers
     public class AirportsController : ControllerBase
     {
         private readonly AirlineContext _context;
+        private readonly IMapper _mapper;
 
-        public AirportsController(AirlineContext context)
+        public AirportsController(AirlineContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/airports
@@ -36,17 +38,18 @@ namespace Airline_Web_API.Controllers
             }
 
             var airportsSearchResults = await airports
-                                                .OrderBy(airport => airport.Id)
-                                                .ToListAsync();
+                .OrderBy(airport => airport.Id)
+                .ToListAsync();
 
-            var config = new MapperConfiguration(config =>
+           /* var config = new MapperConfiguration(config =>
             {
                 config.CreateMap<Airport, AirportViewModel>();
             });
 
-            var mapper = new Mapper(config);
+            var mapper = new Mapper(config);*/
 
-            var results = AirlineContext.mapper.Map<List<AirportViewModel>>(airportsSearchResults);
+            var results = _mapper.Map<List<AirportViewModel>>(airportsSearchResults);
+
             return Ok (results);
         }
 
