@@ -1,13 +1,61 @@
-<div>
-  <ul>
-    <li *ngFor="let flight of flightsTo$ | async">
-      Flights TO: {{flight.flightId}} {{flight.departureDate}} {{flight.departureAirport.country}} {{flight.tickets[0].price}}
-    </li>
-  </ul>
+<div class="container">
+  <p class="header">Choose your outbound flight</p>
+  <mat-accordion id="flightsTo" class="searchResults">
+    <mat-expansion-panel *ngFor="let flight of flightsTo$ | async">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span class="flightInfo">
+            {{flight.departureAirport.city}}, {{flight.departureAirport.country}} ->
+            {{flight.arrivalAirport.city}}, {{flight.arrivalAirport.country}}</span>
+          <span>{{flight.departureDate | date:'longDate'}}</span>
+        </mat-panel-title>
+        <mat-panel-description>
+          {{flight.departureDate | date: 'shortTime'}} - {{flight.arrivalDate | date: 'shortTime'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="tickets">
+        <div *ngFor="let ticket of flight.tickets" class="ticketAppearance">
+          <div class="ticketTypeName">{{ticket.ticketType.name}}</div>
+          <div class="ticketInfo">
+            <div>{{ticket.ticketType.carry_on_bag}}</div>
+            <div>{{ticket.ticketType.baggage}}</div>
+            <div>{{ticket.ticketType.seat_reservation}}</div>
+            <div>{{ticket.ticketType.changes}}</div>
+            <div>{{ticket.ticketType.refund}}</div>
+            <div>{{ticket.price}} $</div>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
 
-  <ul>
-    <li *ngFor="let flight of flightsBack$ | async">
-      Flights BACK: {{flight.flightId}} {{flight.departureDate}} {{flight.departureAirport.country}}
-    </li>
-  </ul>
+  <p id="flightBackHeader" class="header" *ngIf="flightBack.departureAirportId">Choose your inbound flight</p>
+  <mat-accordion id="flightsBack" class="searchResults">
+    <mat-expansion-panel *ngFor="let flight of flightsBack$ | async">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span class="flightInfo">
+            {{flight.departureAirport.city}}, {{flight.departureAirport.country}} ->
+            {{flight.arrivalAirport.city}}, {{flight.arrivalAirport.country}}</span>
+          <span>{{flight.departureDate | date:'longDate'}}</span>
+        </mat-panel-title>
+        <mat-panel-description>
+          {{flight.departureDate | date: 'shortTime'}} - {{flight.arrivalDate | date: 'shortTime'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="tickets">
+        <div *ngFor="let ticket of flight.tickets" class="ticketAppearance">
+          <div class="ticketTypeName">{{ticket.ticketType.name}}</div>
+          <div class="ticketInfo">
+            <div>{{ticket.ticketType.carry_on_bag}}</div>
+            <div>{{ticket.ticketType.baggage}}</div>
+            <div>{{ticket.ticketType.seat_reservation}}</div>
+            <div>{{ticket.ticketType.changes}}</div>
+            <div>{{ticket.ticketType.refund}}</div>
+            <div>{{ticket.price}} $</div>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>
