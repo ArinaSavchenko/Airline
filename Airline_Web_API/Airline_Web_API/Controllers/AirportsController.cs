@@ -41,13 +41,6 @@ namespace Airline_Web_API.Controllers
                 .OrderBy(airport => airport.Id)
                 .ToListAsync();
 
-           /* var config = new MapperConfiguration(config =>
-            {
-                config.CreateMap<Airport, AirportViewModel>();
-            });
-
-            var mapper = new Mapper(config);*/
-
             var results = _mapper.Map<List<AirportViewModel>>(airportsSearchResults);
 
             return Ok (results);
