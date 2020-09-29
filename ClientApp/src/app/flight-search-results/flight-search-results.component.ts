@@ -5,10 +5,10 @@ import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
 
-import { Flight } from '../Flight';
-import { FlightService } from '../flight.service';
-import { SharedService } from '../Shared.service';
-import { FlightForSearch } from '../FlightForSearch';
+import { Flight } from '../Models/Flight';
+import { FlightService } from '../Services/flight.service';
+import { SharedService } from '../Services/Shared.service';
+import { FlightForSearch } from '../Models/FlightForSearch';
 
 @Component({
   selector: 'app-flight-search-results',
@@ -28,7 +28,7 @@ export class FlightSearchResultsComponent implements OnInit {
 
   search(): void {
     this.searchTermsTo.next(this.flightTo);
-    if (this.flightBack.departure){
+    if (this.flightBack.departureAirportId){
       this.searchTermsBack.next(this.flightBack);
     }
   }

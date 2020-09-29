@@ -1,11 +1,10 @@
 ﻿CREATE TABLE [dbo].[Flights] (
-[FlightId] INT  IDENTITY (1, 1) NOT NULL,
+[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 [DepartureAirportId] INT NOT NULL,
 [ArrivalAirportId] INT  NOT NULL,
-[DepartureDate] DATE NOT NULL,
-[ArrivalDate] DATE NOT NULL,
-PRIMARY KEY CLUSTERED ([FlightId] ASC),
-FOREIGN KEY ([ArrivalAirportId]) REFERENCES [dbo].[Airports] ([AirportId]),
-FOREIGN KEY ([DepartureAirportId]) REFERENCES [dbo].[Airports] ([AirportId])
+[DepartureDate] DATETIME NOT NULL,
+[ArrivalDate] DATETIME NOT NULL,
+FOREIGN KEY ([ArrivalAirportId]) REFERENCES [dbo].[Airports] ([Id]),
+FOREIGN KEY ([DepartureAirportId]) REFERENCES [dbo].[Airports] ([Id])
 );
 

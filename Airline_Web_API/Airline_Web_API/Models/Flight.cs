@@ -10,7 +10,7 @@ namespace Airline_Web_API.Models
     [Table("Flights")]
     public class Flight
     {
-        public int FlightId { get; set; }
+        public int Id { get; set; }
         public int DepartureAirportId { get; set; }
         public int ArrivalAirportId { get; set; }
         public DateTime DepartureDate { get; set; }
@@ -18,5 +18,7 @@ namespace Airline_Web_API.Models
 
         public Airport DepartureAirport { get; set; }
         public Airport ArrivalAirport { get; set; }
+
+        public ICollection<Ticket> Tickets { get; set; }
     }
 }

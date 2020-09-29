@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { FlightForSearch } from './FlightForSearch';
+import { FlightForSearch } from '../Models/FlightForSearch';
 
 @Injectable({
   providedIn: 'root',

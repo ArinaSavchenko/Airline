@@ -3,8 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 
-import { Airport } from './Airport';
-import { environment } from '../environments/environment';
+import { Airport } from '../Models/Airport';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
