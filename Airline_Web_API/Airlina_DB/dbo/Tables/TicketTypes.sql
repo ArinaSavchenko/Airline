@@ -1,10 +1,13 @@
 ﻿CREATE TABLE [dbo].[TicketTypes]
 (
 	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	[Name] VARCHAR(50) NOT NULL,
-	[Carry_on_bag] VARCHAR(250) NULL,
-	[Baggage] VARCHAR(250),
-	[Seat_reservation] VARCHAR(250) NULL,
-	[Changes] VARCHAR(250) NULL,
-	[Refund] VARCHAR(250) NULL
+	[Name] NVARCHAR(50) NOT NULL,
+	[CarryOnBagsNumber] INT NULL,
+	[CarryOnBagsMaxWeight] INT NULL,
+	[BaggageNumber] INT NULL,
+	[BaggageMaxWaight] BIT NULL,
+	[SeatReservation] BIT NOT NULL,
+	[Changes] BIT NOT NULL,
+	[Refund] NVARCHAR(50) NULL, 
+    [SeatType] NVARCHAR(50) NOT NULL
 )

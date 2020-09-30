@@ -11,10 +11,11 @@ namespace Airline_Web_API.Models
         public int FlightId { get; set; }
         public int TicketTypeId { get; set; }
         public decimal Price { get; set; }
-        public int TotalNumber { get; set; }
-        public int TicketsLeftNumber { get; set; }
+        public string Status { get; set; }
+        public int UserId { get; set; }
 
         public Flight Flight { get; set; }
+        public User User { get; set; }
         public TicketType TicketType { get; set; }
     }
 }
