@@ -4,9 +4,8 @@
 	[FlightId] INT NOT NULL,
 	[TicketTypeId] INT NOT NULL,
 	[Price] MONEY NOT NULL,
-	[Status] NVARCHAR(50) NUll,
-	[UserId] INT NULL,
-	FOREIGN KEY ([FlightId]) REFERENCES [dbo].Flights ([Id]),
-	FOREIGN KEY ([TicketTypeId]) REFERENCES [dbo].TicketTypes ([Id]),
-	FOREIGN KEY ([UserId]) REFERENCES [dbo].Users ([Id]),
+	[TotalTicketsNumber] INT NOT NULL, 
+    [TicketsLeftNumber] INT NOT NULL, 
+    FOREIGN KEY ([FlightId]) REFERENCES [dbo].Flights ([Id]),
+	FOREIGN KEY ([TicketTypeId]) REFERENCES [dbo].TicketTypes ([Id])
 )
