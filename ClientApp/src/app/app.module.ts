@@ -13,6 +13,8 @@ import { MatNativeDateModule} from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { MatAccordion } from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -23,6 +25,7 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { FlightsSearchBarComponent } from './flights-search-bar/flights-search-bar.component';
 import { FlightSearchResultsComponent } from './flight-search-results/flight-search-results.component';
+import {identifierModuleUrl} from '@angular/compiler';
 
 @NgModule({
   declarations: [
@@ -50,7 +53,8 @@ import { FlightSearchResultsComponent } from './flight-search-results/flight-sea
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    HttpClientModule
+    HttpClientModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

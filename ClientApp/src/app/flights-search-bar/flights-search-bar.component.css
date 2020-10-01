@@ -74,6 +74,14 @@
   width: 45%;
 }
 
-span {
-  font: 14px normal;
+q.airport_name {
+  font-size: inherit;
+  font-weight: lighter;
 }
+
+.mat-option {
+  border: #bcd30b solid 1px;
+  height: auto;
+  line-height: 1.5em;
+}
+

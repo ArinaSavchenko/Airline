@@ -38,8 +38,7 @@ namespace Airline_Web_API.Controllers
                 flight.DepartureAirportId == departureAirportId
                 && flight.ArrivalAirportId == arrivalAirportId
                 && flight.DepartureDate.Date == date.Date
-                && flight.Tickets
-                    .Count(ticket => ticket.TicketsLeftNumber >= ticketsNumber) > 0
+                && flight.Tickets.Count() >= ticketsNumber
             );
 
             var flightsSearchResults = await flights

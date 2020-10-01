@@ -23,6 +23,7 @@ export class FlightSearchResultsComponent implements OnInit {
   flightBack: FlightForSearch;
   private searchTermsTo = new Subject<FlightForSearch>();
   private searchTermsBack = new Subject<FlightForSearch>();
+  panelOpenState = false;
 
   constructor(private sharedService: SharedService, private flightService: FlightService) { }
 
