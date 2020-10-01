@@ -5,9 +5,9 @@
 	[CarryOnBagsNumber] INT NULL,
 	[CarryOnBagsMaxWeight] INT NULL,
 	[BaggageNumber] INT NULL,
-	[BaggageMaxWaight] BIT NULL,
+	[BaggageMaxWeight] BIT NULL,
 	[SeatReservation] BIT NOT NULL,
 	[Changes] BIT NOT NULL,
-	[Refund] NVARCHAR(50) NULL, 
-    [SeatType] NVARCHAR(50) NOT NULL
+	[Refund] BIT NOT NULL, 
+	[SeatType] NVARCHAR(50) NOT NULL
 )
