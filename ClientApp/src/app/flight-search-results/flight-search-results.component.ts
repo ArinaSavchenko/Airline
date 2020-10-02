@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Observable, of, Subject } from 'rxjs';
-import {
-  debounceTime, distinctUntilChanged, switchMap
-} from 'rxjs/operators';
+import { distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { Flight } from '../Models/Flight';
 import { FlightService } from '../Services/flight.service';
 import { SharedService } from '../Services/Shared.service';
 import { FlightForSearch } from '../Models/FlightForSearch';
+import { SelectedTickets } from '../Models/SelectedTickets';
+import { TicketsService } from '../Services/tickets.service';
+import {Ticket} from '../Models/Ticket';
 
 @Component({
   selector: 'app-flight-search-results',
@@ -21,11 +22,17 @@ export class FlightSearchResultsComponent implements OnInit {
   flightsBack$: Observable<Flight[]>;
   flightTo: FlightForSearch;
   flightBack: FlightForSearch;
+  selectedTickets: SelectedTickets;
+  clickedOutbound = false;
+  clickedInbound = false;
+  outboundTicket: Ticket;
+  inboundTicket: Ticket;
+  selectedFlightTo: Flight;
+  selectedFlightBack: Flight;
   private searchTermsTo = new Subject<FlightForSearch>();
   private searchTermsBack = new Subject<FlightForSearch>();
-  panelOpenState = false;
 
-  constructor(private sharedService: SharedService, private flightService: FlightService) { }
+  constructor(private sharedService: SharedService, private flightService: FlightService, private ticketsService: TicketsService) { }
 
   search(): void {
     this.searchTermsTo.next(this.flightTo);
@@ -34,8 +41,41 @@ export class FlightSearchResultsComponent implements OnInit {
     }
   }
 
+  onChangeOutboundTicket(): void{
+    this.clickedOutbound = false;
+  }
+
+  onChangeInboundTicket(): void{
+    this.clickedInbound = false;
+  }
+
+  setOutboundTicket(ticket): void{
+    this.selectedTickets.outboundTicketId = ticket.id;
+    this.selectedTickets.number = this.flightTo.ticketsNumber;
+    this.clickedOutbound = true;
+    this.outboundTicket = ticket;
+    this.flightService.getFlight(this.outboundTicket.flightId)
+      .subscribe(flight => this.selectedFlightTo = flight);
+  }
+
+  setInboundTicket(ticket): void{
+    this.selectedTickets.inboundTicketId = ticket.id;
+    this.clickedInbound = true;
+    this.inboundTicket = ticket;
+    this.flightService.getFlight(this.inboundTicket.flightId)
+      .subscribe(flight => this.selectedFlightBack = flight);
+  }
+
   ngOnInit(): void {
-    this.sharedService.sharedFlightTo.subscribe(flight => this.flightTo = flight);
+    this.sharedService.sharedFlightTo.subscribe(flight => {
+      this.flightTo = flight;
+      this.selectedTickets = {
+        outboundTicketId: 0,
+        inboundTicketId: 0,
+        number: this.flightTo.ticketsNumber
+      };
+    });
+
     this.sharedService.sharedFlightBack.subscribe(flight => this.flightBack = flight);
 
     this.searchTermsTo.pipe(

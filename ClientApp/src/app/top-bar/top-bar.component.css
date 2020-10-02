@@ -10,6 +10,7 @@
   border: solid darkgray;
   border-top: none;
   justify-content: space-between;
+  z-index: 20;
 }
 
 #logo {

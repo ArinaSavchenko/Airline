@@ -31,5 +31,4 @@ export class AirportService{
     }
     return  this.http.get<Airport[]>(`${this.airportsUrl}/?value=${term}`);
   }
-
 }

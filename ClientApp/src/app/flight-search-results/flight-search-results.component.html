@@ -16,13 +16,31 @@
       <div class="tickets">
         <div *ngFor="let ticket of flight.tickets" class="ticketAppearance">
           <div class="ticketTypeName">{{ticket.ticketType.name}}</div>
-          <div class="ticketInfo">
-            <div>{{ticket.ticketType.carry_on_bag}}</div>
-            <div>{{ticket.ticketType.baggage}}</div>
-            <div>{{ticket.ticketType.seat_reservation}}</div>
-            <div>{{ticket.ticketType.changes}}</div>
-            <div>{{ticket.ticketType.refund}}</div>
-            <div>{{ticket.price}} $</div>
+          <div class="ticketInfoContainer">
+            <div class="ticketInfo">
+              <div>
+                {{ticket.ticketType.carryOnBagsNumber == 1 ?
+                '1 carry on bag up to ' + ticket.ticketType.carryOnBagMaxWeight + 'kg':
+                ticket.ticketType.carryOnBagsNumber + ' carry on bags up to ' + ticket.ticketType.carryOnBagMaxWeight + 'kg each'}}
+              </div>
+              <div *ngIf="ticket.ticketType.baggageNumber !== null">
+                {{ticket.ticketType.baggageNumber == 1 ?
+                'Baggage to ' + ticket.ticketType.baggageMaxWeight + 'kg':
+                ticket.ticketType.baggageNumber + ' pieces of baggage up to ' + ticket.ticketType.baggageNumber + 'kg each'}}
+              </div>
+              <div>Advanced seat reservation {{ticket.ticketType.seatReservation ? 'allowed' : 'for fee'}}</div>
+              <div>{{ticket.ticketType.changes ? 'Free changes' : 'Changes for fee'}}</div>
+              <div *ngIf="ticket.ticketType.refund !== null">
+                  {{ticket.ticketType.refund ? 'Full refund' : 'Refund for fee'}}
+              </div>
+              <div *ngIf="ticket.ticketType.refund === null">
+                    Refund not allowed
+              </div>
+              <div>Price: {{ticket.price}} $</div>
+            </div>
+            <div class="selectButton">
+             <button mat-raised-button [disabled]="clickedOutbound" class="selectButton" (click)="setOutboundTicket(ticket);">Select</button>
+            </div>
           </div>
         </div>
       </div>
@@ -46,16 +64,66 @@
       <div class="tickets">
         <div *ngFor="let ticket of flight.tickets" class="ticketAppearance">
           <div class="ticketTypeName">{{ticket.ticketType.name}}</div>
-          <div class="ticketInfo">
-            <div>{{ticket.ticketType.carry_on_bag}}</div>
-            <div>{{ticket.ticketType.baggage}}</div>
-            <div>{{ticket.ticketType.seat_reservation}}</div>
-            <div>{{ticket.ticketType.changes}}</div>
-            <div>{{ticket.ticketType.refund}}</div>
-            <div>{{ticket.price}} $</div>
+          <div class="ticketInfoContainer">
+            <div class="ticketInfo">
+              <div>
+                {{ticket.ticketType.carryOnBagsNumber == 1 ?
+                '1 carry on bag up to ' + ticket.ticketType.carryOnBagMaxWeight + 'kg':
+                ticket.ticketType.carryOnBagsNumber + ' carry on bags up to ' + ticket.ticketType.carryOnBagMaxWeight + 'kg each'}}
+              </div>
+              <div *ngIf="ticket.ticketType.baggageNumber !== null">
+                {{ticket.ticketType.baggageNumber == 1 ?
+                'Baggage to ' + ticket.ticketType.baggageMaxWeight + 'kg':
+                ticket.ticketType.baggageNumber + ' pieces of baggage up to ' + ticket.ticketType.baggageNumber + 'kg each'}}
+              </div>
+              <div>Advanced seat reservation {{ticket.ticketType.seatReservation ? 'allowed' : 'for fee'}}</div>
+              <div>{{ticket.ticketType.changes ? 'Free changes' : 'Changes for fee'}}</div>
+              <div *ngIf="ticket.ticketType.refund !== null">
+                {{ticket.ticketType.refund ? 'Full refund' : 'Refund for fee'}}
+              </div>
+              <div *ngIf="ticket.ticketType.refund === null">
+                Refund not allowed
+              </div>
+              <div>Price: {{ticket.price}} $</div>
+            </div>
+            <div class="selectButton">
+              <button mat-raised-button [disabled]="clickedInbound" class="selectButton" (click)="setInboundTicket(ticket)">Select</button>
+            </div>
           </div>
         </div>
       </div>
     </mat-expansion-panel>
   </mat-accordion>
+
+  <div class="choice_container">
+    <div *ngIf="selectedFlightTo && clickedOutbound" class="selectedTicket" >
+      <div class="selectedTicketHeader">
+        Outbound - {{this.selectedFlightTo.departureDate | date:'longDate'}}
+      </div>
+      <div class="selectedTicketBody">
+        <div class="flightTimeAndCity">
+          <span class="time"> {{this.selectedFlightTo.departureDate | date: 'shortTime'}}</span>
+          <span class="city"> {{this.selectedFlightTo.departureAirport.city}}</span>
+        </div>
+        <div class="flightTimeAndCity">
+          <span class="time"> {{this.selectedFlightTo.arrivalDate | date: 'shortTime'}}</span>
+          <span class="city"> {{this.selectedFlightTo.arrivalAirport.city}}</span>
+        </div>
+        <div class="selectedTicketType">
+          <span class="ticketType">{{this.outboundTicket.ticketType.name}}</span>
+          <span class="price">{{this.outboundTicket.price}} $</span>
+        </div>
+        <div class="changeButtonContainer">
+          <button mat-raised-button class="changeButton" (click)="onChangeOutboundTicket()">
+            Change
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="clickedInbound && clickedInbound" class="selectedTicket">
+
+    </div>
+    <button *ngIf="clickedInbound || clickedOutbound" mat-raised-button class="nextButton">Next</button>
+  </div>
 </div>

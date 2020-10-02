@@ -25,6 +25,11 @@ export class FlightService {
     return this.http.get<Flight[]>(this.flightsUrl);
   }
 
+  getFlight(id: number): Observable<Flight>{
+    const url = `${this.flightsUrl}/${id}`;
+    return this.http.get<Flight>(url);
+  }
+
   searchFlights(flight: FlightForSearch): Observable<Flight[]> {
     if (!flight) {
       return of([]);
@@ -37,7 +42,6 @@ export class FlightService {
       options.params = options.params.set(key, flight[key]);
     });
 
-    console.log(options.params);
     return this.http.get<Flight[]>(this.flightsUrl, options);
   }
 }
