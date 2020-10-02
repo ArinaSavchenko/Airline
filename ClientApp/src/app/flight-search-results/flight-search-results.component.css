@@ -97,7 +97,6 @@ div.selectButton {
   size: auto;
   width: 6em;
   height: 2em;
-  align-self: center;
   text-align: center;
 }
 
@@ -109,6 +108,7 @@ div.selectButton {
 }
 
 .flightTimeAndCity, .selectedTicketType {
+  width: fit-content;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -116,10 +116,8 @@ div.selectButton {
   height: 100%;
 }
 
-.flightTimeAndCity {
-}
-
 .selectedTicket {
+  margin-top: 2em;
   border: #bcd30b solid 1px;
   display: flex;
   flex-direction: column;
@@ -146,11 +144,15 @@ div.selectButton {
 }
 
 .choice_container {
-  margin-top: 3em;
+  margin-top: 1em;
 }
 
 .nextButton {
-  margin-top: 1.5em;
+  margin-top: 0.5em;
+  float: right;
+  width: 6em;
+  height: 2em;
+  font-size: 26px;
 }
 
 .changeButtonContainer {
@@ -167,7 +169,39 @@ div.selectButton {
   font-size: 16px;
 }
 
-.ticketType{
+.ticketType {
   border-bottom: dimgrey solid 1px;
   width: fit-content;
+}
+
+.smallEl {
+  font-weight: normal;
+}
+
+.totalPrice {
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 2em;
+  width: fit-content;
+  font-size: 22px;
+  font-weight: bolder;
+  color: dimgrey;
+  border: dimgrey solid 2px;
+  float: right;
+}
+
+.line {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.elements {
+  display: flex;
+  flex-direction: column;
+  float: right;
 }

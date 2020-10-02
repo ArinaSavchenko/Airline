@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { Observable, of, Subject } from 'rxjs';
-import { distinctUntilChanged, switchMap } from 'rxjs/operators';
+import {Observable, of, Subject} from 'rxjs';
+import {distinctUntilChanged, switchMap} from 'rxjs/operators';
 
-import { Flight } from '../Models/Flight';
-import { FlightService } from '../Services/flight.service';
-import { SharedService } from '../Services/Shared.service';
-import { FlightForSearch } from '../Models/FlightForSearch';
-import { SelectedTickets } from '../Models/SelectedTickets';
-import { TicketsService } from '../Services/tickets.service';
+import {Flight} from '../Models/Flight';
+import {FlightService} from '../Services/flight.service';
+import {SharedService} from '../Services/Shared.service';
+import {FlightForSearch} from '../Models/FlightForSearch';
+import {SelectedTickets} from '../Models/SelectedTickets';
+import {TicketsService} from '../Services/tickets.service';
 import {Ticket} from '../Models/Ticket';
 
 @Component({
@@ -32,34 +32,35 @@ export class FlightSearchResultsComponent implements OnInit {
   private searchTermsTo = new Subject<FlightForSearch>();
   private searchTermsBack = new Subject<FlightForSearch>();
 
-  constructor(private sharedService: SharedService, private flightService: FlightService, private ticketsService: TicketsService) { }
+  constructor(private sharedService: SharedService, private flightService: FlightService, private ticketsService: TicketsService) {
+  }
 
   search(): void {
     this.searchTermsTo.next(this.flightTo);
-    if (this.flightBack.departureAirportId){
+    if (this.flightBack.departureAirportId) {
       this.searchTermsBack.next(this.flightBack);
     }
   }
 
-  onChangeOutboundTicket(): void{
+  onChangeOutboundTicket(): void {
     this.clickedOutbound = false;
+    this.outboundTicket.price = 0;
   }
 
-  onChangeInboundTicket(): void{
+  onChangeInboundTicket(): void {
     this.clickedInbound = false;
+    this.inboundTicket.price = 0;
   }
 
-  setOutboundTicket(ticket): void{
+  setOutboundTicket(ticket): void {
     this.selectedTickets.outboundTicketId = ticket.id;
-    this.selectedTickets.number = this.flightTo.ticketsNumber;
     this.clickedOutbound = true;
     this.outboundTicket = ticket;
     this.flightService.getFlight(this.outboundTicket.flightId)
       .subscribe(flight => this.selectedFlightTo = flight);
   }
 
-  setInboundTicket(ticket): void{
-    this.selectedTickets.inboundTicketId = ticket.id;
+  setInboundTicket(ticket): void {
     this.clickedInbound = true;
     this.inboundTicket = ticket;
     this.flightService.getFlight(this.inboundTicket.flightId)
@@ -75,18 +76,17 @@ export class FlightSearchResultsComponent implements OnInit {
         number: this.flightTo.ticketsNumber
       };
     });
-
     this.sharedService.sharedFlightBack.subscribe(flight => this.flightBack = flight);
 
     this.searchTermsTo.pipe(
       distinctUntilChanged(),
       switchMap((term: FlightForSearch) => this.flightService.searchFlights(term)),
-    ).subscribe( results => this.flightsTo$ = of(results));
+    ).subscribe(results => this.flightsTo$ = of(results));
 
     this.searchTermsBack.pipe(
       distinctUntilChanged(),
       switchMap((term: FlightForSearch) => this.flightService.searchFlights(term)),
-    ).subscribe( results => this.flightsBack$ = of(results));
+    ).subscribe(results => this.flightsBack$ = of(results));
     this.search();
   }
 }
