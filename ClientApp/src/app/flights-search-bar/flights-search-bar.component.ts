@@ -96,5 +96,4 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
     }
     this.sharedService.nextFlightBack(this.flightForSearchBack);
   }
-
 }

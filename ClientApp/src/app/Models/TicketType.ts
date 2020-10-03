@@ -8,5 +8,4 @@ export interface TicketType {
   seatReservation: boolean;
   changes: boolean;
   refund?: boolean;
-  seatType: string;
 }
