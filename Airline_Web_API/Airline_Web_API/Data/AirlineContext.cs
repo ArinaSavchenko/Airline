@@ -14,6 +14,7 @@ namespace Airline_Web_API.Models
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TicketType> TicketTypes { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public AirlineContext(DbContextOptions<AirlineContext> options):
             base(options)

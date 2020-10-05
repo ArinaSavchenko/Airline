@@ -10,8 +10,8 @@
                (click)="search('')"
                (input)="search(departureAirportIdInput.value)">
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
-                          (optionSelected)="setDepartureAirportId($event.option.value)" >
-          <mat-option *ngFor="let airport of airports$ | async" [value]="airport">
+                          (optionSelected)="setDepartureAirportId($event.option.value)">
+          <mat-option *ngFor="let airport of airports" [value]="airport">
             {{airport.city}}, {{airport.country}}<br>
             <q class="airport_name">{{airport.name}}</q>
           </mat-option>
@@ -32,7 +32,7 @@
         >
         <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn"
                           (optionSelected)="setArrivalAirportId($event.option.value)">
-          <mat-option *ngFor="let airport of airports$ | async" [value]="airport">
+          <mat-option *ngFor="let airport of airports" [value]="airport">
             {{airport.city}}, {{airport.country}}<br>
             <q class="airport_name">{{airport.name}}</q>
           </mat-option>
@@ -55,7 +55,7 @@
     <div class="dates">
       <mat-form-field appearance="outline" class="datePicker">
         <mat-label>Choose departure date</mat-label>
-        <input matInput [min]="today" [matDatepicker]="picker"
+        <input matInput [min]="today" [max]="maxDate" [matDatepicker]="picker"
                (ngModelChange)="setDateTo($event)" formControlName="dateTo">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
@@ -63,7 +63,7 @@
 
       <mat-form-field appearance="outline" class="datePicker" *ngIf="ticketType === 'Return'">
         <mat-label>Choose return date</mat-label>
-        <input matInput required [min]="today || flightForSearchTo.date" [matDatepicker]="picker"
+        <input matInput required [min]="minDate" [matDatepicker]="picker"
                (ngModelChange)="setDateBack($event)" formControlName="dateBack">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>

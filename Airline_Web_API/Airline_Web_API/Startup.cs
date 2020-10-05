@@ -30,6 +30,9 @@ namespace Airline_Web_API
             services.AddDbContext<AirlineContext>(options
                => options.UseSqlServer(Configuration.GetConnectionString("AirlineDatabase")));
             services.AddControllers();
+            services.AddTransient<Airline_Web_API.Services.FlightService>();
+            services.AddTransient<Airline_Web_API.Services.AirportService>();
+            services.AddTransient<Airline_Web_API.Services.UserService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 

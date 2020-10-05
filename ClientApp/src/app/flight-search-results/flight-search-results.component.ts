@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { Observable, of, Subject } from 'rxjs';
-import { distinctUntilChanged, switchMap } from 'rxjs/operators';
+import {Observable, of, Subject} from 'rxjs';
+import {distinctUntilChanged, switchMap} from 'rxjs/operators';
 
-import { Flight } from '../Models/Flight';
-import { FlightService } from '../Services/flight.service';
-import { SharedService } from '../Services/Shared.service';
-import { FlightForSearch } from '../Models/FlightForSearch';
-import { SelectedTickets } from '../Models/SelectedTickets';
-import { TicketsService } from '../Services/tickets.service';
-import { Ticket } from '../Models/Ticket';
+import {Flight} from '../Models/Flight';
+import {FlightService} from '../Services/flight.service';
+import {SharedService} from '../Services/Shared.service';
+import {FlightForSearch} from '../Models/FlightForSearch';
+import {SelectedTickets} from '../Models/SelectedTickets';
+import {TicketsService} from '../Services/tickets.service';
+import {Ticket} from '../Models/Ticket';
 
 @Component({
   selector: 'app-flight-search-results',
@@ -80,12 +80,12 @@ export class FlightSearchResultsComponent implements OnInit {
 
     this.searchTermsTo.pipe(
       distinctUntilChanged(),
-      switchMap((term: FlightForSearch) => this.flightService.getFlights(term)),
+      switchMap((term: FlightForSearch) => this.flightService.searchFlights(term)),
     ).subscribe(results => this.flightsTo$ = of(results));
 
     this.searchTermsBack.pipe(
       distinctUntilChanged(),
-      switchMap((term: FlightForSearch) => this.flightService.getFlights(term)),
+      switchMap((term: FlightForSearch) => this.flightService.searchFlights(term)),
     ).subscribe(results => this.flightsBack$ = of(results));
     this.search();
   }

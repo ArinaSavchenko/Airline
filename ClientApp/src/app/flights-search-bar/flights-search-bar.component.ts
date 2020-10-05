@@ -29,10 +29,13 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
     ticketsNumber: new FormControl(1, Validators.min(1))
   });
 
+  airports: Airport[];
   airports$: Observable<Airport[]>;
   private searchTerms = new Subject<string>();
 
   today = new Date();
+  maxDate =  new Date(new Date(this.today).getTime() + 1000 * 60 * 60 * 24 * 180);
+  minDate = new Date();
 
   constructor(private airportService: AirportService, private sharedService: SharedService,
               private changes: ChangeDetectorRef) {}
@@ -45,6 +48,15 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
       distinctUntilChanged(),
       switchMap((term: string) => this.airportService.searchAirports(term))
     );
+    this.airports$.subscribe(airports => {
+      this.airports = airports;
+      if (this.myForm.controls.departureAirportId.value){
+        this.airports = this.airports.filter(airport => airport.id !== this.myForm.controls.departureAirportId.value.id);
+      }
+      if (this.flightForSearchTo.arrivalAirportId){
+        this.airports = this.airports.filter(airport => airport.id !== this.myForm.controls.arrivalAirportId.value.id);
+      }
+    });
     this.flightForSearchTo.ticketsNumber = 1;
   }
 
@@ -62,10 +74,12 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
 
   setDepartureAirportId(subject): void{
     this.flightForSearchTo.departureAirportId = subject.id;
+    this.airports = this.airports.filter(airport => airport.id !== subject.id);
   }
 
-  setArrivalAirportId(arrival): void{
-    this.flightForSearchTo.arrivalAirportId = arrival.id;
+  setArrivalAirportId(subject): void{
+    this.flightForSearchTo.arrivalAirportId = subject.id;
+    this.airports = this.airports.filter(airport => airport.id !== subject.id);
   }
 
   setTicketsNumber(ticketsNumber): void{
@@ -77,10 +91,12 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
   }
 
   setDateTo(date): void{
+    this.minDate = date;
     this.flightForSearchTo.date = new Date(date).toUTCString();
   }
 
   setDateBack(date): void{
+    this.maxDate = date;
     this.flightForSearchBack.date = new Date(date).toUTCString();
   }
 

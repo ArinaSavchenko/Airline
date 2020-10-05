@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
+import { LogInComponent } from '../log-in/log-in.component';
 
 @Component({
   selector: 'app-top-bar',
@@ -8,4 +10,12 @@ import { Component } from '@angular/core';
 })
 export class TopBarComponent{
 
+  constructor(private dialog: MatDialog) {}
+
+  openLogInForm(): void {
+    this.dialog.open(LogInComponent, {
+      width: '35em',
+      height: '25em'
+    });
+  }
 }

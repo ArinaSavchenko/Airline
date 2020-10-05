@@ -9,7 +9,7 @@ namespace Airline_Web_API.ViewModels
     {
         public int Id { get; set; }
         public decimal Price { get; set; }
-        public int FlightId { get; set; }
+        public int flightId { get; set; }
         public TicketTypeViewModel TicketType { get; set; }
     }
 }

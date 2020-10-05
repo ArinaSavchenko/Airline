@@ -5,8 +5,11 @@
   </a>
 
   <div id="account_buttons">
-    <a id="log-in" mat-flat-button routerLink="/log-in">Log in</a>
-    <a id="sign-up" mat-flat-button routerLink="/sign-up">Sign up</a>
+    <a routerLink="/airline/account" title="Go to your account">
+     <i class="material-icons md-48 orange">account_circle</i>
+    </a>
+    <a id="log-in" mat-flat-button (click)="openLogInForm()">Log in</a>
+    <a id="sign-up" mat-flat-button routerLink="/airline/registration">Sign up</a>
   </div>
 </div>
 
