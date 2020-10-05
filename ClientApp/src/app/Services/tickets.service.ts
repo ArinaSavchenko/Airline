@@ -22,8 +22,6 @@ export class TicketsService {
   }
 
   getTicket(id: number): Observable<Ticket> {
-    // tslint:disable-next-line:no-debugger
-    debugger;
     const url = `${this.ticketsUrl}/${id}`;
     return this.http.get<Ticket>(url);
   }

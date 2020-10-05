@@ -54,7 +54,12 @@ div.tickets {
   background-color: #f3fab7;
 }
 
-p.header, .flightInfo, .ticketTypeName, .time, .price, .ticketType {
+p.header,
+.flightInfo,
+.ticketTypeName,
+.time,
+.price,
+.ticketType {
   font-weight: bolder;
   font-family: "Helvetica Neue", sans-serif;
   color: dimgrey;
@@ -90,7 +95,10 @@ div.selectButton {
   background-color: inherit;
 }
 
-.selectButton, .changeButton, .nextButton, button .changeButton {
+.selectButton,
+.changeButton,
+.nextButton,
+button .changeButton {
   font-size: 16px;
   background-color: #bcd30b;
   color: #ffffff;
@@ -107,7 +115,8 @@ div.selectButton {
   justify-content: space-between;
 }
 
-.flightTimeAndCity, .selectedTicketType {
+.flightTimeAndCity,
+.selectedTicketType {
   width: fit-content;
   text-align: center;
   display: flex;
