@@ -45,6 +45,7 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
       distinctUntilChanged(),
       switchMap((term: string) => this.airportService.searchAirports(term))
     );
+    this.flightForSearchTo.ticketsNumber = 1;
   }
 
   ngAfterViewChecked(): void{
@@ -95,5 +96,4 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
     }
     this.sharedService.nextFlightBack(this.flightForSearchBack);
   }
-
 }

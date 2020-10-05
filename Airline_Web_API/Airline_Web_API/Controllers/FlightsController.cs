@@ -38,7 +38,8 @@ namespace Airline_Web_API.Controllers
                 flight.DepartureAirportId == departureAirportId
                 && flight.ArrivalAirportId == arrivalAirportId
                 && flight.DepartureDate.Date == date.Date
-                && flight.Tickets.Count() >= ticketsNumber
+                && flight.Tickets
+                    .Count(ticket => ticket.TicketsLeftNumber >= ticketsNumber) >= 0
             );
 
             var flightsSearchResults = await flights
@@ -48,6 +49,24 @@ namespace Airline_Web_API.Controllers
             var results = _mapper.Map<List<FlightViewModel>>(flightsSearchResults);
 
             return Ok(results);
+        }
+
+        //GET: api/flights/id
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Flight>> GetFlight(int id)
+        {
+            var flight = _context.Flights
+                .Include(flight => flight.DepartureAirport)
+                .Include(flight => flight.ArrivalAirport)
+                .Where(flight => flight.Id == id)
+                .FirstOrDefault();
+
+            if (flight == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<FlightViewModel>(flight));
         }
     }
 }

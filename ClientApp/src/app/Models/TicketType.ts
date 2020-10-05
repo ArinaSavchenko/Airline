@@ -1,9 +1,11 @@
 export interface TicketType {
-  ticketTypeId: number;
+  id: number;
   name: string;
-  carry_on_bag: string;
-  baggage: string;
-  seat_reservation: string;
-  changes: string;
-  refund: string;
+  carryOnBagsNumber?: number;
+  carryOnBagMaxWeight?: number;
+  baggageNumber?: number;
+  baggageMaxWeight?: number;
+  seatReservation: boolean;
+  changes: boolean;
+  refund?: boolean;
 }
