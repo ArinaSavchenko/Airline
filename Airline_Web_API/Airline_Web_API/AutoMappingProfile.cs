@@ -17,7 +17,7 @@ namespace Airline_Web_API
             CreateMap<TicketType, TicketTypeViewModel>();
             CreateMap<Ticket, TicketsViewModel>();
             CreateMap<Flight, FlightViewModel>();
-            CreateMap<UserForRegistration, User>();
+            CreateMap<RegisterModel, User>();
         }
     }
 }

@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Airline_Web_API.Models;
+using Airline_Web_API.Services;
 using AutoMapper;
 
 namespace Airline_Web_API
@@ -30,9 +31,9 @@ namespace Airline_Web_API
             services.AddDbContext<AirlineContext>(options
                => options.UseSqlServer(Configuration.GetConnectionString("AirlineDatabase")));
             services.AddControllers();
-            services.AddTransient<Airline_Web_API.Services.FlightService>();
-            services.AddTransient<Airline_Web_API.Services.AirportService>();
-            services.AddTransient<Airline_Web_API.Services.UserService>();
+            services.AddTransient<FlightService>();
+            services.AddTransient<AirportService>();
+            services.AddTransient<AccountService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 

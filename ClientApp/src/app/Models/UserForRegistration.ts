@@ -4,4 +4,5 @@ export interface UserForRegistration{
   birthDate: Date;
   email: string;
   password: string;
+  role: string;
 }

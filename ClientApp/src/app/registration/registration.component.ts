@@ -37,7 +37,8 @@ export class RegistrationComponent{
       lastName: this.userForm.controls.lastName.value,
       birthDate: this.userForm.controls.birthDate.value,
       email: this.userForm.controls.email.value,
-      password: this.userForm.controls.password.value
+      password: this.userForm.controls.password.value,
+      role: 'user'
     };
     this.userService.addUser(user);
   }

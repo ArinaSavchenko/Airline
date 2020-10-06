@@ -14,18 +14,18 @@ namespace Airline_Web_API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly UserService _userService;
+        private readonly AccountService _userService;
 
-        public UsersController(UserService userService)
+        public UsersController(AccountService userService)
         {
             _userService = userService;
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostUser(UserForRegistration user)
+        public async Task<ActionResult> PostUser(RegisterModel model)
         {
-            var results =  await _userService.AddUser(user);
-            return Ok(results);
+            await _userService.AddUser(model);
+            return Ok();
         }
     }
 }
