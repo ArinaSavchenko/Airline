@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://localhost:44392/api'
+  baseUrl: 'https://localhost:44392/api',
+  authUrl: 'https://localhost:44392/api/user/authenticate'
 };
 
 /*

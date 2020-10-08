@@ -29,6 +29,7 @@ import { FlightSearchResultsComponent } from './flight-search-results/flight-sea
 import { LogInComponent } from './log-in/log-in.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { AccountComponent } from './account/account.component';
+import {AUTH_API_URL} from './app-injection-tokens';
 
 @NgModule({
   declarations: [

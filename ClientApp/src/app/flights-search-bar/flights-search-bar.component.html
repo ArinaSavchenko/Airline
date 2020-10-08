@@ -1,5 +1,5 @@
 <div class="main_container">
-  <form [formGroup]="myForm" >
+  <form [formGroup]="myForm" (ngSubmit)="sendSearchRequest()">
     <div class="airports">
       <mat-form-field class="direction_field">
         <input #departureAirportIdInput
@@ -63,7 +63,7 @@
 
       <mat-form-field appearance="outline" class="datePicker" *ngIf="ticketType === 'Return'">
         <mat-label>Choose return date</mat-label>
-        <input matInput required [min]="minDate" [matDatepicker]="picker"
+        <input matInput [required]="ticketType!=='OneWay'" [min]="minDate" [matDatepicker]="picker"
                (ngModelChange)="setDateBack($event)" formControlName="dateBack">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
@@ -78,9 +78,7 @@
     </div>
 
     <div class="submit_button">
-      <button type="submit" mat-flat-button [disabled]="!myForm.valid" id="search" routerLink="/search"
-      (click)="sendSearchRequest()"
-      >Search</button>
+      <button type="submit" mat-flat-button [disabled]="!myForm.valid" id="search" routerLink="/search">Search</button>
     </div>
   </form>
 </div>

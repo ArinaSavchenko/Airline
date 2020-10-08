@@ -14,8 +14,8 @@ export class TopBarComponent{
 
   openLogInForm(): void {
     this.dialog.open(LogInComponent, {
-      width: '35em',
-      height: '25em'
+      width: '37em',
+      height: '27em'
     });
   }
 }

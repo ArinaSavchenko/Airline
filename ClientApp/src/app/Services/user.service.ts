@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-import { Observable} from 'rxjs';
+import { Observable } from 'rxjs';
+
 import { environment } from '../../environments/environment';
 
-import { UserForRegistration } from '../Models/UserForRegistration';
+import { RegisterModel } from '../Models/RegisterModel';
+import { RequestResult } from '../Models/RequestResult';
 
 @Injectable({
   providedIn: 'root',
@@ -21,8 +23,11 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  addUser(user: UserForRegistration): void {
-    console.log(this.usersUrl);
-    this.http.post(this.usersUrl, user, this.httpOptions);
+  addUser(model: RegisterModel): Observable<RequestResult> {
+    return this.http.post<RequestResult>(this.usersUrl + '/register', model, this.httpOptions);
+  }
+
+  logIn(model): Observable<RequestResult>{
+    return this.http.post<RequestResult>(this.usersUrl + '/authenticate', model, this.httpOptions);
   }
 }

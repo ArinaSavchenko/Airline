@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/airline', pathMatch: 'full'},
   { path: 'search', component: FlightSearchResultsComponent},
   { path: 'airline/registration', component: RegistrationComponent },
-  { path: 'airline/account', component: AccountComponent}
+  { path: 'airline/account', component: AccountComponent }
 ];
 
 @NgModule({
