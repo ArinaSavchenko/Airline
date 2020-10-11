@@ -1,4 +1,4 @@
-#top_bar {
+#topBar {
   box-sizing: border-box;
   position: fixed;
   top: 0;
@@ -23,7 +23,7 @@
   color: #ffffff;
 }
 
-#account_buttons {
+#accountButtons {
   width: 22%;
   padding-right: 3em;
   display: flex;

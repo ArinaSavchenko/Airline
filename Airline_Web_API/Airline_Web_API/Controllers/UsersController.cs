@@ -31,9 +31,14 @@ namespace Airline_Web_API.Controllers
         [HttpPost("authenticate")]
         public async Task<ActionResult<Response<string>>> Authenticate([FromBody] AuthenticateModel model)
         {
+            if (model == null)
+            {
+                return BadRequest();
+            }
+
             Response<User> authorizationResult = await _accountService.AuthenticateAsync(model);
 
-            if(authorizationResult.Data == null)
+            if (authorizationResult.Data == null)
             {
                 return Ok(authorizationResult);
             }
@@ -54,6 +59,11 @@ namespace Airline_Web_API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<Response<string>>> Register([FromBody] RegisterModel model)
         {
+            if (model == null)
+            {
+                return BadRequest();
+            }
+
             Response<string> registrationResult = await _accountService.RegisterAsync(model);
 
             return registrationResult;

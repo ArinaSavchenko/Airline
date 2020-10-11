@@ -1,7 +1,7 @@
-<div class="main_container">
+<div class="mainContainer">
   <form [formGroup]="myForm" (ngSubmit)="sendSearchRequest()">
     <div class="airports">
-      <mat-form-field class="direction_field">
+      <mat-form-field class="directionField">
         <input #departureAirportIdInput
                placeholder="From:"
                matInput
@@ -13,7 +13,7 @@
                           (optionSelected)="setDepartureAirportId($event.option.value)">
           <mat-option *ngFor="let airport of airports" [value]="airport">
             {{airport.city}}, {{airport.country}}<br>
-            <q class="airport_name">{{airport.name}}</q>
+            <q class="airportName">{{airport.name}}</q>
           </mat-option>
         </mat-autocomplete>
         <mat-error>
@@ -21,7 +21,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="direction_field">
+      <mat-form-field class="directionField">
         <input #arrivalAirportIdInput
                placeholder="To:"
                matInput
@@ -34,7 +34,7 @@
                           (optionSelected)="setArrivalAirportId($event.option.value)">
           <mat-option *ngFor="let airport of airports" [value]="airport">
             {{airport.city}}, {{airport.country}}<br>
-            <q class="airport_name">{{airport.name}}</q>
+            <q class="airportName">{{airport.name}}</q>
           </mat-option>
         </mat-autocomplete>
         <mat-error>
@@ -45,7 +45,7 @@
 
     <mat-radio-group
       aria-label="Select an option"
-      class="radio_buttons"
+      class="radioButtons"
       (ngModelChange)="OnTicketTypeChange($event)"
       formControlName="ticketType">
       <mat-radio-button value='OneWay'>One way</mat-radio-button>
@@ -77,7 +77,7 @@
       </mat-form-field>
     </div>
 
-    <div class="submit_button">
+    <div class="submitButton">
       <button type="submit" mat-flat-button [disabled]="!myForm.valid" id="search" routerLink="/search">Search</button>
     </div>
   </form>
