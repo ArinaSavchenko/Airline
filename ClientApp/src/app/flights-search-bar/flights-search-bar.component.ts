@@ -1,13 +1,12 @@
-import {AfterViewChecked, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {Observable, Subject} from 'rxjs';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 
-import {Airport} from '../Models/Airport';
-import {FlightForSearch} from '../Models/FlightForSearch';
-import {SharedService} from '../Services/Shared.service';
-import {AirportService} from '../Services/airport.service';
-import {FlightService} from '../Services/flight.service';
+import { Airport } from '../Models/Airport';
+import { FlightForSearch } from '../Models/FlightForSearch';
+import { SharedService } from '../Services/Shared.service';
+import { AirportService } from '../Services/airport.service';
 
 @Component({
   selector: 'app-flights-search-bar',

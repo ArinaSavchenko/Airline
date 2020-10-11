@@ -1,4 +1,4 @@
-import {FormGroup, ValidationErrors, ValidatorFn} from '@angular/forms';
+import { FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export function MatchRevealedValidator(formControlName: string, formControlNameToCompare: string): ValidatorFn{
   return (formGroup: FormGroup): ValidationErrors => {

@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { RegisterModel } from '../Models/RegisterModel';
 import { UserService } from '../Services/user.service';
 import { MatchRevealedValidator } from '../Validators/MatchRevealedValidator';
-import {RequestResult} from '../Models/RequestResult';
+import { RequestResult } from '../Models/RequestResult';
 
 @Component({
   selector: 'app-registration',

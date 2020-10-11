@@ -1,12 +1,12 @@
-﻿using Airline_Web_API.Models;
-using AutoMapper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 using Airline_Web_API.ViewModels;
 using Airline_Web_API.Services;
+using Airline_Web_API.Models;
 
 namespace Airline_Web_API.Services
 {

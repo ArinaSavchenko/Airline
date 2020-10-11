@@ -5,6 +5,6 @@
 	[LastName] NVARCHAR(100) NOT NULL,
 	[BirthDate] Date NOT NULL,
 	[Email] NVARCHAR(100) NOT NULL UNIQUE,
-	[Password] NVARCHAR(MAX) NOT NULL, 
-    [Role] NVARCHAR(50) NOT NULL
+	[Password] NVARCHAR(MAX) NOT NULL,
+	[Role] NVARCHAR(50) NOT NULL
 )

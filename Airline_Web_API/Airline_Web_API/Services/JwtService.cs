@@ -2,13 +2,12 @@
 using System.Text;
 using System.Security.Claims;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.IdentityModel.Tokens.Jwt;
-
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Options;
 using Airline_Web_API.Helpers;
 using Airline_Web_API.Models;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
 
 namespace Airline_Web_API.Services
 {

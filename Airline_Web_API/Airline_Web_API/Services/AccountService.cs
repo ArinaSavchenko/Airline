@@ -27,11 +27,6 @@ namespace Airline_Web_API.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<User> GetAll()
-        {
-            return _context.Users;
-        }
-
         public User GetById(int id)
         {
             return _context.Users.Find(id);
@@ -42,18 +37,23 @@ namespace Airline_Web_API.Services
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == model.Email);
 
             if (user == null)
+            {
                 return new Response<User>
                 {
                     Status = (int)HttpStatusCode.NotFound,
                     Message = "There is no user with such email"
                 };
+            }
+                
 
             if (!BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
+            {
                 return new Response<User>
                 {
                     Status = (int)HttpStatusCode.NotFound,
                     Message = "Password is incorrect"
                 };
+            }
 
             return new Response<User>
             {
@@ -81,7 +81,7 @@ namespace Airline_Web_API.Services
             await _context.AddAsync(newUser);
             await _context.SaveChangesAsync();
 
-            string userFullName = newUser.FirstName + " " + newUser.LastName;
+            string userFullName = $"{newUser.FirstName} {newUser.LastName}";
 
             return new Response<string>
             {
