@@ -27,7 +27,7 @@ export class UserService {
     return this.http.post<RequestResult>(this.usersUrl + '/register', model, this.httpOptions);
   }
 
-  logIn(model): Observable<RequestResult>{
-    return this.http.post<RequestResult>(this.usersUrl + '/authenticate', model, this.httpOptions);
+  logIn(model): Observable<Response>{
+    return this.http.post<Response>(this.usersUrl + '/authenticate', model, this.httpOptions);
   }
 }

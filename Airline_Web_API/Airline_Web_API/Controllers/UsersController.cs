@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -9,8 +10,7 @@ using Airline_Web_API.Models;
 using Airline_Web_API.DTOs;
 using Airline_Web_API.Services;
 using Airline_Web_API.Helpers;
-
-using System.Net;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Airline_Web_API.Controllers
 {
@@ -31,42 +31,65 @@ namespace Airline_Web_API.Controllers
         [HttpPost("authenticate")]
         public async Task<ActionResult<Response<string>>> Authenticate([FromBody] AuthenticateModel model)
         {
-            if (model == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
+                var response = new Response<string>
+                {
+                    Status = HttpStatusCode.BadRequest,
+                    Message = "Model is not valid"
+                };
+
+                return base.StatusCode((int)response.Status, response);
             }
 
             Response<User> authorizationResult = await _accountService.AuthenticateAsync(model);
 
-            if (authorizationResult.Data == null)
+            if (authorizationResult.Status != HttpStatusCode.OK)
             {
-                return Ok(authorizationResult);
+                return base.StatusCode((int)authorizationResult.Status, authorizationResult);
             }
 
             string tokenString = _jwtService.GenerateJwtToken(authorizationResult.Data);
 
             var result = new Response<string>
             {
-                Status = (int)HttpStatusCode.OK,
+                Status = HttpStatusCode.OK,
                 Message = authorizationResult.Message,
                 Data = tokenString
             };
 
-            return Ok(result);
+            return base.StatusCode((int)result.Status, result); ;
         }
 
         [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<Response<string>>> Register([FromBody] RegisterModel model)
         {
-            if (model == null)
+            if (!ModelState.IsValid)
             {
-                return BadRequest();
+                var response = new Response<string>
+                {
+                    Status = HttpStatusCode.BadRequest,
+                    Message = "Model is not valid"
+                };
+
+                return base.StatusCode((int)response.Status, response); ;
             }
 
             Response<string> registrationResult = await _accountService.RegisterAsync(model);
 
-            return registrationResult;
+            if (registrationResult == null)
+            {
+                var response = new Response<string>
+                {
+                    Status = HttpStatusCode.BadRequest,
+                    Message = "Registration failed"
+                };
+
+                return base.StatusCode((int)response.Status, response);
+            }
+
+            return base.StatusCode((int)registrationResult.Status, registrationResult);
         }
     }
 }

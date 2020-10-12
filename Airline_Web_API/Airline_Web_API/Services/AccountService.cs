@@ -3,16 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Text;
-
+using System.Net;
 using Microsoft.EntityFrameworkCore;
-
 using AutoMapper;
-
 using Airline_Web_API.DTOs;
 using Airline_Web_API.Models;
 using Airline_Web_API.Helpers;
-
-using System.Net;
 
 namespace Airline_Web_API.Services
 {
@@ -40,24 +36,23 @@ namespace Airline_Web_API.Services
             {
                 return new Response<User>
                 {
-                    Status = (int)HttpStatusCode.NotFound,
+                    Status = HttpStatusCode.NotFound,
                     Message = "There is no user with such email"
                 };
             }
-                
 
             if (!BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
             {
                 return new Response<User>
                 {
-                    Status = (int)HttpStatusCode.NotFound,
+                    Status = HttpStatusCode.BadRequest,
                     Message = "Password is incorrect"
                 };
             }
 
             return new Response<User>
             {
-                Status = (int)HttpStatusCode.OK,
+                Status = HttpStatusCode.OK,
                 Message = "User authorized",
                 Data = user
             };
@@ -67,9 +62,9 @@ namespace Airline_Web_API.Services
         {
             if (_context.Users.Any(x => x.Email == model.Email))
             {
-                return new Response<String>
+                return new Response<string>
                 {
-                    Status = (int)HttpStatusCode.BadRequest,
+                    Status = HttpStatusCode.BadRequest,
                     Message = "User with such email already exists"
                 };
             }
@@ -85,7 +80,7 @@ namespace Airline_Web_API.Services
 
             return new Response<string>
             {
-                Status = (int)HttpStatusCode.OK,
+                Status = HttpStatusCode.OK,
                 Message = "User was siccessfully added",
                 Data = userFullName
             };

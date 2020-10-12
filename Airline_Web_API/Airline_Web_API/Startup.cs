@@ -47,7 +47,7 @@ namespace Airline_Web_API
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
             var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            var key = Encoding.UTF8.GetBytes(appSettings.Secret);
 
             services.AddAuthentication(x =>
             {
@@ -83,7 +83,6 @@ namespace Airline_Web_API
                      ValidateAudience = false
                  };
              });
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

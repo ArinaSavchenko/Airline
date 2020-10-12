@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { UserService } from '../Services/user.service';
-import { RequestResult } from '../Models/RequestResult';
 
 @Component({
   selector: 'app-log-in',
@@ -28,11 +27,11 @@ export class LogInComponent {
    this.userService.logIn(this.userInfo.value).subscribe(result => this.checkResult(result));
   }
 
-  checkResult(response: RequestResult): void{
+  checkResult(response: Response): void{
    if (response.status === 404){
-     this.message = response.message;
+     this.message = response.statusText;
    }
-   else if (response.status === 200){
+   else if (response.status % 100 === 2){
      this.closeDialog();
    }
   }

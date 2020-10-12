@@ -14,6 +14,7 @@ namespace Airline_Web_API.Services
     public class JwtService
     {
         private readonly AppSettings _appSettings;
+
         public JwtService(IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
@@ -21,12 +22,12 @@ namespace Airline_Web_API.Services
 
         public string GenerateJwtToken(User user)
         {
-            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_appSettings.Secret));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.Secret));
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(CreateClaims(user)),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Expires = DateTime.UtcNow.AddMinutes(30),
                 SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature)
             };
 
@@ -40,6 +41,11 @@ namespace Airline_Web_API.Services
 
         private IEnumerable<Claim> CreateClaims(User user)
         {
+            if (user == null)
+            {
+                return null;
+            }
+
             var userIdClaim = new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString());
             var userEmailClaim = new Claim(JwtRegisteredClaimNames.Email, user.Email);
             var userRoleClaim = new Claim("role", user.Role);

@@ -12,7 +12,6 @@ namespace Airline_Web_API.Controllers
     [ApiController]
     public class AirportsController : ControllerBase
     {
-
         private readonly AirportService _airportService;
         public AirportsController(AirportService airportService)
         {

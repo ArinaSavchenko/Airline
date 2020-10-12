@@ -48,7 +48,7 @@ export class RegistrationComponent{
   }
 
   checkRegistrationResults(response: RequestResult): void {
-    if (response.status === 400){
+    if (response.status % 100 === 4){
       this.message = response.message;
     }
   }
