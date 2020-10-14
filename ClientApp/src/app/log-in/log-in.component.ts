@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { UserService } from '../Services/user.service';
-
 @Component({
   selector: 'app-log-in',
   templateUrl: './log-in.component.html',
@@ -24,16 +23,12 @@ export class LogInComponent {
    private userService: UserService) {}
 
   logIn(): void {
-   this.userService.logIn(this.userInfo.value).subscribe(result => this.checkResult(result));
+   this.userService.logIn(this.userInfo.value).subscribe(response => this.checkResult(response));
   }
 
   checkResult(response: Response): void{
-   if (response.status === 404){
-     this.message = response.statusText;
-   }
-   else if (response.status % 100 === 2){
-     this.closeDialog();
-   }
+   console.log(response);
+   this.closeDialog();
   }
 
   closeDialog(): void {

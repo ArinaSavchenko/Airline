@@ -36,7 +36,6 @@ namespace Airline_Web_API.Services
             {
                 return new Response<User>
                 {
-                    Status = HttpStatusCode.NotFound,
                     Message = "There is no user with such email"
                 };
             }
@@ -45,14 +44,12 @@ namespace Airline_Web_API.Services
             {
                 return new Response<User>
                 {
-                    Status = HttpStatusCode.BadRequest,
                     Message = "Password is incorrect"
                 };
             }
 
             return new Response<User>
             {
-                Status = HttpStatusCode.OK,
                 Message = "User authorized",
                 Data = user
             };
@@ -64,7 +61,6 @@ namespace Airline_Web_API.Services
             {
                 return new Response<string>
                 {
-                    Status = HttpStatusCode.BadRequest,
                     Message = "User with such email already exists"
                 };
             }
@@ -80,7 +76,6 @@ namespace Airline_Web_API.Services
 
             return new Response<string>
             {
-                Status = HttpStatusCode.OK,
                 Message = "User was siccessfully added",
                 Data = userFullName
             };
