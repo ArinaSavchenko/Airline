@@ -10,8 +10,9 @@ using Airline_Web_API.Helpers;
 namespace Airline_Web_API.Controllers
 {
     [ApiController]
+    [ValidateModelState]
     [Route("api/users")]
-    public class UsersController : ApiController
+    public class UsersController : ControllerBase
     {
         private readonly AccountService _accountService;
         private readonly JwtService _jwtService;

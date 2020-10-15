@@ -34,8 +34,9 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked {
   private searchTerms = new Subject<string>();
 
   today = new Date();
-  maxDate = new Date(new Date(this.today).getTime() + 1000 * 60 * 60 * 24 * 180);
-  minDate = new Date();
+  dateInterval = 180;
+  minDate = this.today;
+  maxDate = new Date();
 
   constructor(
     private airportService: AirportService,
@@ -44,6 +45,7 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit(): void {
+    this.maxDate.setDate(this.today.getDate() + this.dateInterval);
     this.sharedService.sharedFlightTo.subscribe(flight => this.flightForSearchTo = flight);
     this.sharedService.sharedFlightBack.subscribe(flight => this.flightForSearchBack = flight);
     this.airports$ = this.searchTerms.pipe(

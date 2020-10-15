@@ -19,7 +19,6 @@ export class LogInComponent {
 
  constructor(
    public dialogRef: MatDialogRef<LogInComponent>,
-   @Inject(MAT_DIALOG_DATA) public data,
    private userService: UserService) {}
 
   logIn(): void {
