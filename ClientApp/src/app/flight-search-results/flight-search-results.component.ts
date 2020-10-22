@@ -80,12 +80,12 @@ export class FlightSearchResultsComponent implements OnInit {
 
     this.searchTermsTo.pipe(
       distinctUntilChanged(),
-      switchMap((term: FlightForSearch) => this.flightService.getFlights(term)),
+      switchMap((term: FlightForSearch) => this.flightService.searchFlights(term)),
     ).subscribe(results => this.flightsTo$ = of(results));
 
     this.searchTermsBack.pipe(
       distinctUntilChanged(),
-      switchMap((term: FlightForSearch) => this.flightService.getFlights(term)),
+      switchMap((term: FlightForSearch) => this.flightService.searchFlights(term)),
     ).subscribe(results => this.flightsBack$ = of(results));
     this.search();
   }

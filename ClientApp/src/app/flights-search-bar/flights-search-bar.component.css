@@ -1,4 +1,4 @@
-.main_container {
+.mainContainer {
   margin: auto;
   padding-top: 1em;
   width: 30em;
@@ -51,7 +51,7 @@
   justify-content: space-between;
 }
 
-.submit_button {
+.submitButton {
   text-align: center;
 }
 
@@ -70,11 +70,11 @@
   justify-content: space-between;
 }
 
-.direction_field {
+.directionField {
   width: 45%;
 }
 
-q.airport_name {
+q.airportName {
   font-size: inherit;
   font-weight: lighter;
 }

@@ -21,12 +21,16 @@ export class FlightService {
   constructor(private http: HttpClient) {
   }
 
+  getFlights(): Observable<Flight[]> {
+    return this.http.get<Flight[]>(this.flightsUrl);
+  }
+
   getFlight(id: number): Observable<Flight>{
     const url = `${this.flightsUrl}/${id}`;
     return this.http.get<Flight>(url);
   }
 
-  getFlights(flight: FlightForSearch): Observable<Flight[]> {
+  searchFlights(flight: FlightForSearch): Observable<Flight[]> {
     if (!flight) {
       return of([]);
     }

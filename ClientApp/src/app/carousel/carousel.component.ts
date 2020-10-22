@@ -1,5 +1,5 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {trigger, transition, style, animate} from '@angular/animations';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 
 @Component({

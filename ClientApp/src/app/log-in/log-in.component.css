@@ -1,0 +1,62 @@
+.logInForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.header {
+  font-size: 25px;
+  font-weight: bolder;
+  color: dimgrey;
+  text-align: center;
+  font-family: "Helvetica Neue", sans-serif;
+}
+
+.logInButton {
+  margin-top: -2.5em;
+  font-size: 16px;
+  background-color: #bcd30b;
+  color: #ffffff;
+  size: auto;
+  width: 6em;
+  height: 2em;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+mat-dialog-content, .logInForm {
+  height: fit-content;
+}
+
+.message {
+  margin-top: 0.5em;
+  color: darkgray;
+  text-align: center;
+}
+
+.singUpLink {
+  margin-top: -1em;
+  display: flex;
+  justify-content: center;
+}
+
+a:hover {
+  color: red;
+}
+
+a:active {
+  color: #bcd30b;;
+}
+
+a:visited {
+  color: blueviolet;
+}
+
+.forgotPassword {
+  text-align: right;
+  float: right;
+  margin-top: -1.5em;
+  font-size: 12px;
+}
+

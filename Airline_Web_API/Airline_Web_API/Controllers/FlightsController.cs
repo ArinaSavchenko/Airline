@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Airline_Web_API.Models;
 using AutoMapper;
+using Airline_Web_API.Models;
 using Airline_Web_API.ViewModels;
+using Airline_Web_API.Services;
 
 namespace Airline_Web_API.Controllers
 {
@@ -15,58 +16,34 @@ namespace Airline_Web_API.Controllers
     [ApiController]
     public class FlightsController : ControllerBase
     {
-        private readonly AirlineContext _context;
-        private readonly IMapper _mapper;
-        public FlightsController(AirlineContext context, IMapper mapper)
+        private readonly FlightService _flightService;
+
+        public FlightsController(FlightService flightService)
         {
-            _context = context;
-            _mapper = mapper;
+            _flightService = flightService;
         }
 
         // GET: api/flights
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Flight>>> GetFlights([FromQuery] int departureAirportId, int arrivalAirportId, DateTime date, int ticketsNumber)
         {
-            var flights = _context.Flights
-                .Include(flight => flight.DepartureAirport)
-                .Include(flight => flight.ArrivalAirport)
-                .Include(flight => flight.Tickets)
-                    .ThenInclude(ticket => ticket.TicketType)
-                .AsQueryable();
-
-            flights = flights.Where(flight =>
-                flight.DepartureAirportId == departureAirportId
-                && flight.ArrivalAirportId == arrivalAirportId
-                && flight.DepartureDate.Date == date.Date
-                && flight.Tickets
-                    .Count(ticket => ticket.TicketsLeftNumber >= ticketsNumber) >= 0
-            );
-
-            var flightsSearchResults = await flights
-                .OrderBy(flight => flight.Id)
-                .ToListAsync();
-
-            var results = _mapper.Map<List<FlightViewModel>>(flightsSearchResults);
+            var results = await _flightService.GetFlights(departureAirportId, arrivalAirportId, date, ticketsNumber);
 
             return Ok(results);
         }
 
         //GET: api/flights/id
         [HttpGet("{id}")]
-        public async Task<ActionResult<Flight>> GetFlight(int id)
+        public async Task<ActionResult<FlightViewModel>> GetFlight(int id)
         {
-            var flight = _context.Flights
-                .Include(flight => flight.DepartureAirport)
-                .Include(flight => flight.ArrivalAirport)
-                .Where(flight => flight.Id == id)
-                .FirstOrDefault();
+            var result = await _flightService.GetFlight(id);
 
-            if (flight == null)
+            if (result == null)
             {
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<FlightViewModel>(flight));
+            return Ok(result);
         }
     }
 }

@@ -14,7 +14,7 @@ import { AirportService } from '../Services/airport.service';
   styleUrls: ['./flights-search-bar.component.css']
 })
 
-export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
+export class FlightsSearchBarComponent implements OnInit, AfterViewChecked {
 
   flightForSearchTo: FlightForSearch;
   flightForSearchBack: FlightForSearch;
@@ -29,15 +29,23 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
     ticketsNumber: new FormControl(1, Validators.min(1))
   });
 
+  airports: Airport[];
   airports$: Observable<Airport[]>;
   private searchTerms = new Subject<string>();
 
   today = new Date();
+  dateInterval = 180;
+  minDate = this.today;
+  maxDate = new Date();
 
-  constructor(private airportService: AirportService, private sharedService: SharedService,
-              private changes: ChangeDetectorRef) {}
+  constructor(
+    private airportService: AirportService,
+    private sharedService: SharedService,
+    private changes: ChangeDetectorRef) {
+  }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
+    this.maxDate.setDate(this.today.getDate() + this.dateInterval);
     this.sharedService.sharedFlightTo.subscribe(flight => this.flightForSearchTo = flight);
     this.sharedService.sharedFlightBack.subscribe(flight => this.flightForSearchBack = flight);
     this.airports$ = this.searchTerms.pipe(
@@ -45,10 +53,19 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
       distinctUntilChanged(),
       switchMap((term: string) => this.airportService.searchAirports(term))
     );
+    this.airports$.subscribe(airports => {
+      this.airports = airports;
+      if (this.myForm.controls.departureAirportId.value) {
+        this.airports = this.airports.filter(airport => airport.id !== this.myForm.controls.departureAirportId.value.id);
+      }
+      if (this.flightForSearchTo.arrivalAirportId) {
+        this.airports = this.airports.filter(airport => airport.id !== this.myForm.controls.arrivalAirportId.value.id);
+      }
+    });
     this.flightForSearchTo.ticketsNumber = 1;
   }
 
-  ngAfterViewChecked(): void{
+  ngAfterViewChecked(): void {
     this.changes.detectChanges();
   }
 
@@ -56,41 +73,44 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked{
     this.searchTerms.next(term);
   }
 
-  displayFn(subject): string{
+  displayFn(subject): string {
     return subject ? `${subject.city}, ${subject.country}` : undefined;
   }
 
-  setDepartureAirportId(subject): void{
+  setDepartureAirportId(subject): void {
     this.flightForSearchTo.departureAirportId = subject.id;
+    this.airports = this.airports.filter(airport => airport.id !== subject.id);
   }
 
-  setArrivalAirportId(arrival): void{
-    this.flightForSearchTo.arrivalAirportId = arrival.id;
+  setArrivalAirportId(subject): void {
+    this.flightForSearchTo.arrivalAirportId = subject.id;
+    this.airports = this.airports.filter(airport => airport.id !== subject.id);
   }
 
-  setTicketsNumber(ticketsNumber): void{
+  setTicketsNumber(ticketsNumber): void {
     this.flightForSearchTo.ticketsNumber = +ticketsNumber;
-    if (this.ticketType === 'Return')
-    {
+    if (this.ticketType === 'Return') {
       this.flightForSearchBack.ticketsNumber = +ticketsNumber;
     }
   }
 
-  setDateTo(date): void{
+  setDateTo(date): void {
+    this.minDate = date;
     this.flightForSearchTo.date = new Date(date).toUTCString();
   }
 
-  setDateBack(date): void{
+  setDateBack(date): void {
+    this.maxDate = date;
     this.flightForSearchBack.date = new Date(date).toUTCString();
   }
 
-  OnTicketTypeChange(value): void{
+  OnTicketTypeChange(value): void {
     this.ticketType = value;
   }
 
-  sendSearchRequest(): void{
+  sendSearchRequest(): void {
     this.sharedService.nextFlightTo(this.flightForSearchTo);
-    if (this.ticketType === 'Return'){
+    if (this.ticketType === 'Return') {
       this.flightForSearchBack.departureAirportId = this.flightForSearchTo.arrivalAirportId;
       this.flightForSearchBack.arrivalAirportId = this.flightForSearchTo.departureAirportId;
     }

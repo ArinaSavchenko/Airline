@@ -1,0 +1,17 @@
+form {
+  margin-top: 7em;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.signUpButton {
+  margin: auto;
+  text-align: center;
+  width: 5em;
+  font-size: 16px;
+  background-color: #bcd30b;
+  color: #ffffff;
+}

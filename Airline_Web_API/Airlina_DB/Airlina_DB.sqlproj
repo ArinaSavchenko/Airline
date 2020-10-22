@@ -66,5 +66,6 @@
     <Build Include="dbo\Tables\Flights.sql" />
     <Build Include="dbo\Tables\Tickets.sql" />
     <Build Include="dbo\Tables\TicketTypes.sql" />
+    <Build Include="dbo\Tables\Users.sql" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-search-bar',
@@ -6,11 +6,6 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
   styleUrls: ['./search-bar.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class SearchBarComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+export class SearchBarComponent {
 
 }
