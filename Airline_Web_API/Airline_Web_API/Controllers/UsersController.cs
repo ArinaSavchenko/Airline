@@ -10,7 +10,6 @@ using Airline_Web_API.Helpers;
 namespace Airline_Web_API.Controllers
 {
     [ApiController]
-    [ValidateModelState]
     [Route("api/users")]
     public class UsersController : ControllerBase
     {
@@ -29,7 +28,7 @@ namespace Airline_Web_API.Controllers
         {
             Response<User> authorizationResult = await _accountService.AuthenticateAsync(model);
 
-            if (authorizationResult.Data == null)
+            if (authorizationResult.Success == false)
             {
                 return BadRequest(authorizationResult);
             }
@@ -51,7 +50,7 @@ namespace Airline_Web_API.Controllers
         {
             Response<string> registrationResult = await _accountService.RegisterAsync(model);
 
-            if (registrationResult.Data == null)
+            if (registrationResult.Success == false)
             {
                 return BadRequest(registrationResult);
             }

@@ -41,11 +41,6 @@ namespace Airline_Web_API.Services
 
         private IEnumerable<Claim> CreateClaims(User user)
         {
-            if (user == null)
-            {
-                return null;
-            }
-
             var userIdClaim = new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString());
             var userEmailClaim = new Claim(JwtRegisteredClaimNames.Email, user.Email);
             var userRoleClaim = new Claim("role", user.Role);

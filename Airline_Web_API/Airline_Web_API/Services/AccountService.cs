@@ -36,6 +36,7 @@ namespace Airline_Web_API.Services
             {
                 return new Response<User>
                 {
+                    Success = false,
                     Message = "There is no user with such email"
                 };
             }
@@ -44,6 +45,7 @@ namespace Airline_Web_API.Services
             {
                 return new Response<User>
                 {
+                    Success = false,
                     Message = "Password is incorrect"
                 };
             }
@@ -61,6 +63,7 @@ namespace Airline_Web_API.Services
             {
                 return new Response<string>
                 {
+                    Success = false,
                     Message = "User with such email already exists"
                 };
             }
@@ -76,10 +79,9 @@ namespace Airline_Web_API.Services
 
             return new Response<string>
             {
-                Message = "User was siccessfully added",
+                Message = "User was successfully added",
                 Data = userFullName
             };
         }
-
     }
 }

@@ -3,8 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 
 import { RegisterModel } from '../Models/RegisterModel';
 import { UserService } from '../Services/user.service';
-import { MatchRevealedValidator } from '../Validators/MatchRevealedValidator';
-import { RequestResult } from '../Models/RequestResult';
+import { PasswordsMatchValidator } from '../Validators/PasswordsMatchValidator';
 
 @Component({
   selector: 'app-registration',
@@ -30,7 +29,7 @@ export class RegistrationComponent{
         confirmPassword: new FormControl(null, Validators.required),
         birthDate: new FormControl(null, Validators.required)
       });
-    this.userForm.setValidators(MatchRevealedValidator('password', 'confirmPassword'));
+    this.userForm.setValidators(PasswordsMatchValidator('password', 'confirmPassword'));
   }
 
   onFormSubmit(): void {
@@ -43,13 +42,7 @@ export class RegistrationComponent{
         password: this.userForm.controls.password.value,
         role: 'user'
       };
-      this.userService.addUser(user).subscribe(response => this.checkRegistrationResults((response)));
-    }
-  }
-
-  checkRegistrationResults(response: RequestResult): void {
-    if (response.status % 100 === 4){
-      this.message = response.message;
+      this.userService.addUser(user).subscribe();
     }
   }
 }

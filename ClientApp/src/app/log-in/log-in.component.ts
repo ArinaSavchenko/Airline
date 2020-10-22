@@ -1,6 +1,6 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 
 import { UserService } from '../Services/user.service';
 @Component({
@@ -25,8 +25,7 @@ export class LogInComponent {
    this.userService.logIn(this.userInfo.value).subscribe(response => this.checkResult(response));
   }
 
-  checkResult(response: Response): void{
-   console.log(response);
+  checkResult(response: Response): void {
    this.closeDialog();
   }
 

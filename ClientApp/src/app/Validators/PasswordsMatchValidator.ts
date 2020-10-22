@@ -1,6 +1,6 @@
 import { FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-export function MatchRevealedValidator(formControlName: string, formControlNameToCompare: string): ValidatorFn{
+export function PasswordsMatchValidator(formControlName: string, formControlNameToCompare: string): ValidatorFn {
   return (formGroup: FormGroup): ValidationErrors => {
     const control = formGroup.controls[formControlName];
     const controlToCompare = formGroup.controls[formControlNameToCompare];
