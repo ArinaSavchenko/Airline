@@ -36,7 +36,6 @@ namespace Airline_Web_API.Services
             var accessToken = tokenHandler.CreateToken(tokenDescriptor);
             string tokenString = tokenHandler.WriteToken(accessToken);
 
-
             return tokenString;
         }
 

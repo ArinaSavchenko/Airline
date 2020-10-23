@@ -10,5 +10,4 @@ import { UserService } from '../Services/user.service';
 export class AccountComponent {
   constructor(public userService: UserService) {
   }
-
 }
