@@ -30,7 +30,7 @@
 
     <p *ngIf="message" id="error_message" class="mat-error">{{this.message}}</p>
   <p class="message">No account yet?</p>
-  <a routerLink="/airline/registration" class="signUpLink" (click)="closeDialog()">Sigg up</a>
+  <a routerLink="/airline/registration" class="signUpLink" (click)="closeDialog()">Sign up</a>
 </div>
 
 <div *ngIf="userService.isLoggedIn" class="loggedInContainer">
