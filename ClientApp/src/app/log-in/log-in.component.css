@@ -1,3 +1,17 @@
+.loggedOutContainer {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.loggedInContainer {
+  margin-top: 6em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .logInForm {
   display: flex;
   flex-direction: column;
@@ -10,6 +24,17 @@
   color: dimgrey;
   text-align: center;
   font-family: "Helvetica Neue", sans-serif;
+}
+
+.logOutButton {
+  font-size: 16px;
+  background-color: #bcd30b;
+  color: #ffffff;
+  size: auto;
+  width: 6em;
+  height: 2em;
+  text-align: center;
+  margin: auto;
 }
 
 .logInButton {
@@ -35,7 +60,7 @@ mat-dialog-content, .logInForm {
   text-align: center;
 }
 
-.singUpLink {
+.signUpLink {
   margin-top: -1em;
   display: flex;
   justify-content: center;
@@ -60,3 +85,9 @@ a:visited {
   font-size: 12px;
 }
 
+.accountLink {
+  font-weight: bolder;
+  color: dimgrey;
+  text-align: center;
+  font-family: "Helvetica Neue", sans-serif;
+}

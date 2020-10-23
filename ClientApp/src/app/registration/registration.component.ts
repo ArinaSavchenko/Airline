@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { RegisterModel } from '../Models/RegisterModel';
 import { UserService } from '../Services/user.service';
 import { PasswordsMatchValidator } from '../Validators/PasswordsMatchValidator';
+import { ResponseModel } from '../Models/ResponseModel';
 
 @Component({
   selector: 'app-registration',
@@ -20,7 +22,7 @@ export class RegistrationComponent{
   maxDate = new Date(new Date(this.dateNow).getTime() - 1000 * 60 * 60 * 24 * 365 * 14);
   message: string;
 
-  constructor(private userService: UserService, private formBuilder: FormBuilder) {
+  constructor(public userService: UserService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) {
     this.userForm = this.formBuilder.group({
         firstName: new FormControl(null, [Validators.required, Validators.pattern(this.nameFormat)]),
         lastName: new FormControl(null, [Validators.required, Validators.pattern(this.nameFormat)]),
@@ -42,7 +44,20 @@ export class RegistrationComponent{
         password: this.userForm.controls.password.value,
         role: 'user'
       };
-      this.userService.addUser(user).subscribe();
+      this.userService.register(user).subscribe(response => this.checkResult(response));
     }
+  }
+
+  checkResult(response: ResponseModel): void {
+    if (!response.success) {
+      this.message = response.message;
+    }
+    else {
+      this.goToAccount();
+    }
+  }
+
+  goToAccount(): void {
+    this.router.navigate(['airline/account'], { relativeTo: this.route });
   }
 }

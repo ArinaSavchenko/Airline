@@ -1,32 +1,44 @@
-<h1 mat-dialog-title class="header">Log in</h1>
-<mat-dialog-content>
-  <form class="logInForm" [formGroup]="userInfo">
-    <mat-form-field appearance="outline">
-      <mat-label>Enter email:</mat-label>
-      <input matInput formControlName="email" placeholder="Ex. pat@example.com">
-      <mat-error>
-        Please enter a valid email address
-      </mat-error>
-    </mat-form-field>
+<div *ngIf="!userService.isLoggedIn" class="loggedOutContainer">
+  <h1 mat-dialog-title class="header">Log in</h1>
+  <mat-dialog-content>
+    <form class="logInForm" [formGroup]="userInfo">
+      <mat-form-field appearance="outline">
+        <mat-label>Enter email:</mat-label>
+        <input matInput formControlName="email" placeholder="Ex. pat@example.com">
+        <mat-error>
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Enter password:</mat-label>
-      <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
-      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-              [attr.aria-pressed]="hide">
-        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </button>
-      <mat-error>
-        Please enter a valid password
-      </mat-error>
-    </mat-form-field>
-    <a class="forgotPassword" routerLink="/resetPassword">Forgot password?</a>
-  </form>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-raised-button class="logInButton" [disabled]="!userInfo.valid" (click)="logIn()">Log in</button>
-</mat-dialog-actions>
+      <mat-form-field appearance="outline">
+        <mat-label>Enter password:</mat-label>
+        <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error>
+          Please enter a valid password
+        </mat-error>
+      </mat-form-field>
+      <a class="forgotPassword" routerLink="/resetPassword">Forgot password?</a>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-raised-button class="logInButton" [disabled]="!userInfo.valid" (click)="logIn()">Log in</button>
+  </mat-dialog-actions>
 
-  <p *ngIf="message" id="error_message" class="mat-error">{{message}}</p>
-<p class="message">No account yet?</p>
-<a routerLink="/airline/registration" class="singUpLink" (click)="closeDialog()">Sing up</a>
+    <p *ngIf="message" id="error_message" class="mat-error">{{this.message}}</p>
+  <p class="message">No account yet?</p>
+  <a routerLink="/airline/registration" class="signUpLink" (click)="closeDialog()">Sign up</a>
+</div>
+
+<div *ngIf="userService.isLoggedIn" class="loggedInContainer">
+  <h1 mat-dialog-title class="header">User is logged in</h1>
+  <mat-dialog-conten class="accountLink">
+    <a routerLink="/airline/account" (click)="closeDialog()">Click the link if you want to visit your account</a>
+  </mat-dialog-conten>
+  <mat-dialog-actions>
+    <button mat-raised-button class="logOutButton" (click)="logOut()">Log out</button>
+  </mat-dialog-actions>
+</div>
