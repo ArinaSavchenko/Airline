@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { Observable, of} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 
 import { RegisterModel } from '../Models/RegisterModel';
+import { ResponseModel } from '../Models/ResponseModel';
 
 @Injectable({
   providedIn: 'root',
@@ -22,11 +24,27 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  addUser(model: RegisterModel): Observable<Response> {
-    return this.http.post<Response>(this.usersUrl + '/register', model, this.httpOptions);
+  register(model: RegisterModel): Observable<ResponseModel> {
+    return this.http.post<ResponseModel>(this.usersUrl + '/register', model, this.httpOptions).pipe(
+      catchError(error => this.errorHandling(error))
+    );
   }
 
-  logIn(model): Observable<Response>{
-    return this.http.post<Response>(this.usersUrl + '/authenticate', model, this.httpOptions);
+  logIn(model): Observable<ResponseModel>{
+    return this.http.post<ResponseModel>(this.usersUrl + '/authenticate', model, this.httpOptions).pipe(
+      catchError(error => this.errorHandling(error))
+    );
+  }
+
+  get isLoggedIn(): boolean {
+    return localStorage.getItem('token') !== null;
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+  }
+
+  errorHandling(error: HttpErrorResponse): Observable<any>{
+    return of(error.error);
   }
 }
