@@ -1,4 +1,4 @@
-<div *ngIf="!userService.isLoggedIn">
+<div *ngIf="!userService.isLoggedIn" class="loggedOutContainer">
   <h1 mat-dialog-title class="header">Log in</h1>
   <mat-dialog-content>
     <form class="logInForm" [formGroup]="userInfo">
@@ -30,10 +30,15 @@
 
     <p *ngIf="message" id="error_message" class="mat-error">{{this.message}}</p>
   <p class="message">No account yet?</p>
-  <a routerLink="/airline/registration" class="singUpLink" (click)="closeDialog()">Sing up</a>
+  <a routerLink="/airline/registration" class="signUpLink" (click)="closeDialog()">Sigg up</a>
 </div>
 
-<div *ngIf="userService.isLoggedIn">
-  User is logged
-  <button (click)="logOut()">Log out</button>
+<div *ngIf="userService.isLoggedIn" class="loggedInContainer">
+  <h1 mat-dialog-title class="header">User is logged in</h1>
+  <mat-dialog-conten class="accountLink">
+    <a routerLink="/airline/account" (click)="closeDialog()">Click the link if you want to visit your account</a>
+  </mat-dialog-conten>
+  <mat-dialog-actions>
+    <button mat-raised-button class="logOutButton" (click)="logOut()">Log out</button>
+  </mat-dialog-actions>
 </div>

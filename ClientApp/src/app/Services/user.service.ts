@@ -26,13 +26,13 @@ export class UserService {
 
   register(model: RegisterModel): Observable<ResponseModel> {
     return this.http.post<ResponseModel>(this.usersUrl + '/register', model, this.httpOptions).pipe(
-      catchError(error => this.errorHandling(error))
+      catchError(error => this.handleError(error))
     );
   }
 
   logIn(model): Observable<ResponseModel>{
     return this.http.post<ResponseModel>(this.usersUrl + '/authenticate', model, this.httpOptions).pipe(
-      catchError(error => this.errorHandling(error))
+      catchError(error => this.handleError(error))
     );
   }
 
@@ -44,7 +44,7 @@ export class UserService {
     localStorage.removeItem('token');
   }
 
-  errorHandling(error: HttpErrorResponse): Observable<any>{
+  handleError(error: HttpErrorResponse): Observable<any>{
     return of(error.error);
   }
 }
