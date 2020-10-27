@@ -39,8 +39,9 @@ namespace Airline_Web_API
 
             services.AddTransient<FlightService>();
             services.AddTransient<AirportService>();
-            services.AddTransient<AccountService>();
+            services.AddTransient<UserService>();
             services.AddTransient<JwtService>();
+            services.AddTransient<AirlineContext>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -60,12 +61,11 @@ namespace Airline_Web_API
                  {
                      OnTokenValidated = context =>
                      {
-                         var userService = context.HttpContext.RequestServices.GetRequiredService<AccountService>();
+                         var userService = context.HttpContext.RequestServices.GetRequiredService<UserService>();
                          var userId = int.Parse(context.Principal.Identity.Name);
-                         var user = userService.GetById(userId);
+                         var user =  userService.GetById(userId);
                          if (user == null)
                          {
-                            // return unauthorized if user no longer exists
                             context.Fail("Unauthorized");
                          }
                          return Task.CompletedTask;

@@ -44,7 +44,7 @@ export class RegistrationComponent{
         password: this.userForm.controls.password.value,
         role: 'user'
       };
-      this.userService.register(user).subscribe(response => this.checkResult(response));
+      this.userService.registerUser(user).subscribe(response => this.checkResult(response));
     }
   }
 
@@ -58,6 +58,10 @@ export class RegistrationComponent{
   }
 
   goToAccount(): void {
-    this.router.navigate(['airline/account'], { relativeTo: this.route });
+    this.router.navigate(['airline/account']);
+  }
+
+  logOut(): void {
+    this.userService.logOut();
   }
 }

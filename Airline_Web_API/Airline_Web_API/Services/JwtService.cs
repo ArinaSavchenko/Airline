@@ -42,10 +42,10 @@ namespace Airline_Web_API.Services
         private IEnumerable<Claim> CreateClaims(User user)
         {
             var userIdClaim = new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString());
-            var userEmailClaim = new Claim(JwtRegisteredClaimNames.Email, user.Email);
-            var userRoleClaim = new Claim("role", user.Role);
+            var userNameClaim = new Claim(ClaimTypes.Name, user.Id.ToString());
+            var userRoleClaim = new Claim(ClaimTypes.Role, user.Role);
 
-            return new[] { userIdClaim, userEmailClaim, userRoleClaim };
+            return new[] { userIdClaim, userNameClaim, userRoleClaim };
         }
     }
 }

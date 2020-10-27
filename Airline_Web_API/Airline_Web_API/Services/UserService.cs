@@ -2,30 +2,59 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Text;
-using System.Net;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Airline_Web_API.DTOs;
 using Airline_Web_API.Models;
 using Airline_Web_API.Helpers;
+using Airline_Web_API.ViewModels;
 
 namespace Airline_Web_API.Services
 {
-    public class AccountService
+    public class UserService
     {
         private readonly AirlineContext _context;
         private readonly IMapper _mapper;
 
-        public AccountService(AirlineContext context, IMapper mapper)
+        public UserService(AirlineContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public User GetById(int id)
+        public async Task<UserViewModel> GetById(int id)
         {
-            return _context.Users.Find(id);
+            var user = await _context.Users.FindAsync(id);
+
+            return _mapper.Map<UserViewModel>(user);
+        }
+
+        /*public async Task<string> UpdateUserAsync()
+        {
+
+        }*/
+
+        public async Task<Response<string>> DeleteAsync(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+
+            if (user == null)
+            {
+                return new Response<string>
+                {
+                    Success = false,
+                    Message = "There is no such user"
+                };
+            }
+
+            _context.Remove(user);
+            _context.SaveChanges();
+
+            return new Response<string>
+            {
+                Success = true,
+                Message = "User was succesfully deleted"
+            };
         }
 
         public async Task<Response<User>> AuthenticateAsync(AuthenticateModel model)

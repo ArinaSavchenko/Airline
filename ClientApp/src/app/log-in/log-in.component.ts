@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 import { UserService } from '../Services/user.service';
 import { ResponseModel } from '../Models/ResponseModel';
@@ -21,14 +22,17 @@ export class LogInComponent {
 
  constructor(
    public dialogRef: MatDialogRef<LogInComponent>,
-   public userService: UserService) {}
+   public userService: UserService,
+   private router: Router) {}
 
   logIn(): void {
    this.userService.logIn(this.userInfo.value).subscribe(response => this.checkResult(response));
   }
 
   logOut(): void {
-   this.userService.logout();
+   this.userService.logOut();
+   this.closeDialog();
+   this.router.navigate(['']);
   }
 
   checkResult(response: ResponseModel): void {

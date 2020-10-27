@@ -20,6 +20,7 @@ namespace Airline_Web_API
             CreateMap<RegisterModel, User>();
             CreateMap<User, UserViewModel>();
             CreateMap<AuthenticateModel, User>();
+            CreateMap<UserViewModel, User>();
         }
     }
 }

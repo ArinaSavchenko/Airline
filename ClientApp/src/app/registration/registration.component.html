@@ -60,6 +60,9 @@
 </div>
 
 <div *ngIf="userService.isLoggedIn" class="userIsLoggedIn">
-  <h1>User is logged in</h1>
-  <a (click)="userService.logout()">Click the link if you want to create new account</a>
+  <h1 class="header">User is logged in</h1>
+  <div class="actionButtons">
+    <button mat-raised-button (click)="logOut()">Click the link if you want to create new account</button>
+    <button mat-raised-button class="backButton" routerLink="/airline" >Back to the main page</button>
+  </div>
 </div>

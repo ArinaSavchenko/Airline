@@ -1,25 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 
 import { UserService } from '../Services/user.service';
 import { User } from '../Models/User';
+import { ResponseModel } from '../Models/ResponseModel';
 import { ConfirmActionDialogComponent } from '../confirm-action-dialog/confirm-action-dialog.component';
-import {ResponseModel} from '../Models/ResponseModel';
 
 @Component({
-  selector: 'app-account',
-  templateUrl: './account.component.html',
-  styleUrls: ['./account.component.css']
+  selector: 'app-user-details',
+  templateUrl: './user-details.component.html',
+  styleUrls: ['./user-details.component.css']
 })
-export class AccountComponent implements OnInit {
+export class UserDetailsComponent implements OnInit {
 
   user: User;
 
   constructor(private router: Router,
-              public dialog: MatDialog,
-              public userService: UserService) {
-  }
+              public userService: UserService,
+              private location: Location,
+              private dialog: MatDialog) {}
 
   ngOnInit(): void {
     const tokenParts = localStorage.getItem('token').split(/\./);
@@ -27,12 +28,8 @@ export class AccountComponent implements OnInit {
     this.userService.getUserById(tokenDecoded.sub).subscribe(user => this.user = user);
   }
 
-  logOut(): void {
-    this.userService.logOut();
-  }
-
-  delete(): void {
-    const message = `Are you sure you want to delete your account?`;
+  save(): void {
+    const message = `Are you sure you want to change info in your account?`;
 
     const dialogRef = this.dialog.open(ConfirmActionDialogComponent, {
       data: message
@@ -40,15 +37,13 @@ export class AccountComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(dialogResult => {
       if (dialogResult === true) {
-        this.userService.deleteUser(this.user.id).subscribe(response => this.checkResult(response));
+        this.userService.updateUser(this.user);
+        this.goBack();
       }
     });
   }
 
-  checkResult(response: ResponseModel): void {
-    if (response.success === true){
-      this.userService.logOut();
-      this.router.navigate(['']);
-    }
+  goBack(): void {
+    this.location.back();
   }
 }
