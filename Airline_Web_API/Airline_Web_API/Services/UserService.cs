@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -22,17 +21,69 @@ namespace Airline_Web_API.Services
             _mapper = mapper;
         }
 
-        public async Task<UserViewModel> GetById(int id)
+        public async Task<UserViewModel> GetUserById(int id)
         {
             var user = await _context.Users.FindAsync(id);
 
             return _mapper.Map<UserViewModel>(user);
         }
 
-        /*public async Task<string> UpdateUserAsync()
+        public async Task<Response<string>> UpdateUserAsync(UpdateUserModel model)
+        {
+            var user = await _context.Users.FindAsync(model.Id);
+
+            if (user == null)
+            {
+                return new Response<string>
+                {
+                    Success = false,
+                    Message = "There is no such user"
+                };
+            }
+
+            _mapper.Map(model, user);
+            await _context.SaveChangesAsync();
+
+             return new Response<string>
+             {
+                 Success = true,
+                 Message = "User was succesfully updated"
+             };
+        }
+
+        public async Task<Response<string>> ChangePasswordAsync(ChangePasswordModel model)
         {
 
-        }*/
+            var user = await _context.Users.FindAsync(model.UserId);
+
+            if (user == null)
+            {
+                return new Response<string>
+                {
+                    Success = false,
+                    Message = "There is no such user"
+                };
+            }
+
+            if (!BCrypt.Net.BCrypt.Verify(model.OldPassword, user.Password))
+            {
+                return new Response<string>
+                {
+                    Success = false,
+                    Message = "Old password is incorrect"
+                };
+            }
+
+            user.Password = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
+
+            await _context.SaveChangesAsync();
+
+            return new Response<string>
+            {
+                Success = true,
+                Message = "Password was succesfully changed"
+            };
+        }
 
         public async Task<Response<string>> DeleteAsync(int id)
         {
@@ -48,7 +99,7 @@ namespace Airline_Web_API.Services
             }
 
             _context.Remove(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return new Response<string>
             {

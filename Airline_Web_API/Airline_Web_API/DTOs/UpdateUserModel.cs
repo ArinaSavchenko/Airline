@@ -3,8 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Airline_Web_API.DTOs
 {
-    public class RegisterModel
+    public class UpdateUserModel
     {
+        [Required]
+        public int Id { get; set; }
         [Required(ErrorMessage = "First name is required")]
         public string FirstName { get; set; }
         [Required(ErrorMessage = "Last name is required")]
@@ -14,9 +16,5 @@ namespace Airline_Web_API.DTOs
         [EmailAddress]
         [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "Password is required")]
-        public string Password { get; set; }
-        [Required]
-        public string Role { get; set; }
     }
 }

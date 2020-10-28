@@ -18,11 +18,11 @@
       <h3 class="fieldValue">{{user.birthDate | date}}</h3>
     </div>
   </div>
-  <a class="changePassword" routerLink="/airline/account/changepassword">Change password</a>
+  <a class="changePassword" routerLink="/airline/account/change-password">Change password</a>
   <div class="actionButtons">
     <button mat-raised-button routerLink="/airline/account/details">Update</button>
     <button mat-raised-button (click)="delete()">Delete</button>
   </div>
   <button mat-raised-button class="logOutButton" (click)="logOut()">Log out</button>
-  <button mat-raised-button class="backButton" routerLink="/airline" >Back to the main page</button>
+  <button mat-raised-button class="backButton" routerLink="/airline">Back to the main page</button>
 </div>

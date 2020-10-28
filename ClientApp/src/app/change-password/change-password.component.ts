@@ -34,6 +34,7 @@ export class ChangePasswordComponent implements OnInit {
   onFormSubmit(): void {
     if (this.passwordForm.valid) {
       const password: PasswordChangeModel = {
+        userId: this.user.id,
         oldPassword: this.passwordForm.controls.oldPassword.value,
         newPassword: this.passwordForm.controls.newPassword.value
       };
@@ -42,9 +43,7 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const tokenParts = localStorage.getItem('token').split(/\./);
-    const tokenDecoded = JSON.parse(window.atob(tokenParts[1]));
-    this.userService.getUserById(tokenDecoded.sub).subscribe(user => this.user = user);
+    this.userService.getUser().subscribe(user => this.user = user);
   }
 
   checkResult(response: ResponseModel): void {
@@ -52,11 +51,8 @@ export class ChangePasswordComponent implements OnInit {
       this.message = response.message;
     }
     else {
-      this.goToAccount();
+      this.userService.logOut();
+      this.router.navigate(['/airline/account']);
     }
-  }
-
-  goToAccount(): void {
-    this.router.navigate(['airline/account']);
   }
 }

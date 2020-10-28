@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment';
 import { RegisterModel } from '../Models/RegisterModel';
 import { ResponseModel } from '../Models/ResponseModel';
 import { User } from '../Models/User';
+import { UpdateUserModel } from '../Models/UpdateUserModel';
 
 @Injectable({
   providedIn: 'root',
@@ -31,18 +32,19 @@ export class UserService {
     );
   }
 
-  getUserById(id: number): Observable<User>{
+  getUser(): Observable<User> {
+    const id = this.getUserId();
     const url = `${this.usersUrl}/${id}`;
     return this.http.get<User>(url);
   }
 
-  logIn(model): Observable<ResponseModel>{
+  logIn(model): Observable<ResponseModel> {
     return this.http.post<ResponseModel>(this.usersUrl + '/authenticate', model, this.httpOptions).pipe(
       catchError(error => this.handleError(error))
     );
   }
 
-  updateUser(user: User): Observable<ResponseModel> {
+  updateUser(user: UpdateUserModel): Observable<ResponseModel> {
     return this.http.put<ResponseModel>(this.usersUrl + '/update', user, this.httpOptions).pipe(
       catchError(error => this.handleError(error))
     );
@@ -68,7 +70,14 @@ export class UserService {
       catchError(error => this.handleError(error)));
   }
 
-  handleError(error: HttpErrorResponse): Observable<any>{
+  handleError(error: HttpErrorResponse): Observable<any> {
     return of(error.error);
+  }
+
+  getUserId(): number {
+    const tokenParts = localStorage.getItem('token').split(/\./);
+    const tokenDecoded = JSON.parse(window.atob(tokenParts[1]));
+    const userId = tokenDecoded.sub;
+    return userId;
   }
 }

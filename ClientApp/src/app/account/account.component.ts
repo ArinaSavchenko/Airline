@@ -22,13 +22,12 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const tokenParts = localStorage.getItem('token').split(/\./);
-    const tokenDecoded = JSON.parse(window.atob(tokenParts[1]));
-    this.userService.getUserById(tokenDecoded.sub).subscribe(user => this.user = user);
+    this.userService.getUser().subscribe(user => this.user = user);
   }
 
   logOut(): void {
     this.userService.logOut();
+    this.goToTheMainPage();
   }
 
   delete(): void {
@@ -48,7 +47,11 @@ export class AccountComponent implements OnInit {
   checkResult(response: ResponseModel): void {
     if (response.success === true){
       this.userService.logOut();
-      this.router.navigate(['']);
+      this.goToTheMainPage();
     }
+  }
+
+  goToTheMainPage(): void {
+    this.router.navigate(['']);
   }
 }

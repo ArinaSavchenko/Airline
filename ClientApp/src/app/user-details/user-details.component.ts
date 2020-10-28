@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { UserService } from '../Services/user.service';
 import { User } from '../Models/User';
 import { ResponseModel } from '../Models/ResponseModel';
 import { ConfirmActionDialogComponent } from '../confirm-action-dialog/confirm-action-dialog.component';
+import { UpdateUserModel } from '../Models/UpdateUserModel';
 
 @Component({
   selector: 'app-user-details',
@@ -16,34 +18,65 @@ import { ConfirmActionDialogComponent } from '../confirm-action-dialog/confirm-a
 export class UserDetailsComponent implements OnInit {
 
   user: User;
+  updateUser: UpdateUserModel;
+  userForm: FormGroup;
+  nameFormat = '[a-zA-Z\s]+$';
+  dateNow = new Date();
+  maxDate = new Date(new Date(this.dateNow).getTime() - 1000 * 60 * 60 * 24 * 365 * 14);
+  message: string;
 
   constructor(private router: Router,
               public userService: UserService,
               private location: Location,
-              private dialog: MatDialog) {}
+              private dialog: MatDialog,
+              private formBuilder: FormBuilder) {
+  }
 
   ngOnInit(): void {
-    const tokenParts = localStorage.getItem('token').split(/\./);
-    const tokenDecoded = JSON.parse(window.atob(tokenParts[1]));
-    this.userService.getUserById(tokenDecoded.sub).subscribe(user => this.user = user);
+    this.userService.getUser().subscribe(user =>
+    {
+      this.user = user;
+      this.userForm = this.formBuilder.group({
+      firstName: new FormControl(this.user.firstName, [Validators.required, Validators.pattern(this.nameFormat)]),
+      lastName: new FormControl(this.user.lastName, [Validators.required, Validators.pattern(this.nameFormat)]),
+      email: new FormControl(this.user.email, [Validators.required, Validators.email]),
+      birthDate: new FormControl(this.user.birthDate, Validators.required)
+          });
+    });
   }
 
   save(): void {
-    const message = `Are you sure you want to change info in your account?`;
+    if (this.userForm.valid) {
+      this.updateUser = {
+        id: this.user.id,
+        firstName: this.userForm.controls.firstName.value,
+        lastName: this.userForm.controls.lastName.value,
+        birthDate: this.userForm.controls.birthDate.value,
+        email: this.userForm.controls.email.value
+      };
 
-    const dialogRef = this.dialog.open(ConfirmActionDialogComponent, {
-      data: message
-    });
+      const message = `Are you sure you want to change info in your account?`;
 
-    dialogRef.afterClosed().subscribe(dialogResult => {
-      if (dialogResult === true) {
-        this.userService.updateUser(this.user);
-        this.goBack();
-      }
-    });
+      const dialogRef = this.dialog.open(ConfirmActionDialogComponent, {
+        data: message
+      });
+
+      dialogRef.afterClosed().subscribe(dialogResult => {
+        if (dialogResult === true) {
+          this.userService.updateUser(this.updateUser).subscribe(response => this.checkResult(response));
+        }
+      });
+    }
+  }
+
+  checkResult(response: ResponseModel): void {
+    if (response.success === false){
+      this.message = response.message;
+    }
+    this.goBack();
   }
 
   goBack(): void {
-    this.location.back();
+    this.router.navigate(['/airline/account']);
   }
 }

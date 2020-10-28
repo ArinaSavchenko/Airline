@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'airline/registration', component: RegistrationComponent },
   { path: 'airline/account', canActivate: [AuthGuard], component: AccountComponent },
   { path: 'airline/account/details', canActivate: [AuthGuard], component: UserDetailsComponent},
-  { path: 'airline/account/changepassword', canActivate: [AuthGuard], component: ChangePasswordComponent},
+  { path: 'airline/account/change-password', canActivate: [AuthGuard], component: ChangePasswordComponent},
 ];
 
 @NgModule({

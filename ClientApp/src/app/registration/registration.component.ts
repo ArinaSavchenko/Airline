@@ -22,7 +22,9 @@ export class RegistrationComponent{
   maxDate = new Date(new Date(this.dateNow).getTime() - 1000 * 60 * 60 * 24 * 365 * 14);
   message: string;
 
-  constructor(public userService: UserService, private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) {
+  constructor(public userService: UserService,
+              private formBuilder: FormBuilder,
+              private router: Router) {
     this.userForm = this.formBuilder.group({
         firstName: new FormControl(null, [Validators.required, Validators.pattern(this.nameFormat)]),
         lastName: new FormControl(null, [Validators.required, Validators.pattern(this.nameFormat)]),

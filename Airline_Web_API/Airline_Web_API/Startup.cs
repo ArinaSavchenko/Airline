@@ -63,7 +63,7 @@ namespace Airline_Web_API
                      {
                          var userService = context.HttpContext.RequestServices.GetRequiredService<UserService>();
                          var userId = int.Parse(context.Principal.Identity.Name);
-                         var user =  userService.GetById(userId);
+                         var user =  userService.GetUserById(userId);
                          if (user == null)
                          {
                             context.Fail("Unauthorized");

@@ -6,7 +6,6 @@ using Airline_Web_API.Models;
 using Airline_Web_API.DTOs;
 using Airline_Web_API.Services;
 using Airline_Web_API.Helpers;
-using Airline_Web_API.ViewModels;
 
 namespace Airline_Web_API.Controllers
 {
@@ -27,7 +26,7 @@ namespace Airline_Web_API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetUser(int id)
         {
-            var user = await _userService.GetById(id);
+            var user = await _userService.GetUserById(id);
 
             if (user == null)
             {
@@ -37,27 +36,34 @@ namespace Airline_Web_API.Controllers
             return Ok(user);
         }
 
-        [Authorize]
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteUser(int id)
-        {
-            var result = await _userService.DeleteAsync(id);
 
-            if (result.Success == false)
+        [Authorize]
+        [HttpPut("update")]
+        public async Task<ActionResult> Update([FromBody] UpdateUserModel model)
+        {
+            Response<string> updateResult = await _userService.UpdateUserAsync(model);
+
+            if (updateResult.Success == false)
             {
-                return BadRequest(result);
+                return BadRequest(updateResult);
             }
 
-            return Ok(result);
+            return Ok(updateResult);
         }
 
-        /*[Authorize]
-        [HttpPut("update")]
-        public async Task<ActionResult> Update([FromBody] UserViewModel model)
+        [Authorize]
+        [HttpPut("update-password")]
+        public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordModel model)
         {
-            Response<string> updateResult = await _userService.AuthenticateAsync(model);
-            return Ok();
-        }*/
+            Response<string> updateResult = await _userService.ChangePasswordAsync(model);
+
+            if (updateResult.Success == false)
+            {
+                return BadRequest(updateResult);
+            }
+
+            return Ok(updateResult);
+        }
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
@@ -93,6 +99,20 @@ namespace Airline_Web_API.Controllers
             }
 
             return Ok(registrationResult);
+        }
+
+        [Authorize]
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteUser(int id)
+        {
+            var result = await _userService.DeleteAsync(id);
+
+            if (result.Success == false)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
         }
     }
 }
