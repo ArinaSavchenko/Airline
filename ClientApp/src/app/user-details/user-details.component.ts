@@ -37,10 +37,10 @@ export class UserDetailsComponent implements OnInit {
     {
       this.user = user;
       this.userForm = this.formBuilder.group({
-      firstName: new FormControl(this.user.firstName, [Validators.required, Validators.pattern(this.nameFormat)]),
-      lastName: new FormControl(this.user.lastName, [Validators.required, Validators.pattern(this.nameFormat)]),
-      email: new FormControl(this.user.email, [Validators.required, Validators.email]),
-      birthDate: new FormControl(this.user.birthDate, Validators.required)
+        firstName: new FormControl(this.user.firstName, [Validators.required, Validators.pattern(this.nameFormat)]),
+        lastName: new FormControl(this.user.lastName, [Validators.required, Validators.pattern(this.nameFormat)]),
+        email: new FormControl(this.user.email, [Validators.required, Validators.email]),
+        birthDate: new FormControl(this.user.birthDate, Validators.required)
       });
     });
   }

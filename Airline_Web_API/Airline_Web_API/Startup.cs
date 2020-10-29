@@ -18,6 +18,10 @@ using Airline_Web_API.Helpers;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using Microsoft.IdentityModel.JsonWebTokens;
+using IdentityServer4.Extensions;
+using Microsoft.AspNetCore.Http;
 
 namespace Airline_Web_API
 {
@@ -62,8 +66,8 @@ namespace Airline_Web_API
                      OnTokenValidated = context =>
                      {
                          var userService = context.HttpContext.RequestServices.GetRequiredService<UserService>();
-                         var userId = int.Parse(context.Principal.Identity.Name);
-                         var user =  userService.GetUserById(userId);
+                         var userId = int.Parse(context.Principal.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
+                         var user = userService.GetUserById(userId);
                          if (user == null)
                          {
                             context.Fail("Unauthorized");
