@@ -44,11 +44,11 @@ namespace Airline_Web_API.Services
             _mapper.Map(model, user);
             await _context.SaveChangesAsync();
 
-             return new Response<string>
-             {
+            return new Response<string>
+            {
                  Success = true,
                  Message = "User was succesfully updated"
-             };
+            };
         }
 
         public async Task<Response<string>> ChangePasswordAsync(ChangePasswordModel model)

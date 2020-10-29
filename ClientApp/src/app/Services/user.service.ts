@@ -67,7 +67,8 @@ export class UserService {
   deleteUser(id: number): Observable<ResponseModel> {
     const url = `${this.usersUrl}/${id}`;
     return this.http.delete<ResponseModel>(url, this.httpOptions).pipe(
-      catchError(error => this.handleError(error)));
+      catchError(error => this.handleError(error))
+    );
   }
 
   handleError(error: HttpErrorResponse): Observable<any> {

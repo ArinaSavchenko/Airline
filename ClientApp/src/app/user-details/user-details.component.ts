@@ -9,6 +9,7 @@ import { User } from '../Models/User';
 import { ResponseModel } from '../Models/ResponseModel';
 import { ConfirmActionDialogComponent } from '../confirm-action-dialog/confirm-action-dialog.component';
 import { UpdateUserModel } from '../Models/UpdateUserModel';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-user-details',
@@ -21,8 +22,7 @@ export class UserDetailsComponent implements OnInit {
   updateUser: UpdateUserModel;
   userForm: FormGroup;
   nameFormat = '[a-zA-Z\s]+$';
-  dateNow = new Date();
-  maxDate = new Date(new Date(this.dateNow).getTime() - 1000 * 60 * 60 * 24 * 365 * 14);
+  maxDate = environment.userMaxBirthDate;
   message: string;
 
   constructor(private router: Router,
@@ -41,7 +41,7 @@ export class UserDetailsComponent implements OnInit {
       lastName: new FormControl(this.user.lastName, [Validators.required, Validators.pattern(this.nameFormat)]),
       email: new FormControl(this.user.email, [Validators.required, Validators.email]),
       birthDate: new FormControl(this.user.birthDate, Validators.required)
-          });
+      });
     });
   }
 

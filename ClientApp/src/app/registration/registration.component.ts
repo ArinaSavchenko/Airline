@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { RegisterModel } from '../Models/RegisterModel';
 import { UserService } from '../Services/user.service';
 import { PasswordsMatchValidator } from '../Validators/PasswordsMatchValidator';
 import { ResponseModel } from '../Models/ResponseModel';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-registration',
@@ -18,8 +19,7 @@ export class RegistrationComponent{
   confirmHide = true;
   userForm: FormGroup;
   nameFormat = '[a-zA-Z\s]+$';
-  dateNow = new Date();
-  maxDate = new Date(new Date(this.dateNow).getTime() - 1000 * 60 * 60 * 24 * 365 * 14);
+  maxDate = environment.userMaxBirthDate;
   message: string;
 
   constructor(public userService: UserService,

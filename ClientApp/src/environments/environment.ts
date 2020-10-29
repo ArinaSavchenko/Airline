@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://localhost:44392/api'
+  baseUrl: 'https://localhost:44392/api',
+  userMaxBirthDate: new Date(new Date(new Date()).getTime() - 1000 * 60 * 60 * 24 * 365 * 14)
 };
 
 /*
