@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Airline_Web_API.Models;
 using Airline_Web_API.ViewModels;
 using Airline_Web_API.DTOs;
@@ -23,6 +21,7 @@ namespace Airline_Web_API
             CreateMap<UpdateUserModel, User>()
                 .ForMember(user => user.Password, opt => opt.Ignore())
                 .ForMember(user => user.Role, opt => opt.Ignore());
+            CreateMap<AirportViewModel, Airport>();
         }
     }
 }

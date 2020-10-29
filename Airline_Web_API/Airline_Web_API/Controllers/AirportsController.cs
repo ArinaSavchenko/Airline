@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Airline_Web_API.ViewModels;
 using Airline_Web_API.Services;
 using Airline_Web_API.Models;
+using Airline_Web_API.Helpers;
 
 namespace Airline_Web_API.Controllers
 {
@@ -25,6 +27,29 @@ namespace Airline_Web_API.Controllers
             var results = await _airportService.GetAirports(value);
 
             return Ok (results);
+        }
+
+        [Authorize(Roles ="admin")]
+        [HttpPost]
+        public async Task<ActionResult> PostAirport([FromBody] Airport airport)
+        {
+            await _airportService.AddAirportAsync(airport);
+
+            return Ok();
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPut]
+        public async Task<ActionResult> UpdateAirport([FromBody] AirportViewModel model)
+        {
+            Response<string> updateResult = await _airportService.UpdateAirportAsync(model);
+
+            if (updateResult.Success == false)
+            {
+                return BadRequest(updateResult);
+            }
+
+            return Ok(updateResult);
         }
     }
 }
