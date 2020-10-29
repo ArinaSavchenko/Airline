@@ -85,7 +85,7 @@ namespace Airline_Web_API.Services
             };
         }
 
-        public async Task<Response<string>> DeleteAsync(int id)
+        public async Task<Response<string>> DeleteUserAsync(int id)
         {
             var user = await _context.Users.FindAsync(id);
 

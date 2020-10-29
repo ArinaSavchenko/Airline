@@ -69,5 +69,28 @@ namespace Airline_Web_API.Services
                 Message = "Airport was succesfully updated"
             };
         }
+
+        public async Task<Response<string>> DeleteAirportAsync(AirportViewModel model)
+        {
+            var airport = await _context.Airports.FindAsync(model.Id);
+
+            if (airport == null)
+            {
+                return new Response<string>
+                {
+                    Success = false,
+                    Message = "There is no such airport"
+                };
+            }
+
+            _context.Remove(airport);
+            await _context.SaveChangesAsync();
+
+            return new Response<string>
+            {
+                Success = true,
+                Message = "Airport was succesfully deleted"
+            };
+        }
     }
 }

@@ -51,5 +51,19 @@ namespace Airline_Web_API.Controllers
 
             return Ok(updateResult);
         }
+
+        [Authorize(Roles = "admin")]
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteAirport([FromBody] AirportViewModel model)
+        {
+            Response<string> updateResult = await _airportService.UpdateAirportAsync(model);
+
+            if (updateResult.Success == false)
+            {
+                return BadRequest(updateResult);
+            }
+
+            return Ok(updateResult);
+        }
     }
 }
