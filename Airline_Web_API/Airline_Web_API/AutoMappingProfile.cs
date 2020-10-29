@@ -20,6 +20,9 @@ namespace Airline_Web_API
             CreateMap<RegisterModel, User>();
             CreateMap<User, UserViewModel>();
             CreateMap<AuthenticateModel, User>();
+            CreateMap<UpdateUserModel, User>()
+                .ForMember(user => user.Password, opt => opt.Ignore())
+                .ForMember(user => user.Role, opt => opt.Ignore());
         }
     }
 }

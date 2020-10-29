@@ -17,6 +17,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 
+import { JwtModule } from '@auth0/angular-jwt';
+
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -29,6 +31,14 @@ import { FlightSearchResultsComponent } from './flight-search-results/flight-sea
 import { LogInComponent } from './log-in/log-in.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { AccountComponent } from './account/account.component';
+import { AuthGuard } from './AuthGuard';
+import { UserDetailsComponent } from './user-details/user-details.component';
+import { ConfirmActionDialogComponent } from './confirm-action-dialog/confirm-action-dialog.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+
+export function tokenGetter(): any {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
@@ -41,7 +51,10 @@ import { AccountComponent } from './account/account.component';
     FlightSearchResultsComponent,
     LogInComponent,
     RegistrationComponent,
-    AccountComponent
+    AccountComponent,
+    UserDetailsComponent,
+    ConfirmActionDialogComponent,
+    ChangePasswordComponent
   ],
     imports: [
         BrowserModule,
@@ -62,9 +75,16 @@ import { AccountComponent } from './account/account.component';
         HttpClientModule,
         MatExpansionModule,
         MatDialogModule,
-        MatIconModule
+        MatIconModule,
+        JwtModule.forRoot({
+          config: {
+            tokenGetter: tokenGetter,
+            whitelistedDomains: ['localhost:44392'],
+            blacklistedRoutes: []
+          }
+        })
     ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 

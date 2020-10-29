@@ -9,7 +9,7 @@ namespace Airline_Web_API.DTOs
         [EmailAddress(ErrorMessage = "Email is not valid")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Email is required")]
+        [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
     }
 }

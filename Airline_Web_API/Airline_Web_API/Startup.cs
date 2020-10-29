@@ -18,6 +18,10 @@ using Airline_Web_API.Helpers;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using Microsoft.IdentityModel.JsonWebTokens;
+using IdentityServer4.Extensions;
+using Microsoft.AspNetCore.Http;
 
 namespace Airline_Web_API
 {
@@ -39,8 +43,9 @@ namespace Airline_Web_API
 
             services.AddTransient<FlightService>();
             services.AddTransient<AirportService>();
-            services.AddTransient<AccountService>();
+            services.AddTransient<UserService>();
             services.AddTransient<JwtService>();
+            services.AddTransient<AirlineContext>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -60,12 +65,11 @@ namespace Airline_Web_API
                  {
                      OnTokenValidated = context =>
                      {
-                         var userService = context.HttpContext.RequestServices.GetRequiredService<AccountService>();
-                         var userId = int.Parse(context.Principal.Identity.Name);
-                         var user = userService.GetById(userId);
+                         var userService = context.HttpContext.RequestServices.GetRequiredService<UserService>();
+                         var userId = int.Parse(context.Principal.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
+                         var user = userService.GetUserById(userId);
                          if (user == null)
                          {
-                            // return unauthorized if user no longer exists
                             context.Fail("Unauthorized");
                          }
                          return Task.CompletedTask;

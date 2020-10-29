@@ -13,20 +13,63 @@ namespace Airline_Web_API.Controllers
     [Route("api/users")]
     public class UsersController : ControllerBase
     {
-        private readonly AccountService _accountService;
+        private readonly UserService _userService;
         private readonly JwtService _jwtService;
 
-        public UsersController(AccountService accountService, JwtService jwtService)
+        public UsersController(UserService userService, JwtService jwtService)
         {
-            _accountService = accountService;
+            _userService = userService;
             _jwtService = jwtService;
+        }
+
+        [Authorize]
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetUser(int id)
+        {
+            var user = await _userService.GetUserById(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
+
+        [Authorize]
+        [HttpPut("update")]
+        public async Task<ActionResult> Update([FromBody] UpdateUserModel model)
+        {
+            Response<string> updateResult = await _userService.UpdateUserAsync(model);
+
+            if (updateResult.Success == false)
+            {
+                return BadRequest(updateResult);
+            }
+
+            return Ok(updateResult);
+        }
+
+        [Authorize]
+        [HttpPut("update-password")]
+        public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordModel model)
+        {
+            Response<string> updateResult = await _userService.ChangePasswordAsync(model);
+
+            if (updateResult.Success == false)
+            {
+                return BadRequest(updateResult);
+            }
+
+            return Ok(updateResult);
         }
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public async Task<ActionResult> Authenticate([FromBody]AuthenticateModel model)
         {
-            Response<User> authorizationResult = await _accountService.AuthenticateAsync(model);
+            Response<User> authorizationResult = await _userService.AuthenticateAsync(model);
 
             if (authorizationResult.Success == false)
             {
@@ -48,7 +91,7 @@ namespace Airline_Web_API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<Response<string>>> Register([FromBody] RegisterModel model)
         {
-            Response<string> registrationResult = await _accountService.RegisterAsync(model);
+            Response<string> registrationResult = await _userService.RegisterAsync(model);
 
             if (registrationResult.Success == false)
             {
@@ -56,6 +99,20 @@ namespace Airline_Web_API.Controllers
             }
 
             return Ok(registrationResult);
+        }
+
+        [Authorize]
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteUser(int id)
+        {
+            var result = await _userService.DeleteAsync(id);
+
+            if (result.Success == false)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
         }
     }
 }
