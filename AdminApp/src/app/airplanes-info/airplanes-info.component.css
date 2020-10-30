@@ -1,0 +1,13 @@
+button.goBackButton {
+  color: #404040;
+}
+
+button.addButton {
+  color: #404040;
+}
+
+.airplaneField {
+  font-size: 17px;
+  margin-top: 2em;
+  width: 100%;
+}

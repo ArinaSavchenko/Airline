@@ -1,0 +1,48 @@
+<div class="infoContainer">
+  <h1 class="header">Flights info</h1>
+  <div>
+    <button mat-raised-button color="accent" class="addButton" routerLink="/admin/airports">Add new flight</button>
+  </div>
+<form>
+  <div class="searchArea">
+    <mat-form-field class="airportField" appearance="outline">
+      <input #departureAirportIdInput
+             placeholder="From:"
+             matInput
+             [matAutocomplete]="auto"
+             (click)="searchAirports('')"
+             (input)="searchAirports(departureAirportIdInput.value)">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+                        (optionSelected)="setDepartureAirportId($event.option.value)">
+        <mat-option *ngFor="let airport of airports" [value]="airport">
+          {{airport.city}}, {{airport.country}}<br>
+          <q class="airportName">{{airport.name}}</q>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field class="airportField" appearance="outline">
+      <input #arrivalAirportIdInput
+             placeholder="To:"
+             matInput
+             [matAutocomplete]="auto2"
+             (click)="searchAirports('')"
+             (input)="searchAirports(arrivalAirportIdInput.value)"
+      >
+      <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn"
+                        (optionSelected)="setArrivalAirportId($event.option.value)">
+        <mat-option *ngFor="let airport of airports" [value]="airport">
+          {{airport.city}}, {{airport.country}}<br>
+          <q class="airportName">{{airport.name}}</q>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+</form>
+
+
+  <div *ngIf="flight">
+    {{flight.departureAirportId}}, {{flight.arrivalAirportId}}
+  </div>
+  <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
+</div>

@@ -1,0 +1,37 @@
+<div *ngIf="airport" class="infoContainer">
+  <h1 class="header">Airport info</h1>
+
+  <div class="infoArea">
+    <div><h2>id: {{airport.id}}</h2></div>
+    <h3>Name:</h3>
+    <mat-form-field class="airportField" appearance="outline">
+      <input [(ngModel)]="airport.name" placeholder="name"
+             matInput/>
+    </mat-form-field>
+
+    <h3>City:</h3>
+    <mat-form-field class="airportField" appearance="outline">
+      <input [(ngModel)]="airport.city" placeholder="city"
+             matInput/>
+    </mat-form-field>
+
+    <h3>Country:</h3>
+    <mat-form-field class="airportField" appearance="outline">
+      <input [(ngModel)]="airport.country" placeholder="country"
+             matInput/>
+    </mat-form-field>
+
+  </div>
+
+  <div class="buttonsContainer">
+    <div>
+      <button mat-raised-button color="accent" class="saveButton" (click)="onSave()">Save</button>
+    </div>
+    <div>
+      <button mat-raised-button color="accent" class="deleteButton" (click)="onDelete()">Delete airport</button>
+    </div>
+    <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/airports">Back to the airports
+    </button>
+    <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
+  </div>
+</div>
