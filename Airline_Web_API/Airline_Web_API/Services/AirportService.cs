@@ -21,6 +21,15 @@ namespace Airline_Web_API.Services
             _mapper = mapper;
         }
 
+        public async Task<AirportViewModel> GetAirportByIdAsync(int id)
+        {
+            var airport = await _context.Airports.FindAsync(id);
+
+            var results = _mapper.Map<AirportViewModel>(airport);
+
+            return results;
+        }
+
         public async Task<IEnumerable<AirportViewModel>> GetAirports(string value)
         {
             var airports = _context.Airports.AsQueryable();

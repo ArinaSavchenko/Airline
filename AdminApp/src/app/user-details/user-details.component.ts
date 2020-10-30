@@ -62,7 +62,7 @@ export class UserDetailsComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(dialogResult => {
-        if (dialogResult === true) {
+        if (dialogResult.event === true) {
           this.userService.updateUser(this.updateUser).subscribe(response => this.checkResult(response));
         }
       });
@@ -70,13 +70,15 @@ export class UserDetailsComponent implements OnInit {
   }
 
   checkResult(response: ResponseModel): void {
-    if (response.success === false){
+    if (!response.success === true){
       this.message = response.message;
     }
-    this.goBack();
+    else{
+      this.goBack();
+    }
   }
 
   goBack(): void {
-    this.router.navigate(['/airline/account']);
+    this.router.navigate(['/admin/account']);
   }
 }

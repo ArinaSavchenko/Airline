@@ -3,9 +3,11 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { RegisterModel } from '../Models/RegisterModel';
-// import { UserService } from '../Services/user.service';
 import { PasswordsMatchValidator } from '../Validators/PasswordsMatchValidator';
-// import { ResponseModel } from '../Models/ResponseModel';
+import { ResponseModel } from '../Models/ResponseModel';
+import { UserService } from '../Services/user.service';
+import { environment } from '../../environments/environment';
+
 
 @Component({
   selector: 'app-registration',
@@ -18,11 +20,13 @@ export class RegistrationComponent{
   confirmHide = true;
   userForm: FormGroup;
   nameFormat = '[a-zA-Z\s]+$';
-  dateNow = new Date();
-  maxDate = new Date(new Date(this.dateNow).getTime() - 1000 * 60 * 60 * 24 * 365 * 14);
+  maxDate = environment.userMaxBirthDate;
   message: string;
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) {
+  constructor(private formBuilder: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router,
+              private userService: UserService) {
     this.userForm = this.formBuilder.group({
       firstName: new FormControl(null, [Validators.required, Validators.pattern(this.nameFormat)]),
       lastName: new FormControl(null, [Validators.required, Validators.pattern(this.nameFormat)]),
@@ -44,21 +48,21 @@ export class RegistrationComponent{
         password: this.userForm.controls.password.value,
         role: 'admin'
       };
-      // this.userService.register(user).subscribe();
+      this.userService.registerUser(user).subscribe(response => this.checkResult(response));
     }
   }
 
-  // checkResult(response: ResponseModel): void {
-  //   if (!response.success) {
-  //     this.message = response.message;
-  //   }
-  //   else {
-  //     this.goToAccount();
-  //   }
-  // }
+  checkResult(response: ResponseModel): void {
+    if (!response.success) {
+      this.message = response.message;
+    }
+    else {
+      this.goToAccount();
+    }
+  }
 
-  // goToAccount(): void {
-  //   this.router.navigate(['airline/account'], { relativeTo: this.route });
-  // }
+  goToAccount(): void {
+    this.router.navigate(['admin/account']);
+  }
 }
 

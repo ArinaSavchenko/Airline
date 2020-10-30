@@ -37,12 +37,15 @@
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
+
+    <mat-form-field appearance="outline" class="datePicker">
+      <mat-label>Choose departure date</mat-label>
+      <input matInput [matDatepicker]="picker"
+             (ngModelChange)="setDate($event)" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
   </div>
 </form>
-
-
-  <div *ngIf="flight">
-    {{flight.departureAirportId}}, {{flight.arrivalAirportId}}
-  </div>
   <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
 </div>

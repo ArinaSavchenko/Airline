@@ -5,12 +5,13 @@ import {Observable, of} from 'rxjs';
 
 import { Flight } from '../Models/Flight';
 import {FlightForSearch} from '../Models/FlightForSearch';
+import {environment} from '../../environments/environment';
 
 
 @Injectable({ providedIn: 'root' })
 export class FlightService {
 
-  private flightsUrl = 'api/flights';  // URL to web api
+  private flightsUrl = environment.baseUrl + 'api/flights';  // URL to web api
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

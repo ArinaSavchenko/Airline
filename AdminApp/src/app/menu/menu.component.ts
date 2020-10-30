@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {UserService} from '../Services/user.service';
 
 @Component({
   selector: 'app-menu',
@@ -6,4 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent {
+  constructor(private userService: UserService) {
+  }
+
+  logOut(): void {
+    this.userService.logOut();
+  }
 }

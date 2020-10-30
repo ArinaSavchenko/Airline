@@ -11,19 +11,27 @@ import { AirportAddingComponent } from './airport-adding/airport-adding.componen
 import { AirportDetailsComponent } from './airport-details/airport-details.component';
 import { AirplaneAddingComponent } from './airplane-adding/airplane-adding.component';
 import { AirplaneDetailsComponent } from './airplane-details/airplane-details.component';
+import { TicketsInfoComponent } from './tickets-info/tickets-info.component';
+import { LogInComponent } from './log-in/log-in.component';
+import { AuthGuard } from './AuthGuard';
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 const routes: Routes = [
-  { path: 'admin/menu', component: MenuComponent},
+
+  { path: 'admin/log-in', component: LogInComponent},
+  { path: 'admin/menu', canActivate: [AuthGuard], component: MenuComponent},
   { path: '', redirectTo: 'admin/menu', pathMatch: 'full'},
-  { path: 'admin/flights', component: FlightsInfoComponent},
-  { path: 'admin/airports', component: AirportsInfoComponent},
-  { path: 'admin/airplanes', component: AirplanesInfoComponent},
-  { path: 'admin/account', component: AccountComponent},
-  { path: 'admin/registration', component: RegistrationComponent},
-  { path: 'admin/airports/new', component: AirportAddingComponent},
-  { path: 'admin/airports/:id', component: AirportDetailsComponent},
-  { path: 'admin/airplanes/new', component: AirplaneAddingComponent},
-  { path: 'admin/airplanes/:id', component: AirplaneDetailsComponent},
+  { path: 'admin/flights', canActivate: [AuthGuard], component: FlightsInfoComponent},
+  { path: 'admin/airports', canActivate: [AuthGuard], component: AirportsInfoComponent},
+  { path: 'admin/airplanes', canActivate: [AuthGuard], component: AirplanesInfoComponent},
+  { path: 'admin/account', canActivate: [AuthGuard], component: AccountComponent},
+  { path: 'admin/registration', canActivate: [AuthGuard], component: RegistrationComponent},
+  { path: 'admin/airports/new', canActivate: [AuthGuard], component: AirportAddingComponent},
+  { path: 'admin/airports/:id', canActivate: [AuthGuard], component: AirportDetailsComponent},
+  { path: 'admin/airplanes/new', canActivate: [AuthGuard], component: AirplaneAddingComponent},
+  { path: 'admin/airplanes/:id', canActivate: [AuthGuard], component: AirplaneDetailsComponent},
+  { path: 'admin/tickets', canActivate: [AuthGuard], component: TicketsInfoComponent},
+  { path: 'admin/account/details', canActivate: [AuthGuard], component: UserDetailsComponent},
 ];
 
 @NgModule({

@@ -4,12 +4,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Airport } from '../Models/Airport';
+import {environment} from '../../environments/environment';
 
 
 @Injectable({ providedIn: 'root' })
 export class AirportService {
 
-  private airportsUrl = 'api/airports';  // URL to web api
+  private airportsUrl = environment.baseUrl + '/airports';  // URL to web api
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -30,7 +31,7 @@ export class AirportService {
     if (!term.trim()){
       return this.getAirports();
     }
-    return  this.http.get<Airport[]>(`${this.airportsUrl}/?city=${term}`);
+    return  this.http.get<Airport[]>(`${this.airportsUrl}/?value=${term}`);
   }
 
   addAirport(airport: Airport): Observable<Airport> {

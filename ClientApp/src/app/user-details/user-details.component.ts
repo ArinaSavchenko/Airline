@@ -62,7 +62,7 @@ export class UserDetailsComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(dialogResult => {
-        if (dialogResult === true) {
+        if (dialogResult.event === true) {
           this.userService.updateUser(this.updateUser).subscribe(response => this.checkResult(response));
         }
       });

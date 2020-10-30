@@ -1,12 +1,13 @@
 <div class="buttonsContainer">
   <h1 class="header">Menu</h1>
-  <button mat-raised-button color="accent" class="chooseActionButton" routerLink="/admin/airports">Airport info</button>
-  <button mat-raised-button color="accent" class="chooseActionButton" routerLink="/admin/airplanes">Airplane info
-  </button>
-  <button mat-raised-button color="accent" class="chooseActionButton" routerLink="/admin/flights">Flight info</button>
+  <button mat-raised-button color="accent" class="chooseActionButton" routerLink="/admin/airports">Airports</button>
+  <button mat-raised-button color="accent" class="chooseActionButton" routerLink="/admin/airplanes">Airplanes</button>
+  <button mat-raised-button color="accent" class="chooseActionButton" routerLink="/admin/flights">Flights</button>
+  <button mat-raised-button color="accent" class="chooseActionButton" routerLink="/admin/tickets">Tickets</button>
   <div class="userControlButtons">
     <button mat-raised-button color="accent" class="addUser" routerLink="/admin/registration">Add new user</button>
     <button mat-raised-button color="accent" class="accountButton" routerLink="/admin/account">Account</button>
   </div>
-  <button mat-raised-button color="accent" class="logOutButton" routerLink="/admin/registration">Log out</button>
+  <button mat-raised-button color="accent" class="logOutButton" (click)="logOut()" routerLink="/admin/log-in">Log out
+  </button>
 </div>

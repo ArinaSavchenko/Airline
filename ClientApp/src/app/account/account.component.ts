@@ -38,7 +38,7 @@ export class AccountComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(dialogResult => {
-      if (dialogResult === true) {
+      if (dialogResult.event === true) {
         this.userService.deleteUser(this.user.id).subscribe(response => this.checkResult(response));
       }
     });

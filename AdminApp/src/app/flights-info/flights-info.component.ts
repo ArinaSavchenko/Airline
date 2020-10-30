@@ -69,4 +69,8 @@ export class FlightsInfoComponent implements OnInit {
     this.flight.arrivalAirportId = value.id;
     console.log(this.flight);
   }
+
+  setDate(value): void {
+
+  }
 }

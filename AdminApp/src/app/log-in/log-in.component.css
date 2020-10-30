@@ -1,0 +1,56 @@
+.loggedOutContainer {
+  padding-top: 5em;
+  margin: auto;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.logInForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.header {
+  font-size: 25px;
+  font-weight: bolder;
+  color: dimgrey;
+  text-align: center;
+  font-family: "Helvetica Neue", sans-serif;
+}
+
+.logInButton {
+  margin-top: 1em;
+  font-size: 16px;
+  background-color: #bcd30b;
+  color: #ffffff;
+  size: auto;
+  width: 6em;
+  height: 2em;
+  text-align: center;
+}
+
+.message {
+  margin-top: 0.5em;
+  color: darkgray;
+  text-align: center;
+}
+
+.forgotPassword {
+  text-align: right;
+  float: right;
+  margin-top: -1em;
+  font-size: 12px;
+}
+
+.accountLink {
+  font-weight: bolder;
+  color: dimgrey;
+  text-align: center;
+  font-family: "Helvetica Neue", sans-serif;
+}
+
+.logInButtonContainer {
+  margin: auto;
+}

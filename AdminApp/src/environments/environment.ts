@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  baseUrl: 'https://localhost:44392/api',
+  userMaxBirthDate: new Date(new Date(new Date()).getTime() - 1000 * 60 * 60 * 24 * 365 * 14)
 };
 
 /*

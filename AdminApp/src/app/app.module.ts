@@ -1,23 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {MatOptionModule, NativeDateModule} from '@angular/material/core';
+import { MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule} from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
-
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './in-memory-data.service';
-
 import { FlexLayoutModule } from '@angular/flex-layout';
+
+import { JwtModule } from '@auth0/angular-jwt';
 
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
@@ -33,6 +30,15 @@ import { ConfirmActionDialogComponent } from './confirm-action-dialog/confirm-ac
 import { AirplaneCabinSchemeComponent } from './airplane-cabin-scheme/airplane-cabin-scheme.component';
 import { AirplaneAddingComponent } from './airplane-adding/airplane-adding.component';
 import { AirplaneDetailsComponent } from './airplane-details/airplane-details.component';
+import { TicketsInfoComponent } from './tickets-info/tickets-info.component';
+import { LogInComponent } from './log-in/log-in.component';
+import { AuthGuard } from './AuthGuard';
+import { UserDetailsComponent } from './user-details/user-details.component';
+
+export function tokenGetter(): any {
+  return localStorage.getItem('token');
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +53,10 @@ import { AirplaneDetailsComponent } from './airplane-details/airplane-details.co
     ConfirmActionDialogComponent,
     AirplaneCabinSchemeComponent,
     AirplaneAddingComponent,
-    AirplaneDetailsComponent
+    AirplaneDetailsComponent,
+    TicketsInfoComponent,
+    LogInComponent,
+    UserDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -63,14 +72,18 @@ import { AirplaneDetailsComponent } from './airplane-details/airplane-details.co
     MatIconModule,
     MatNativeDateModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, {dataEncapsulation: false}
-    ),
     FormsModule,
     MatDialogModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:44392'],
+        disallowedRoutes: []
+      }
+    })
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

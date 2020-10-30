@@ -19,8 +19,21 @@ namespace Airline_Web_API.Controllers
         {
             _airportService = airportService;
         }
+        
+        [Authorize(Roles = "admin")]
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Airport>> GetAirportById(int id)
+        {
+            var results = await _airportService.GetAirportByIdAsync(id);
 
-        // GET: api/airports
+            if (results == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(results);
+        }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Airport>>> GetAirports([FromQuery] string value)
         {
