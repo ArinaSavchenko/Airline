@@ -41,7 +41,7 @@
     <mat-form-field appearance="outline" class="datePicker">
       <mat-label>Choose departure date</mat-label>
       <input matInput [matDatepicker]="picker"
-             (ngModelChange)="setDate($event)" formControlName="date">
+             (select)="setDate($event)">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
