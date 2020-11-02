@@ -1,0 +1,54 @@
+.st {
+  display: flex;
+  flex-direction: column;
+}
+
+.k {
+  display: flex;
+  flex-direction: column;
+}
+
+.seat {
+  margin-left: 10px;
+  background: lightgray;
+  width: 30px;
+  height: 20px;
+  text-align: center;
+  margin-top: 0.5em;
+}
+
+.mainContainer {
+  margin-top: 2em;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.header {
+  margin-top: 2em;
+  color: #404040;
+  font-weight: bolder;
+  font-size: 18px;
+  font-family: "Helvetica Neue", sans-serif;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.submitButton{
+  margin: auto;
+  text-align: center;
+  width: 5em;
+  font-size: 16px;
+  background-color: #bcd30b;
+  color: #404040;
+}
+
+.radioButtons {
+  margin-top: 1em;
+  margin-bottom: 2em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}

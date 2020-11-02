@@ -15,6 +15,7 @@ import { TicketsInfoComponent } from './tickets-info/tickets-info.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { AuthGuard } from './AuthGuard';
 import { UserDetailsComponent } from './user-details/user-details.component';
+import {SeatsSchemeComponent} from './seats-scheme/seats-scheme.component';
 
 const routes: Routes = [
 
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'admin/airplanes/:id', canActivate: [AuthGuard], component: AirplaneDetailsComponent},
   { path: 'admin/tickets', canActivate: [AuthGuard], component: TicketsInfoComponent},
   { path: 'admin/account/details', canActivate: [AuthGuard], component: UserDetailsComponent},
+  { path: 'admin/airplane/seats-scheme', canActivate: [AuthGuard], component: SeatsSchemeComponent}
 ];
 
 @NgModule({

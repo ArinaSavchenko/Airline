@@ -1,5 +1,8 @@
-export interface SeatPosition {
+export interface SeatType {
+  id?: number;
+  column: string;
+  sectorName: string;
+  sectorNumber: string;
   seat: number;
-  row: number;
   type: string;
 }

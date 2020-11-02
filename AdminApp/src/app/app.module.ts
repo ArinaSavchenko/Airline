@@ -13,6 +13,8 @@ import { MatNativeDateModule} from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { JwtModule } from '@auth0/angular-jwt';
 
@@ -27,13 +29,13 @@ import { RegistrationComponent } from './registration/registration.component';
 import { AirportAddingComponent } from './airport-adding/airport-adding.component';
 import { AirportDetailsComponent } from './airport-details/airport-details.component';
 import { ConfirmActionDialogComponent } from './confirm-action-dialog/confirm-action-dialog.component';
-import { AirplaneCabinSchemeComponent } from './airplane-cabin-scheme/airplane-cabin-scheme.component';
 import { AirplaneAddingComponent } from './airplane-adding/airplane-adding.component';
 import { AirplaneDetailsComponent } from './airplane-details/airplane-details.component';
 import { TicketsInfoComponent } from './tickets-info/tickets-info.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { AuthGuard } from './AuthGuard';
 import { UserDetailsComponent } from './user-details/user-details.component';
+import { SeatsSchemeComponent } from './seats-scheme/seats-scheme.component';
 
 export function tokenGetter(): any {
   return localStorage.getItem('token');
@@ -51,38 +53,40 @@ export function tokenGetter(): any {
     AirportAddingComponent,
     AirportDetailsComponent,
     ConfirmActionDialogComponent,
-    AirplaneCabinSchemeComponent,
     AirplaneAddingComponent,
     AirplaneDetailsComponent,
     TicketsInfoComponent,
     LogInComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    SeatsSchemeComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatAutocompleteModule,
-    MatInputModule,
-    MatOptionModule,
-    MatDatepickerModule,
-    MatIconModule,
-    MatNativeDateModule,
-    HttpClientModule,
-    FormsModule,
-    MatDialogModule,
-    FlexLayoutModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-        allowedDomains: ['localhost:44392'],
-        disallowedRoutes: []
-      }
-    })
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatAutocompleteModule,
+        MatInputModule,
+        MatOptionModule,
+        MatDatepickerModule,
+        MatIconModule,
+        MatNativeDateModule,
+        HttpClientModule,
+        FormsModule,
+        MatDialogModule,
+        MatRadioModule,
+        FlexLayoutModule,
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: tokenGetter,
+                allowedDomains: ['localhost:44392'],
+                disallowedRoutes: []
+            }
+        }),
+        MatSelectModule
+    ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
