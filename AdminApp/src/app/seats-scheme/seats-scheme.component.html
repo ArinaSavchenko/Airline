@@ -1,0 +1,55 @@
+<div class="mainContainer">
+  <mat-form-field appearance="outline">
+    <mat-label>Sector name:</mat-label>
+    <input type="text" class="form-control" matInput placeholder="Name"
+           required [(ngModel)]="sectorName" name="name">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Sector number:</mat-label>
+    <input type="text" class="form-control" matInput placeholder="Name"
+           required [(ngModel)]="sectorNumber" name="name">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Column name:</mat-label>
+    <input type="text" class="form-control" matInput placeholder="Name"
+           required [(ngModel)]="column" name="name">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Number of seats:</mat-label>
+    <input type="text" class="form-control" matInput placeholder="Name"
+           required [(ngModel)]="seats" name="name">
+  </mat-form-field>
+
+  <form>
+    <mat-form-field appearance="outline">
+      <mat-label>Seat type</mat-label>
+      <mat-select [(ngModel)]="selectedSeatType" name="food">
+        <mat-option *ngFor="let type of types" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+  <button mat-raised-button (click)="this.onSubmit()" class="submitButton">Add</button>
+
+  <h3 class="header">Airplane scheme</h3>
+
+  <div *ngIf="this.seatsGroupedByColumn.length > 0">
+    <div *ngFor="let sectorName of seatsGroupedByColumn" >
+      <div *ngFor="let sectorNumber of sectorName">
+        <div *ngFor="let column of sectorNumber">
+          <div *ngFor="let seat of column">
+            {{3}}
+          </div>
+        </div>
+        <br/>
+        <br/>
+      </div>
+    </div>
+
+  </div>
+</div>

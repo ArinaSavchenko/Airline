@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
-import {JwtHelperService} from '@auth0/angular-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { UserService } from './Services/user.service';
 import { LogInComponent } from './log-in/log-in.component';

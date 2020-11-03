@@ -1,0 +1,43 @@
+@import "../node_modules/@angular/material/theming";
+@include mat-core();
+
+$bv-brand: (
+    50 : #f7fae2,
+    100 : #ebf2b6,
+    200 : #dee985,
+    300 : #d0e054,
+    400 : #c6da30,
+    500 : #bcd30b,
+    600 : #b6ce0a,
+    700 : #adc808,
+    800 : #a5c206,
+    900 : #97b703,
+    A100 : #f9ffe0,
+    A200 : #eeffad,
+    A400 : #e4ff7a,
+    A700 : #deff61,
+    contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #000000,
+      500 : #000000,
+      600 : #000000,
+      700 : #000000,
+      800 : #000000,
+      900 : #000000,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+    )
+);
+
+$primary: mat-palette($bv-brand);
+
+$accent: mat-palette($bv-brand);
+
+$my-theme: mat-light-theme($primary, $accent);
+
+@include angular-material-theme($my-theme);

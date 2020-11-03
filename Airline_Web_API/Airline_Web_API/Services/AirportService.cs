@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Airline_Web_API.ViewModels;
-using Airline_Web_API.Services;
 using Airline_Web_API.Models;
+using Airline_Web_API.Helpers;
 
 namespace Airline_Web_API.Services
 {
@@ -19,6 +19,15 @@ namespace Airline_Web_API.Services
         {
             _context = airlineContext;
             _mapper = mapper;
+        }
+
+        public async Task<AirportViewModel> GetAirportByIdAsync(int id)
+        {
+            var airport = await _context.Airports.FindAsync(id);
+
+            var results = _mapper.Map<AirportViewModel>(airport);
+
+            return results;
         }
 
         public async Task<IEnumerable<AirportViewModel>> GetAirports(string value)
@@ -39,6 +48,58 @@ namespace Airline_Web_API.Services
             var results = _mapper.Map<List<AirportViewModel>>(airportsSearchResults);
 
             return results;
+        }
+
+        public async Task AddAirportAsync(Airport airport)
+        {
+            _context.Airports.Add(airport);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Response<string>> UpdateAirportAsync(AirportViewModel model)
+        {
+            var airport = await _context.Airports.FindAsync(model.Id);
+
+            if (airport == null)
+            {
+                return new Response<string>
+                {
+                    Success = false,
+                    Message = "There is no such airport"
+                };
+            }
+
+            _mapper.Map(model, airport);
+            await _context.SaveChangesAsync();
+
+            return new Response<string>
+            {
+                Success = true,
+                Message = "Airport was succesfully updated"
+            };
+        }
+
+        public async Task<Response<string>> DeleteAirportAsync(AirportViewModel model)
+        {
+            var airport = await _context.Airports.FindAsync(model.Id);
+
+            if (airport == null)
+            {
+                return new Response<string>
+                {
+                    Success = false,
+                    Message = "There is no such airport"
+                };
+            }
+
+            _context.Remove(airport);
+            await _context.SaveChangesAsync();
+
+            return new Response<string>
+            {
+                Success = true,
+                Message = "Airport was succesfully deleted"
+            };
         }
     }
 }
