@@ -1,15 +1,16 @@
 <div class="infoContainer">
   <h1 class="header">Flights info</h1>
   <div>
-    <button mat-raised-button color="accent" class="addButton" routerLink="/admin/airports">Add new flight</button>
+    <button mat-raised-button color="accent" class="addButton" routerLink="/admin/flights/new">Add new flight</button>
   </div>
-<form>
+<form [formGroup]="myForm">
   <div class="searchArea">
     <mat-form-field class="airportField" appearance="outline">
       <input #departureAirportIdInput
              placeholder="From:"
              matInput
              [matAutocomplete]="auto"
+             formControlName="departureAirportId"
              (click)="searchAirports('')"
              (input)="searchAirports(departureAirportIdInput.value)">
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
@@ -26,6 +27,7 @@
              placeholder="To:"
              matInput
              [matAutocomplete]="auto2"
+             formControlName="arrivalAirportId"
              (click)="searchAirports('')"
              (input)="searchAirports(arrivalAirportIdInput.value)"
       >
@@ -41,10 +43,19 @@
     <mat-form-field appearance="outline" class="datePicker">
       <mat-label>Choose departure date</mat-label>
       <input matInput [matDatepicker]="picker"
-             (select)="setDate($event)">
+             formControlName="date"
+             (ngModelChange)="setDate($event)">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
+
+    <div class="results" >
+      <mat-selection-list #shoes [multiple]="false">
+        <mat-list-option *ngFor="let flight of flights$ | async" [value]="flight" routerLink="/admin/flights/{{flight.id}}">
+          {{flight.departureAirport.name}} - {{flight.arrivalAirport.name}}
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
   </div>
 </form>
   <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/menu">Back to the menu</button>

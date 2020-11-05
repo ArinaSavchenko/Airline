@@ -37,9 +37,9 @@ namespace Airline_Web_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Airport>>> GetAirports([FromQuery] string value)
         {
-            var results = await _airportService.GetAirports(value);
+            var results = await _airportService.GetAirportsAsync(value);
 
-            return Ok (results);
+            return Ok(results);
         }
 
         [Authorize(Roles ="admin")]
@@ -53,7 +53,7 @@ namespace Airline_Web_API.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPut]
-        public async Task<ActionResult> UpdateAirport([FromBody] AirportViewModel model)
+        public async Task<ActionResult> UpdateAirport([FromBody] AirportAdminViewModel model)
         {
             Response<string> updateResult = await _airportService.UpdateAirportAsync(model);
 
@@ -67,9 +67,9 @@ namespace Airline_Web_API.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteAirport([FromBody] AirportViewModel model)
+        public async Task<ActionResult> DeleteAirport(int id)
         {
-            Response<string> updateResult = await _airportService.UpdateAirportAsync(model);
+            Response<string> updateResult = await _airportService.DeleteAirportAsync(id);
 
             if (updateResult.Success == false)
             {

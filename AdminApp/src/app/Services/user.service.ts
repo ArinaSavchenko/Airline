@@ -4,12 +4,11 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, of} from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { environment } from '../../environments/environment';
-
 import { RegisterModel } from '../Models/RegisterModel';
 import { ResponseModel } from '../Models/ResponseModel';
 import { User } from '../Models/User';
 import { UpdateUserModel } from '../Models/UpdateUserModel';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

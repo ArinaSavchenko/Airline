@@ -5,11 +5,5 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './tickets-info.component.html',
   styleUrls: ['./tickets-info.component.css']
 })
-export class TicketsInfoComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class TicketsInfoComponent{
 }

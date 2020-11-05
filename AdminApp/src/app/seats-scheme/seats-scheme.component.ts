@@ -1,79 +1,65 @@
-import { Component } from '@angular/core';
-import { SeatType } from '../Models/SeatType';
+import {Component, Input, OnInit} from '@angular/core';
+
+import { Seat } from '../Models/Seat';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SeatsService } from '../Services/seats.service';
+import { SeatsSchemeService } from '../Services/seats-scheme.service';
 
 @Component({
   selector: 'app-seats-scheme',
   templateUrl: './seats-scheme.component.html',
   styleUrls: ['./seats-scheme.component.css']
 })
-export class SeatsSchemeComponent {
+export class SeatsSchemeComponent implements OnInit{
+
+  airplaneId: number;
 
   selectedSeatType: string;
   types = [ 'Business', 'Standard' ];
   sectorName: string;
-  sectorNumber: string;
+  sectorNumber: number;
   column: string;
   seats: number;
   sectors: [];
   seatsScheme = [];
-  visible = true;
   airplane = [];
-  seatsGroupedBySectorName = [];
-  seatsGroupedBySectorNumber = [];
-  seatsGroupedByColumn = [];
+  theCabin = [];
 
-  groupBy(array, key): Array<any> {
-    return array.reduce((result, currentValue) => {
-      (result[currentValue[key]] = result[currentValue[key]] || []).push(
-        currentValue
-      );
-      return result;
-    }, []);
+  constructor(
+      private route: ActivatedRoute,
+      private seatsService: SeatsService,
+      private router: Router,
+      private seatsSchemeService: SeatsSchemeService
+  ) {
+  }
+
+  ngOnInit(): void {
+    this.airplaneId = +this.route.snapshot.paramMap.get('airplaneId');
   }
 
   onSubmit(): void {
-    for (let seatNumber = 1; seatNumber < this.seats; seatNumber++) {
-      const seat: SeatType = {
+    for (let seatNumber = 1; seatNumber <= this.seats; seatNumber++) {
+      const seat: Seat = {
         column: this.column,
         sectorName: this.sectorName,
         sectorNumber: this.sectorNumber,
-        seat: seatNumber,
-        type: this.selectedSeatType
+        number: seatNumber,
+        type: this.selectedSeatType,
+        airplaneId: this.airplaneId
       };
 
       this.seatsScheme.push(seat);
     }
 
-    this.seatsGroupedBySectorName = this.groupBySectorName(this.seatsScheme);
-    this.seatsGroupedBySectorNumber = this.groupBySectorNumber(this.seatsGroupedBySectorName);
-    this.seatsGroupedByColumn = this.groupByColumn(this.seatsGroupedBySectorName);
-    this.seatsGroupedByColumn.sort();
-    console.log(this.seatsGroupedByColumn);
+    this.theCabin = this.seatsSchemeService.drawScheme(this.seatsScheme);
   }
 
-  groupBySectorName(array): any {
-    return this.groupBy(array, 'sectorName');
+  add(): void {
+    this.seatsService.addSeats(this.seatsScheme)
+        .subscribe(() => this.goToTheAirplanes());
   }
 
-  groupBySectorNumber(array): any {
-    for (const property in array){
-      if (array.hasOwnProperty(property)) {
-        array[property] = this.groupBy(array[property], 'sectorNumber');
-      }
-    }
-    return array;
-  }
-
-  groupByColumn(array): any {
-    for (const property in array){
-      if (array.hasOwnProperty(property)) {
-        for (const innerProperty in array[property]){
-          if (array[property].hasOwnProperty(innerProperty)) {
-            array[property][innerProperty] = this.groupBy(array[property][innerProperty], 'column');
-          }
-        }
-      }
-    }
-    return array;
+  goToTheAirplanes(): void {
+    this.router.navigate(['admin/airplanes']);
   }
 }

@@ -70,10 +70,10 @@ export class UserDetailsComponent implements OnInit {
   }
 
   checkResult(response: ResponseModel): void {
-    if (!response.success === true){
+    if (!response.success) {
       this.message = response.message;
     }
-    else{
+    else {
       this.goBack();
     }
   }

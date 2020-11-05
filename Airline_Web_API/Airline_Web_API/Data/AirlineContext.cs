@@ -15,6 +15,8 @@ namespace Airline_Web_API.Models
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TicketType> TicketTypes { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Seat> Seats { get; set; }
+        public DbSet<Airplane> Airplanes { get; set; }
 
         public AirlineContext(DbContextOptions<AirlineContext> options):
             base(options)
@@ -33,15 +35,30 @@ namespace Airline_Web_API.Models
                 .WithMany(a => a.FlightsTo)
                 .HasForeignKey(f => f.ArrivalAirportId);
 
+       /*     modelBuilder.Entity<Flight>()
+                .HasOne<Airplane>(f => f.Airplane)
+                .WithMany(a => a.Flights)
+                .HasForeignKey(f => f.AirplaneId);*/
+
             modelBuilder.Entity<Ticket>()
-                .HasOne(t => t.Flight)
+                .HasOne<Flight>(t => t.Flight)
                 .WithMany(f => f.Tickets)
                 .HasForeignKey(t => t.FlightId);
 
             modelBuilder.Entity<Ticket>()
-                .HasOne(t => t.TicketType)
+                .HasOne<TicketType>(t => t.TicketType)
                 .WithMany(tt => tt.Tickets)
                 .HasForeignKey(t => t.TicketTypeId);
+
+            modelBuilder.Entity<Seat>()
+                .HasOne<Airplane>(s => s.Airplane)
+                .WithMany(a => a.Seats)
+                .HasForeignKey(s => s.AirplaneId);
+
+            modelBuilder.Entity<Seat>()
+                .HasOne<Airplane>(s => s.Airplane)
+                .WithMany(a => a.Seats)
+                .HasForeignKey(s => s.AirplaneId);
         }
     }
 }

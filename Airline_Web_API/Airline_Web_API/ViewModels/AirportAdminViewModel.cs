@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Airline_Web_API.ViewModels
 {
-    public class AirportViewModel
+    public class AirportAdminViewModel
     {
         [Required]
         public int Id { get; set; }
@@ -13,5 +14,7 @@ namespace Airline_Web_API.ViewModels
         public string City { get; set; }
         [Required(ErrorMessage = "Country is required")]
         public string Country { get; set; }
+    //    [Required(ErrorMessage = "Status is required")]
+        public string Status { get; set; }
     }
 }

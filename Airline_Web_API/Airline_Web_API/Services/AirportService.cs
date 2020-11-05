@@ -21,16 +21,16 @@ namespace Airline_Web_API.Services
             _mapper = mapper;
         }
 
-        public async Task<AirportViewModel> GetAirportByIdAsync(int id)
+        public async Task<AirportAdminViewModel> GetAirportByIdAsync(int id)
         {
             var airport = await _context.Airports.FindAsync(id);
 
-            var results = _mapper.Map<AirportViewModel>(airport);
+            var results = _mapper.Map<AirportAdminViewModel>(airport);
 
             return results;
         }
 
-        public async Task<IEnumerable<AirportViewModel>> GetAirports(string value)
+        public async Task<IEnumerable<AirportUserViewModel>> GetAirportsAsync(string value)
         {
             var airports = _context.Airports.AsQueryable();
 
@@ -45,7 +45,7 @@ namespace Airline_Web_API.Services
                 .OrderBy(airport => airport.Id)
                 .ToListAsync();
 
-            var results = _mapper.Map<List<AirportViewModel>>(airportsSearchResults);
+            var results = _mapper.Map<List<AirportUserViewModel>>(airportsSearchResults);
 
             return results;
         }
@@ -56,7 +56,7 @@ namespace Airline_Web_API.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Response<string>> UpdateAirportAsync(AirportViewModel model)
+        public async Task<Response<string>> UpdateAirportAsync(AirportAdminViewModel model)
         {
             var airport = await _context.Airports.FindAsync(model.Id);
 
@@ -79,9 +79,9 @@ namespace Airline_Web_API.Services
             };
         }
 
-        public async Task<Response<string>> DeleteAirportAsync(AirportViewModel model)
+        public async Task<Response<string>> DeleteAirportAsync(int id)
         {
-            var airport = await _context.Airports.FindAsync(model.Id);
+            var airport = await _context.Airports.FindAsync(id);
 
             if (airport == null)
             {
@@ -92,7 +92,7 @@ namespace Airline_Web_API.Services
                 };
             }
 
-            _context.Remove(airport);
+            airport.Status = "Deleted";
             await _context.SaveChangesAsync();
 
             return new Response<string>

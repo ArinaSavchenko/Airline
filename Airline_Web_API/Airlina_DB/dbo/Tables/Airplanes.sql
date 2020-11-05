@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[Airplanes]
+(
+	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[Name] NVARCHAR(250) NOT NULL,
+	[SeatsNumber] INT NOT NULL,
+	[MaxWeight] FLOAT NOT NULL, 
+    [Status] NVARCHAR(50) NOT NULL
+)

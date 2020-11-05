@@ -3,7 +3,7 @@
   <form [formGroup]="airplaneForm" (ngSubmit)="onFormSubmit()">
     <mat-form-field appearance="outline">
       <mat-label>Enter airplane name:</mat-label>
-      <input matInput formControlName="name" placeholder="Name">
+      <input type="text" matInput formControlName="name" placeholder="Name">
       <mat-error>
         Name is required
       </mat-error>
@@ -11,7 +11,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Enter airplane number of seats:</mat-label>
-      <input matInput formControlName="seatsNumber" placeholder="Seats number">
+      <input type="number" matInput formControlName="seatsNumber" placeholder="Seats number">
       <mat-error>
         Number of seats is required
       </mat-error>
@@ -19,12 +19,24 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Enter airplane max weight:</mat-label>
-      <input matInput formControlName="maxWeight" placeholder="max weight">
+      <input type="number" matInput formControlName="maxWeight" placeholder="max weight">
       <mat-error>
         Max weight is required
       </mat-error>
     </mat-form-field>
 
+    <mat-form-field class="airportField" appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option *ngFor="let status of statuses" [value]="status">
+          {{status}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="message" class="mat-error">
+      {{message}}
+    </div>
     <button type="submit" mat-raised-button class="signUpButton" [disabled]="!airplaneForm.valid">Add</button>
   </form>
   <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/menu">Back to the menu</button>

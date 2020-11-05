@@ -15,6 +15,7 @@ import { ResponseModel } from '../Models/ResponseModel';
 export class AccountComponent implements OnInit {
 
   user: User;
+  message: string;
 
   constructor(private router: Router,
               public dialog: MatDialog,
@@ -45,7 +46,10 @@ export class AccountComponent implements OnInit {
   }
 
   checkResult(response: ResponseModel): void {
-    if (response.success === true){
+    if (!response.success) {
+      this.message = response.message;
+    }
+    else {
       this.userService.logOut();
       this.goToTheMainPage();
     }

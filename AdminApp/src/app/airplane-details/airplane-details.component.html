@@ -10,7 +10,7 @@
     </mat-form-field>
 
     <h3>Seats number:</h3>
-    <mat-form-field class="airportField" appearance="outline">
+    <mat-form-field class="airplaneField" appearance="outline">
       <input [(ngModel)]="airplane.seatsNumber" placeholder="city"
              matInput/>
     </mat-form-field>
@@ -21,6 +21,36 @@
              matInput/>
     </mat-form-field>
 
+    <h3>Status:</h3>
+    <mat-form-field class="airportField" appearance="outline">
+      <mat-label>{{airplane.status}}</mat-label>
+      <mat-select [(ngModel)]="airplane.status">
+        <mat-option *ngFor="let status of statuses" [value]="status">
+          {{status}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <h3 *ngIf="this.theCabin.length > 0" class="schemeHeader">Airplane scheme</h3>
+
+  <div *ngIf="this.theCabin.length > 0" class="sector">
+    <div *ngFor="let sectorName of this.theCabin" class="innerSector">
+      <div *ngFor="let innerSector of sectorName" class="column">
+        <div *ngFor="let column of innerSector" class="seat">
+          <div *ngFor="let seat of column" class="seatAppearance">
+            {{seat.column + seat.number}}
+          </div>
+        </div>
+        <br/>
+        <br/>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="message" class="mat-error">
+    {{message}}
   </div>
 
   <div class="buttonsContainer">

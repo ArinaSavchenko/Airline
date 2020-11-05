@@ -1,24 +1,40 @@
-.st {
+.sector {
+  width: fit-content;
   display: flex;
   flex-direction: column;
+  border: solid darkgray 2px;
+  margin: 1em;
+  text-align: center;
 }
 
-.k {
+.innerSector {
+  border: solid darkgray 2px;
+  width: fit-content;
+}
+
+.innerSector,
+.column {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  text-align: center;
+  margin: 1em;
 }
 
 .seat {
-  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.seatAppearance {
+  margin: 0.5em;
   background: lightgray;
   width: 30px;
   height: 20px;
   text-align: center;
-  margin-top: 0.5em;
 }
 
 .mainContainer {
-  margin-top: 2em;
   width: fit-content;
   display: flex;
   flex-direction: column;
@@ -26,20 +42,25 @@
   margin-right: auto;
 }
 
-.header {
-  margin-top: 2em;
-  color: #404040;
+.header, .schemeHeader {
+  margin-top: 1em;
   font-weight: bolder;
-  font-size: 18px;
+  font-size: 30px;
   font-family: "Helvetica Neue", sans-serif;
-  margin-left: auto;
-  margin-right: auto;
+  color: dimgrey;
+  text-align: center;
+}
+
+.schemeHeader {
+  font-size: 20px;
 }
 
 .submitButton{
-  margin: auto;
+  margin-top: 1em;
+  margin-right: auto;
+  margin-left: auto;
   text-align: center;
-  width: 5em;
+  width: fit-content;
   font-size: 16px;
   background-color: #bcd30b;
   color: #404040;

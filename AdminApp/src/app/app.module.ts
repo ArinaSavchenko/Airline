@@ -15,6 +15,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatListModule } from '@angular/material/list';
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
+import { NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 
 import { JwtModule } from '@auth0/angular-jwt';
 
@@ -36,6 +39,8 @@ import { LogInComponent } from './log-in/log-in.component';
 import { AuthGuard } from './AuthGuard';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { SeatsSchemeComponent } from './seats-scheme/seats-scheme.component';
+import { FlightDetailsComponent } from './flight-details/flight-details.component';
+import { FlightAddingComponent } from './flight-adding/flight-adding.component';
 
 export function tokenGetter(): any {
   return localStorage.getItem('token');
@@ -58,7 +63,9 @@ export function tokenGetter(): any {
     TicketsInfoComponent,
     LogInComponent,
     UserDetailsComponent,
-    SeatsSchemeComponent
+    SeatsSchemeComponent,
+    FlightDetailsComponent,
+    FlightAddingComponent
   ],
     imports: [
         BrowserModule,
@@ -85,7 +92,11 @@ export function tokenGetter(): any {
                 disallowedRoutes: []
             }
         }),
-        MatSelectModule
+        MatSelectModule,
+        MatListModule,
+        NgxMatTimepickerModule,
+        NgxMatDatetimePickerModule,
+        NgxMatNativeDateModule
     ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

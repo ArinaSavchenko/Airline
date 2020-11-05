@@ -39,6 +39,9 @@ namespace Airline_Web_API
             services.AddTransient<UserService>();
             services.AddTransient<JwtService>();
             services.AddTransient<AirlineContext>();
+            services.AddTransient<AirplaneService>();
+            services.AddTransient<SeatsService>();
+
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

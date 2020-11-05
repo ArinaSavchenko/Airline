@@ -1,6 +1,6 @@
 .flightField {
   font-size: 17px;
-  margin-top: 2em;
+  margin-top: 1em;
   width: 100%;
 }
 
@@ -14,7 +14,7 @@ button.addButton {
 
 .airportField {
   font-size: 17px;
-  margin-top: 2em;
+  margin-top: 1em;
   width: 100%;
 }
 
@@ -22,4 +22,8 @@ button.addButton {
   border: #bcd30b solid 1px;
   height: auto;
   line-height: 1.5em;
+}
+
+.results {
+  margin-bottom: 2em;
 }

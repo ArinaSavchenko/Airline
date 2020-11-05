@@ -3,4 +3,5 @@ export interface Airplane {
   name: string;
   seatsNumber: number;
   maxWeight: number;
+  status: string;
 }

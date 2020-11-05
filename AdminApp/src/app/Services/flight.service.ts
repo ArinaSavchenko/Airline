@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 
-import {Observable, of} from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 import { Flight } from '../Models/Flight';
-import {FlightForSearch} from '../Models/FlightForSearch';
-import {environment} from '../../environments/environment';
-
+import { FlightForSearch } from '../Models/FlightForSearch';
+import { ResponseModel } from '../Models/ResponseModel';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class FlightService {
 
-  private flightsUrl = environment.baseUrl + 'api/flights';  // URL to web api
+  private flightsUrl = environment.baseUrl + '/flights';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -41,19 +42,27 @@ export class FlightService {
       options.params = options.params.set(key, flight[key]);
     });
 
-    return this.http.get<Flight[]>(this.flightsUrl, options);
+    return this.http.get<Flight[]>(this.flightsUrl + '/parallel-search', options);
   }
 
-  addFlight(flight: Flight): Observable<Flight> {
-    return this.http.post<Flight>(this.flightsUrl, flight, this.httpOptions);
+  addFlight(flight): Observable<any> {
+    return this.http.post(this.flightsUrl, flight, this.httpOptions);
   }
 
-  updateFlight(flight: Flight): Observable<any> {
-    return this.http.put(this.flightsUrl, flight, this.httpOptions);
+  updateFlight(flight: Flight): Observable<ResponseModel> {
+    return this.http.put<ResponseModel>(this.flightsUrl, flight, this.httpOptions).pipe(
+        catchError(error => this.handleError(error))
+    );
   }
 
-  deleteFlight(flight: Flight): Observable<any> {
-    const url = `${this.flightsUrl}/${flight.id}`;
-    return this.http.delete(url, this.httpOptions);
+  deleteFlight(id: number): Observable<ResponseModel> {
+    const url = `${this.flightsUrl}/${id}`;
+    return this.http.delete<ResponseModel>(url, this.httpOptions).pipe(
+        catchError(error => this.handleError(error))
+    );
+  }
+
+  handleError(error: HttpErrorResponse): Observable<any> {
+    return of(error.error);
   }
 }
