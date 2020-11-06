@@ -1,63 +1,63 @@
 <div>
-    <h1 class="header">Registration</h1>
-    <form [formGroup]="userForm" (ngSubmit)="onFormSubmit()">
-        <mat-form-field appearance="outline">
-            <mat-label>Enter first name:</mat-label>
-            <input matInput formControlName="firstName" placeholder="First name">
-            <mat-error>
-                Please enter a valid name
-            </mat-error>
-        </mat-form-field>
+  <h1 class="header">Registration</h1>
+  <form [formGroup]="userForm" (ngSubmit)="onFormSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Enter first name:</mat-label>
+      <input matInput formControlName="firstName" placeholder="First name">
+      <mat-error>
+        Please enter a valid name
+      </mat-error>
+    </mat-form-field>
 
-        <mat-form-field appearance="outline">
-            <mat-label>Enter last name:</mat-label>
-            <input matInput formControlName="lastName" placeholder="Last name">
-            <mat-error>
-                Please enter a valid name
-            </mat-error>
-        </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Enter last name:</mat-label>
+      <input matInput formControlName="lastName" placeholder="Last name">
+      <mat-error>
+        Please enter a valid name
+      </mat-error>
+    </mat-form-field>
 
-        <mat-form-field appearance="outline">
-            <mat-label>Choose birth date</mat-label>
-            <input matInput [max]="maxDate" [matDatepicker]="picker" formControlName="birthDate">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Choose birth date</mat-label>
+      <input matInput [max]="maxDate" [matDatepicker]="picker" formControlName="birthDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
 
-        <mat-form-field appearance="outline">
-            <mat-label>Enter email:</mat-label>
-            <input matInput formControlName="email" placeholder="Ex. pat@example.com">
-            <mat-error>
-                Password is required
-            </mat-error>
-        </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Enter email:</mat-label>
+      <input matInput formControlName="email" placeholder="Ex. pat@example.com">
+      <mat-error>
+        Password is required
+      </mat-error>
+    </mat-form-field>
 
-        <mat-form-field appearance="outline">
-            <mat-label>Enter password:</mat-label>
-            <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-            <mat-error>
-                Please enter a valid password
-            </mat-error>
-        </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Enter password:</mat-label>
+      <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error>
+        Please enter a valid password
+      </mat-error>
+    </mat-form-field>
 
-        <mat-form-field appearance="outline">
-            <mat-label>Confirm password:</mat-label>
-            <input matInput formControlName="confirmPassword" [type]="confirmHide ? 'password' : 'text'">
-            <button mat-icon-button matSuffix (click)="confirmHide = !confirmHide" [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="confirmHide">
-                <mat-icon>{{confirmHide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-            <mat-error>
-                Passwords don't match
-            </mat-error>
-        </mat-form-field>
-        <p *ngIf="message" class="mat-error">{{message}}</p>
-        <button type="submit" mat-raised-button class="signUpButton">Sign up</button>
-    </form>
-    <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
+    <mat-form-field appearance="outline">
+      <mat-label>Confirm password:</mat-label>
+      <input matInput formControlName="confirmPassword" [type]="confirmHide ? 'password' : 'text'">
+      <button mat-icon-button matSuffix (click)="confirmHide = !confirmHide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="confirmHide">
+        <mat-icon>{{confirmHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error>
+        Passwords don't match
+      </mat-error>
+    </mat-form-field>
+    <p *ngIf="message" class="mat-error">{{message}}</p>
+    <button type="submit" mat-raised-button class="signUpButton">Sign up</button>
+  </form>
+  <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
 </div>
 

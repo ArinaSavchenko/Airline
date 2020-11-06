@@ -1,50 +1,50 @@
 <div *ngIf="this.userService.isLoggedIn && user" class="accountInfoContainer">
-    <form [formGroup]="userForm">
-        <p class="header">Account</p>
-        <div class="fieldsContainer">
-            <div class="userInfo">
-                <h2 class="fieldName">First name:</h2>
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <input matInput formControlName="firstName">
-                    <mat-error>
-                        Enter valid first name
-                    </mat-error>
-                </mat-form-field>
-            </div>
+  <form [formGroup]="userForm">
+    <p class="header">Account</p>
+    <div class="fieldsContainer">
+      <div class="userInfo">
+        <h2 class="fieldName">First name:</h2>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <input matInput formControlName="firstName">
+          <mat-error>
+            Enter valid first name
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-            <div class="userInfo">
-                <h2 class="fieldName">Last name:</h2>
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <input matInput formControlName="lastName">
-                    <mat-error>
-                        Enter valid last name
-                    </mat-error>
-                </mat-form-field>
-            </div>
+      <div class="userInfo">
+        <h2 class="fieldName">Last name:</h2>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <input matInput formControlName="lastName">
+          <mat-error>
+            Enter valid last name
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-            <div class="userInfo">
-                <h2 class="fieldName">Email:</h2>
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <input matInput formControlName="email">
-                    <mat-error>
-                        Enter valid email
-                    </mat-error>
-                </mat-form-field>
-            </div>
+      <div class="userInfo">
+        <h2 class="fieldName">Email:</h2>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <input matInput formControlName="email">
+          <mat-error>
+            Enter valid email
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-            <div class="userInfo">
-                <h2 class="fieldName">Date of birth:</h2>
-                <mat-form-field appearance="outline" class="datePicker">
-                    <input matInput [max]="maxDate" [matDatepicker]="picker" formControlName="birthDate">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-            </div>
-        </div>
-    </form>
-    <div *ngIf="message">
-        {{message}}
+      <div class="userInfo">
+        <h2 class="fieldName">Date of birth:</h2>
+        <mat-form-field appearance="outline" class="datePicker">
+          <input matInput [max]="maxDate" [matDatepicker]="picker" formControlName="birthDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
     </div>
-    <button mat-raised-button class="saveButton" (click)="save()">Save changes</button>
-    <button mat-raised-button class="backButton" routerLink="/admin/account">Back</button>
+  </form>
+  <div *ngIf="message">
+    {{message}}
+  </div>
+  <button mat-raised-button class="saveButton" (click)="save()">Save changes</button>
+  <button mat-raised-button class="backButton" routerLink="/admin/account">Back</button>
 </div>
