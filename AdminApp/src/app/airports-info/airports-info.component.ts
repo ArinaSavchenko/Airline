@@ -5,29 +5,30 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Airport } from '../Models/Airport';
 import { AirportService } from '../Services/airport.service';
 
-@Component({
+@Component( {
   selector: 'app-airports',
   templateUrl: './airports-info.component.html',
   styleUrls: ['./airports-info.component.css']
-})
-export class AirportsInfoComponent implements OnInit{
+} )
+export class AirportsInfoComponent implements OnInit {
 
   airportStatus: string;
   statuses: string[] = ['Any', 'Active', 'Closed', 'Temporary closed'];
   airports$: Observable<Airport[]>;
   private searchTerms = new Subject<string>();
 
-  constructor(private airportService: AirportService) { }
+  constructor(private airportService: AirportService) {
+  }
 
   search(term: string): void {
-    this.searchTerms.next(term);
+    this.searchTerms.next( term );
   }
 
   ngOnInit(): void {
     this.airports$ = this.searchTerms.pipe(
-      debounceTime(100),
+      debounceTime( 100 ),
       distinctUntilChanged(),
-      switchMap((value: string) => this.airportService.searchAirports(value))
+      switchMap( (value: string) => this.airportService.searchAirports( value ) )
     );
   }
 

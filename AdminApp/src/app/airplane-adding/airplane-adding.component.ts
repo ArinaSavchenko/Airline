@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
@@ -6,11 +6,11 @@ import { Router } from '@angular/router';
 import { Airplane } from '../Models/Airplane';
 import { AirplaneService } from '../Services/airplane.service';
 
-@Component({
+@Component( {
   selector: 'app-airplane-adding',
   templateUrl: './airplane-adding.component.html',
   styleUrls: ['./airplane-adding.component.css']
-})
+} )
 export class AirplaneAddingComponent {
 
   status: string;
@@ -24,12 +24,12 @@ export class AirplaneAddingComponent {
               private location: Location,
               private router: Router
   ) {
-    this.airplaneForm = this.formBuilder.group({
-      name: new FormControl(null, [Validators.required]),
-      seatsNumber: new FormControl(null, [Validators.required, Validators.min(1)]),
-      maxWeight: new FormControl(null, [Validators.required, Validators.min(400)]),
-      status: new FormControl(null, Validators.required)
-    });
+    this.airplaneForm = this.formBuilder.group( {
+      name: new FormControl( null, [Validators.required] ),
+      seatsNumber: new FormControl( null, [Validators.required, Validators.min( 1 )] ),
+      maxWeight: new FormControl( null, [Validators.required, Validators.min( 400 )] ),
+      status: new FormControl( null, Validators.required )
+    } );
   }
 
   onFormSubmit(): void {
@@ -40,8 +40,8 @@ export class AirplaneAddingComponent {
         maxWeight: this.airplaneForm.controls.maxWeight.value,
         status: this.airplaneForm.controls.status.value
       };
-      this.airplaneService.addAirplane(airplane).subscribe((newAirplaneId) => this.router.navigate(
-          ['admin/airplane/seats-scheme/' + newAirplaneId]));
+      this.airplaneService.addAirplane( airplane ).subscribe( (newAirplaneId) => this.router.navigate(
+        ['admin/airplane/seats-scheme/' + newAirplaneId] ) );
     }
   }
 

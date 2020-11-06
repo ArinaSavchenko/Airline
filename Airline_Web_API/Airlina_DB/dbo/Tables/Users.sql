@@ -6,6 +6,6 @@
 	[BirthDate] Date NOT NULL,
 	[Email] NVARCHAR(100) NOT NULL,
 	[Password] NVARCHAR(MAX) NOT NULL,
-	[Role] NVARCHAR(50) NOT NULL, 
+	[Role] NVARCHAR(50) NOT NULL,
     [Status] NVARCHAR(10) NULL
 )

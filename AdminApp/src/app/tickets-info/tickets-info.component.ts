@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
-@Component({
+@Component( {
   selector: 'app-tickets-info',
   templateUrl: './tickets-info.component.html',
   styleUrls: ['./tickets-info.component.css']
-})
-export class TicketsInfoComponent{
+} )
+export class TicketsInfoComponent {
 }

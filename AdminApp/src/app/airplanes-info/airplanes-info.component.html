@@ -1,27 +1,27 @@
 <div class="infoContainer">
-  <h1 class="header">Airplanes info</h1>
-  <div>
-    <button mat-raised-button color="accent" class="addButton" routerLink="/admin/airplanes/new">Add new airplane
-    </button>
-  </div>
+    <h1 class="header">Airplanes info</h1>
+    <div>
+        <button mat-raised-button color="accent" class="addButton" routerLink="/admin/airplanes/new">Add new airplane
+        </button>
+    </div>
 
-  <div class="searchArea">
-    <mat-form-field class="airplaneField" appearance="outline">
-      <input #airplane
-             placeholder="Enter airplane name"
-             matInput
-             [matAutocomplete]="auto"
-             (click)="search(airplane.value)"
-             (input)="search(airplane.value)"
-      >
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let airplane of airplanes$ | async" [value]="airplane"
-                    routerLink="/admin/airplanes/{{airplane.id}}">
-          {{airplane.name}}<br>
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>
-  </div>
+    <div class="searchArea">
+        <mat-form-field class="airplaneField" appearance="outline">
+            <input #airplane
+                   placeholder="Enter airplane name"
+                   matInput
+                   [matAutocomplete]="auto"
+                   (click)="search(airplane.value)"
+                   (input)="search(airplane.value)"
+            >
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let airplane of airplanes$ | async" [value]="airplane"
+                            routerLink="/admin/airplanes/{{airplane.id}}">
+                    {{airplane.name}}<br>
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
 
-  <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
+    <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
 </div>

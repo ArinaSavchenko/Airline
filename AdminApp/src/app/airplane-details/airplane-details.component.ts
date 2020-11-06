@@ -11,14 +11,14 @@ import { ResponseModel } from '../Models/ResponseModel';
 import { SeatsService } from '../Services/seats.service';
 import { SeatsSchemeService } from '../Services/seats-scheme.service';
 
-@Component({
+@Component( {
   selector: 'app-airplane-details',
   templateUrl: './airplane-details.component.html',
   styleUrls: ['./airplane-details.component.css']
-})
+} )
 export class AirplaneDetailsComponent implements OnInit {
 
-  @ViewChild(MatTable, {static: true}) table: MatTable<any>;
+  @ViewChild( MatTable, {static: true} ) table: MatTable<any>;
 
   statuses = ['Active', 'Closed', 'Temporary closed'];
   airplane: Airplane;
@@ -38,30 +38,30 @@ export class AirplaneDetailsComponent implements OnInit {
   }
 
   getAirplane(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.airplaneService.getAirplane(id)
-      .subscribe(airplane => {
+    const id = +this.route.snapshot.paramMap.get( 'id' );
+    this.airplaneService.getAirplane( id )
+      .subscribe( airplane => {
         this.airplane = airplane;
-        this.seatsService.getSeats(this.airplane.id).subscribe(seats => this.theCabin = this.seatsSchemeService.drawScheme(seats));
-      });
+        this.seatsService.getSeats( this.airplane.id ).subscribe( seats => this.theCabin = this.seatsSchemeService.drawScheme( seats ) );
+      } );
   }
 
   save(): void {
-    this.airplaneService.updateAirplane(this.airplane)
-      .subscribe(response => this.checkResult(response));
+    this.airplaneService.updateAirplane( this.airplane )
+      .subscribe( response => this.checkResult( response ) );
   }
 
   delete(): void {
-    this.airplaneService.deleteAirplane(this.airplane.id)
-        .subscribe(response => this.checkResult(response));
+    this.airplaneService.deleteAirplane( this.airplane.id )
+      .subscribe( response => this.checkResult( response ) );
   }
 
   openDialog(value: string): void {
-    const dialogRef = this.dialog.open(ConfirmActionDialogComponent, {
+    const dialogRef = this.dialog.open( ConfirmActionDialogComponent, {
       data: value
-    });
+    } );
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe( result => {
       if (result.event === true) {
         switch (value) {
           case 'Are you sure that you want to save changes?': {
@@ -74,22 +74,21 @@ export class AirplaneDetailsComponent implements OnInit {
           }
         }
       }
-    });
+    } );
   }
 
   onSave(): void {
-    this.openDialog('Are you sure that you want to save changes?');
+    this.openDialog( 'Are you sure that you want to save changes?' );
   }
 
   onDelete(): void {
-    this.openDialog('Are you sure that you want to delete this airplane?');
+    this.openDialog( 'Are you sure that you want to delete this airplane?' );
   }
 
   checkResult(response: ResponseModel): void {
     if (!response.success) {
       this.message = response.message;
-    }
-    else {
+    } else {
       this.goBack();
     }
   }

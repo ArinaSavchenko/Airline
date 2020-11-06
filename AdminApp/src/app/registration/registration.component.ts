@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { RegisterModel } from '../Models/RegisterModel';
 import { PasswordsMatchValidator } from '../Validators/PasswordsMatchValidator';
@@ -9,12 +9,12 @@ import { UserService } from '../Services/user.service';
 import { environment } from '../../environments/environment';
 
 
-@Component({
+@Component( {
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
-})
-export class RegistrationComponent{
+} )
+export class RegistrationComponent {
 
   hide = true;
   confirmHide = true;
@@ -27,15 +27,15 @@ export class RegistrationComponent{
               private route: ActivatedRoute,
               private router: Router,
               private userService: UserService) {
-    this.userForm = this.formBuilder.group({
-      firstName: new FormControl(null, [Validators.required, Validators.pattern(this.nameFormat)]),
-      lastName: new FormControl(null, [Validators.required, Validators.pattern(this.nameFormat)]),
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, Validators.required),
-      confirmPassword: new FormControl(null, Validators.required),
-      birthDate: new FormControl(null, Validators.required)
-    });
-    this.userForm.setValidators(PasswordsMatchValidator('password', 'confirmPassword'));
+    this.userForm = this.formBuilder.group( {
+      firstName: new FormControl( null, [Validators.required, Validators.pattern( this.nameFormat )] ),
+      lastName: new FormControl( null, [Validators.required, Validators.pattern( this.nameFormat )] ),
+      email: new FormControl( null, [Validators.required, Validators.email] ),
+      password: new FormControl( null, Validators.required ),
+      confirmPassword: new FormControl( null, Validators.required ),
+      birthDate: new FormControl( null, Validators.required )
+    } );
+    this.userForm.setValidators( PasswordsMatchValidator( 'password', 'confirmPassword' ) );
   }
 
   onFormSubmit(): void {
@@ -48,21 +48,20 @@ export class RegistrationComponent{
         password: this.userForm.controls.password.value,
         role: 'admin'
       };
-      this.userService.registerUser(user).subscribe(response => this.checkResult(response));
+      this.userService.registerUser( user ).subscribe( response => this.checkResult( response ) );
     }
   }
 
   checkResult(response: ResponseModel): void {
     if (!response.success) {
       this.message = response.message;
-    }
-    else {
+    } else {
       this.goToAccount();
     }
   }
 
   goToAccount(): void {
-    this.router.navigate(['admin/account']);
+    this.router.navigate( ['admin/account'] );
   }
 }
 

@@ -1,21 +1,21 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Seat } from '../Models/Seat';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SeatsService } from '../Services/seats.service';
 import { SeatsSchemeService } from '../Services/seats-scheme.service';
 
-@Component({
+@Component( {
   selector: 'app-seats-scheme',
   templateUrl: './seats-scheme.component.html',
   styleUrls: ['./seats-scheme.component.css']
-})
-export class SeatsSchemeComponent implements OnInit{
+} )
+export class SeatsSchemeComponent implements OnInit {
 
   airplaneId: number;
 
   selectedSeatType: string;
-  types = [ 'Business', 'Standard' ];
+  types = ['Business', 'Standard'];
   sectorName: string;
   sectorNumber: number;
   column: string;
@@ -26,15 +26,15 @@ export class SeatsSchemeComponent implements OnInit{
   theCabin = [];
 
   constructor(
-      private route: ActivatedRoute,
-      private seatsService: SeatsService,
-      private router: Router,
-      private seatsSchemeService: SeatsSchemeService
+    private route: ActivatedRoute,
+    private seatsService: SeatsService,
+    private router: Router,
+    private seatsSchemeService: SeatsSchemeService
   ) {
   }
 
   ngOnInit(): void {
-    this.airplaneId = +this.route.snapshot.paramMap.get('airplaneId');
+    this.airplaneId = +this.route.snapshot.paramMap.get( 'airplaneId' );
   }
 
   onSubmit(): void {
@@ -48,18 +48,18 @@ export class SeatsSchemeComponent implements OnInit{
         airplaneId: this.airplaneId
       };
 
-      this.seatsScheme.push(seat);
+      this.seatsScheme.push( seat );
     }
 
-    this.theCabin = this.seatsSchemeService.drawScheme(this.seatsScheme);
+    this.theCabin = this.seatsSchemeService.drawScheme( this.seatsScheme );
   }
 
   add(): void {
-    this.seatsService.addSeats(this.seatsScheme)
-        .subscribe(() => this.goToTheAirplanes());
+    this.seatsService.addSeats( this.seatsScheme )
+      .subscribe( () => this.goToTheAirplanes() );
   }
 
   goToTheAirplanes(): void {
-    this.router.navigate(['admin/airplanes']);
+    this.router.navigate( ['admin/airplanes'] );
   }
 }

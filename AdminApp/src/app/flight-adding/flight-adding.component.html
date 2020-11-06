@@ -87,7 +87,7 @@
             <h3>Status:</h3>
             <mat-form-field class="airportField" appearance="outline">
                 <mat-label>Status</mat-label>
-                <mat-select formControlName="status" >
+                <mat-select formControlName="status">
                     <mat-option *ngFor="let status of statuses" [value]="status">
                         {{status}}
                     </mat-option>

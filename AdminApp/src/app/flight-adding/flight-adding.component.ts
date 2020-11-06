@@ -12,11 +12,11 @@ import { FlightService } from '../Services/flight.service';
 import { AirportService } from '../Services/airport.service';
 import { AirplaneService } from '../Services/airplane.service';
 
-@Component({
+@Component( {
   selector: 'app-flight-adding',
   templateUrl: './flight-adding.component.html',
   styleUrls: ['./flight-adding.component.css']
-})
+} )
 export class FlightAddingComponent implements OnInit {
 
   airports: Airport[];
@@ -36,39 +36,39 @@ export class FlightAddingComponent implements OnInit {
   public stepSecond = 1;
 
   constructor(
-      private route: ActivatedRoute,
-      private flightService: FlightService,
-      private location: Location,
-      private airportService: AirportService,
-      private airplaneService: AirplaneService,
-      private formBuilder: FormBuilder) {
-        this.flightForm = this.formBuilder.group({
-          departureAirport: new FormControl(null),
-          arrivalAirport: new FormControl(null),
-          departureDate: new FormControl(null),
-          arrivalDate: new FormControl(null),
-          airplane: new FormControl(null),
-          status: new FormControl(null)
-    });
+    private route: ActivatedRoute,
+    private flightService: FlightService,
+    private location: Location,
+    private airportService: AirportService,
+    private airplaneService: AirplaneService,
+    private formBuilder: FormBuilder) {
+    this.flightForm = this.formBuilder.group( {
+      departureAirport: new FormControl( null ),
+      arrivalAirport: new FormControl( null ),
+      departureDate: new FormControl( null ),
+      arrivalDate: new FormControl( null ),
+      airplane: new FormControl( null ),
+      status: new FormControl( null )
+    } );
   }
 
   ngOnInit(): void {
     this.searchTermsAirport.pipe(
-        distinctUntilChanged(),
-        switchMap(value => this.airportService.searchAirports(value))
-    ).subscribe(airports => {
+      distinctUntilChanged(),
+      switchMap( value => this.airportService.searchAirports( value ) )
+    ).subscribe( airports => {
       this.airports = airports;
       if (this.flightForm.controls.departureAirport.value) {
-        this.airports = this.airports.filter(airport => airport.id !== this.flightForm.controls.departureAirport.value.id);
+        this.airports = this.airports.filter( airport => airport.id !== this.flightForm.controls.departureAirport.value.id );
       }
       if (this.flightForm.controls.arrivalAirport.value) {
-        this.airports = this.airports.filter(airport => airport.id !== this.flightForm.controls.arrivalAirport.value.id);
+        this.airports = this.airports.filter( airport => airport.id !== this.flightForm.controls.arrivalAirport.value.id );
       }
-    });
+    } );
     this.airplanes$ = this.searchTermsAirplanes.pipe(
-        debounceTime(100),
-        distinctUntilChanged(),
-        switchMap((value: string) => this.airplaneService.searchAirplanes(value))
+      debounceTime( 100 ),
+      distinctUntilChanged(),
+      switchMap( (value: string) => this.airplaneService.searchAirplanes( value ) )
     );
   }
 
@@ -81,11 +81,11 @@ export class FlightAddingComponent implements OnInit {
   }
 
   searchAirports(value): void {
-    this.searchTermsAirport.next(value);
+    this.searchTermsAirport.next( value );
   }
 
   searchAirplanes(value): void {
-    this.searchTermsAirplanes.next(value);
+    this.searchTermsAirplanes.next( value );
   }
 
   goBack(): void {
@@ -101,7 +101,7 @@ export class FlightAddingComponent implements OnInit {
       airplaneId: this.flightForm.controls.airplane.value.id,
       status: this.flightForm.controls.status.value
     };
-    this.flightService.addFlight(flight)
-        .subscribe(() => this.goBack());
+    this.flightService.addFlight( flight )
+      .subscribe( () => this.goBack() );
   }
 }
