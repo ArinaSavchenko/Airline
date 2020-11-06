@@ -38,6 +38,7 @@ const routes: Routes = [
   { path: 'admin/airplane/seats-scheme/:airplaneId', canActivate: [AuthGuard], component: SeatsSchemeComponent},
   { path: 'admin/flights/new', canActivate: [AuthGuard], component: FlightAddingComponent},
   { path: 'admin/flights/:id', canActivate: [AuthGuard], component: FlightDetailsComponent},
+  { path: 'admin/tickets/:id', canActivate: [AuthGuard], component: TicketsInfoComponent}
 ];
 
 @NgModule({

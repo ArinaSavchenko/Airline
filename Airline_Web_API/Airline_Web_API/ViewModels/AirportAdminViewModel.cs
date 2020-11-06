@@ -14,7 +14,7 @@ namespace Airline_Web_API.ViewModels
         public string City { get; set; }
         [Required(ErrorMessage = "Country is required")]
         public string Country { get; set; }
-    //    [Required(ErrorMessage = "Status is required")]
+        [Required(ErrorMessage = "Status is required")]
         public string Status { get; set; }
     }
 }
