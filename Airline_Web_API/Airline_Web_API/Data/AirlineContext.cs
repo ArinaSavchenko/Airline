@@ -35,10 +35,10 @@ namespace Airline_Web_API.Models
                 .WithMany(a => a.FlightsTo)
                 .HasForeignKey(f => f.ArrivalAirportId);
 
-       /*     modelBuilder.Entity<Flight>()
+            modelBuilder.Entity<Flight>()
                 .HasOne<Airplane>(f => f.Airplane)
                 .WithMany(a => a.Flights)
-                .HasForeignKey(f => f.AirplaneId);*/
+                .HasForeignKey(f => f.AirplaneId);
 
             modelBuilder.Entity<Ticket>()
                 .HasOne<Flight>(t => t.Flight)
