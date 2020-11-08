@@ -1,6 +1,6 @@
 <div class="infoContainer">
   <h1 class="header">Flight info</h1>
-  <form [formGroup]="flightForm" (ngSubmit)="addFlight()">
+  <form [formGroup]="flightForm">
     <div class="infoArea">
       <h3>Departure airport:</h3>
       <mat-form-field class="airportField" appearance="outline">
@@ -101,7 +101,7 @@
   <div class="buttonsContainer">
 
     <div>
-      <button type="submit" mat-raised-button color="accent" class="addButton">Add</button>
+      <button type="submit" mat-raised-button color="accent" class="addButton" (click)="addFlight()">Add</button>
     </div>
 
     <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/flights">Back to the flights

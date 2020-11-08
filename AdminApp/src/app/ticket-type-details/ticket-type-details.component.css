@@ -1,0 +1,26 @@
+.details {
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.goBackButton {
+    margin-top: 2em;
+    color: #404040;
+}
+
+div.checkBox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-bottom: 1em;
+}
+
+.checkBoxSection {
+    margin: 0.5em;
+}

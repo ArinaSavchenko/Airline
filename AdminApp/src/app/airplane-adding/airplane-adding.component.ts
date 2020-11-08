@@ -34,12 +34,7 @@ export class AirplaneAddingComponent {
 
   onFormSubmit(): void {
     if (this.airplaneForm.valid) {
-      const airplane: Airplane = {
-        name: this.airplaneForm.controls.name.value,
-        seatsNumber: this.airplaneForm.controls.seatsNumber.value,
-        maxWeight: this.airplaneForm.controls.maxWeight.value,
-        status: this.airplaneForm.controls.status.value
-      };
+      const airplane: Airplane = this.airplaneForm.value;
       this.airplaneService.addAirplane( airplane ).subscribe( (newAirplaneId) => this.router.navigate(
         ['admin/airplane/seats-scheme/' + newAirplaneId] ) );
     }

@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Airline_Web_API.Models;
 using Airline_Web_API.ViewModels;
 using AutoMapper;
+using System.Threading.Tasks;
+using Airline_Web_API.Services;
 
 namespace Airline_Web_API.Controllers
 {
@@ -12,30 +14,37 @@ namespace Airline_Web_API.Controllers
     [ApiController]
     public class TicketsController : ControllerBase
     {
-        private readonly AirlineContext _context;
-        private readonly IMapper _mapper;
+        private readonly TicketService _ticketService;
 
-        public TicketsController(AirlineContext context, IMapper mapper)
+        public TicketsController(TicketService ticketService)
         {
-            _context = context;
-            _mapper = mapper;
+            _ticketService = ticketService;
         }
 
-        // GET: api/Tickets/5
         [HttpGet("{id}")]
-        public ActionResult<Ticket> GetTicket(int id)
+        public async Task<ActionResult<TicketsViewModel>> GetTicket(int id)
         {
-            var ticket = _context.Tickets
-                .Include(ticket => ticket.TicketType)
-                .Where(ticket => ticket.Id == id)
-                .FirstOrDefault();
+            var ticket = await _ticketService.GetTicketByIdAsync(id);
 
             if (ticket == null)
             {
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<TicketsViewModel>(ticket));
+            return Ok(ticket);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<Ticket[]>> GetTickets([FromQuery] int flightId)
+        {
+            var tickets = await _ticketService.GetTicketsAsync(flightId);
+
+            if (tickets == null)
+            {
+                return NoContent();
+            }
+
+            return Ok(tickets);
         }
     }
 }

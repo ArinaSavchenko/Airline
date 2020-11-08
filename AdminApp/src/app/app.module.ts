@@ -18,6 +18,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatListModule } from '@angular/material/list';
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { JwtModule } from '@auth0/angular-jwt';
 
@@ -41,6 +42,10 @@ import { UserDetailsComponent } from './user-details/user-details.component';
 import { SeatsSchemeComponent } from './seats-scheme/seats-scheme.component';
 import { FlightDetailsComponent } from './flight-details/flight-details.component';
 import { FlightAddingComponent } from './flight-adding/flight-adding.component';
+import { TicketsTypeInfoComponent } from './ticket-types-info/tickets-type-info.component';
+import { TicketTypeAddingComponent } from './ticket-type-adding/ticket-type-adding.component';
+import { TicketTypeDetailsComponent } from './ticket-type-details/ticket-type-details.component';
+import { TicketAddingComponent } from './ticket-adding/ticket-adding.component';
 
 export function tokenGetter(): any {
   return localStorage.getItem('token');
@@ -65,7 +70,11 @@ export function tokenGetter(): any {
     UserDetailsComponent,
     SeatsSchemeComponent,
     FlightDetailsComponent,
-    FlightAddingComponent
+    FlightAddingComponent,
+    TicketsTypeInfoComponent,
+    TicketTypeAddingComponent,
+    TicketTypeDetailsComponent,
+    TicketAddingComponent
   ],
     imports: [
         BrowserModule,
@@ -96,7 +105,8 @@ export function tokenGetter(): any {
         MatListModule,
         NgxMatTimepickerModule,
         NgxMatDatetimePickerModule,
-        NgxMatNativeDateModule
+        NgxMatNativeDateModule,
+        MatCheckboxModule
     ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]
