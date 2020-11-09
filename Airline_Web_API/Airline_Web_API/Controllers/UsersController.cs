@@ -105,14 +105,14 @@ namespace Airline_Web_API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(int id)
         {
-            var result = await _userService.DeleteUserAsync(id);
+            var deleteResult = await _userService.DeleteUserAsync(id);
 
-            if (result.Success == false)
+            if (deleteResult.Success == false)
             {
-                return BadRequest(result);
+                return BadRequest(deleteResult);
             }
 
-            return Ok(result);
+            return Ok(deleteResult);
         }
     }
 }

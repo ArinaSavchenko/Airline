@@ -26,6 +26,7 @@ export class AirplaneDetailsComponent implements OnInit {
   message: string;
   theCabin = [];
   airplaneForm: FormGroup;
+  airplaneStatuses = AirplaneStatuses;
 
   constructor(private route: ActivatedRoute,
               private airplaneService: AirplaneService,
@@ -33,8 +34,7 @@ export class AirplaneDetailsComponent implements OnInit {
               public dialog: MatDialog,
               private seatsService: SeatsService,
               private seatsSchemeService: SeatsSchemeService,
-              private formBuilder: FormBuilder,
-              private statuses: AirplaneStatuses) {
+              private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
@@ -42,21 +42,21 @@ export class AirplaneDetailsComponent implements OnInit {
   }
 
   getAirplane(): void {
-    // const id = +this.route.snapshot.paramMap.get( 'id' );
-    // this.airplaneService.getAirplane( id )
-    //   .subscribe( airplane => {
-    //     this.airplane = airplane;
-    //     this.seatsService.getSeats( this.airplane.id ).subscribe( seats => {
-    //       this.theCabin = this.seatsSchemeService.drawScheme( seats );
-    //       });
-    //     this.airplaneForm = this.formBuilder.group({
-    //       id: new FormControl(airplane.id, Validators.required),
-    //       name: new FormControl(airplane.name, Validators.required),
-    //       seatsNumber: new FormControl(airplane.seatsNumber, Validators.required),
-    //       maxWeight: new FormControl(airplane.maxWeight, Validators.required),
-    //       status: new FormControl(airplane.status, Validators.required)
-    //     });
-    //   } );
+    const id = +this.route.snapshot.paramMap.get( 'id' );
+    this.airplaneService.getAirplane( id )
+      .subscribe( airplane => {
+        this.airplane = airplane;
+        this.seatsService.getSeats( this.airplane.id ).subscribe( seats => {
+          this.theCabin = this.seatsSchemeService.drawScheme( seats );
+          });
+        this.airplaneForm = this.formBuilder.group({
+          id: this.airplane.id,
+          name: new FormControl(airplane.name, Validators.required),
+          seatsNumber: new FormControl(airplane.seatsNumber, Validators.required),
+          maxWeight: new FormControl(airplane.maxWeight, Validators.required),
+          status: new FormControl(airplane.status, Validators.required)
+        });
+      } );
   }
 
   save(): void {

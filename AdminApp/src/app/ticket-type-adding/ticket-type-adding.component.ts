@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Location } from '@angular/common';
 
 import { TicketTypeService } from '../Services/ticket-type.service';
+import { RefundTypes } from '../Enums/RefundTypes';
+import { SeatTypes } from '../Enums/SeatTypes';
 
 @Component({
   selector: 'app-ticket-type-adding',
@@ -11,8 +13,8 @@ import { TicketTypeService } from '../Services/ticket-type.service';
 })
 export class TicketTypeAddingComponent {
 
-  refundTypes = ['Full refund', 'Refund for fee', 'Partial refund'];
-  seatTypes = ['Business', 'Standard'];
+  refundTypes = RefundTypes;
+  seatTypes = SeatTypes;
   ticketTypeForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,

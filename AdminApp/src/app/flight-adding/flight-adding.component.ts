@@ -11,6 +11,7 @@ import { Airplane } from '../Models/Airplane';
 import { FlightService } from '../Services/flight.service';
 import { AirportService } from '../Services/airport.service';
 import { AirplaneService } from '../Services/airplane.service';
+import { FlightStatuses } from '../Enums/FlightStatuses';
 
 @Component( {
   selector: 'app-flight-adding',
@@ -21,7 +22,7 @@ export class FlightAddingComponent implements OnInit {
 
   airports: Airport[];
   airplanes$: Observable<Airplane[]>;
-  statuses = ['Active', 'Delayed', 'Canceled', 'In process'];
+  flightStatuses = FlightStatuses;
   private searchTermsAirport = new Subject<string>();
   private searchTermsAirplanes = new Subject<string>();
   flightForm: FormGroup;

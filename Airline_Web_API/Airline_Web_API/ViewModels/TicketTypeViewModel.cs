@@ -21,5 +21,6 @@ namespace Airline_Web_API.ViewModels
         public bool Changes { get; set; }
         public string Refund { get; set; }
         public string SeatType { get; set; }
+        public string Status { get; set; }
     }
 }

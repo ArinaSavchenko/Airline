@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Airline_Web_API.Models
 {
@@ -21,6 +19,7 @@ namespace Airline_Web_API.Models
         public bool Changes { get; set; }
         public string Refund { get; set; }
         public string SeatType { get; set; }
+        public string Status { get; set; }
 
         public ICollection<Ticket> Tickets { get; set; }
     }

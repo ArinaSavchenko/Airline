@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 
 import { Airport } from '../Models/Airport';
 import { AirportService } from '../Services/airport.service';
+import { AirportStatuses } from '../Enums/AirportStatuses';
 
 @Component( {
   selector: 'app-airport-adding',
@@ -12,8 +13,7 @@ import { AirportService } from '../Services/airport.service';
 } )
 export class AirportAddingComponent {
 
-  status: string;
-  statuses = ['Active', 'Closed', 'Temporary closed'];
+  airportStatuses = AirportStatuses;
   airportForm: FormGroup;
   nameFormat = '[a-zA-Z\s]+$';
   message: string;

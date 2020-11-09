@@ -69,14 +69,14 @@ namespace Airline_Web_API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Response<string>>> DeleteAirplane(int id)
         {
-            Response<string> updateResult = await _airplaneService.DeleteAirplaneAsync(id);
+            Response<string> deleteResult = await _airplaneService.DeleteAirplaneAsync(id);
 
-            if (updateResult.Success == false)
+            if (deleteResult.Success == false)
             {
-                return BadRequest(updateResult);
+                return BadRequest(deleteResult);
             }
 
-            return Ok(updateResult);
+            return Ok(deleteResult);
         }
     }
 }

@@ -46,6 +46,8 @@ import { TicketsTypeInfoComponent } from './ticket-types-info/tickets-type-info.
 import { TicketTypeAddingComponent } from './ticket-type-adding/ticket-type-adding.component';
 import { TicketTypeDetailsComponent } from './ticket-type-details/ticket-type-details.component';
 import { TicketAddingComponent } from './ticket-adding/ticket-adding.component';
+import { TicketDetailsComponent } from './ticket-details/ticket-details.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 export function tokenGetter(): any {
   return localStorage.getItem('token');
@@ -74,7 +76,9 @@ export function tokenGetter(): any {
     TicketsTypeInfoComponent,
     TicketTypeAddingComponent,
     TicketTypeDetailsComponent,
-    TicketAddingComponent
+    TicketAddingComponent,
+    TicketDetailsComponent,
+    ChangePasswordComponent
   ],
     imports: [
         BrowserModule,

@@ -94,8 +94,8 @@
       <mat-form-field class="airportField" appearance="outline">
         <mat-label>{{flight.status}}</mat-label>
         <mat-select formControlName="status" (selectionChange)="setStatus($event.value)">
-          <mat-option *ngFor="let status of statuses" [value]="status">
-            {{status}}
+          <mat-option *ngFor="let status of flightStatuses | keyvalue" [value]="status.value">
+            {{status.value}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -103,7 +103,7 @@
     </div>
   </form>
 
-  <a class="ticketsLink" routerLink="/admin/tickets/{{flight.id}}">Tickets</a>
+  <a class="ticketsLink" routerLink="/admin/flights/tickets/{{flight.id}}">Tickets</a>
 
   <div *ngIf="message" class="mat-error">
     {{message}}

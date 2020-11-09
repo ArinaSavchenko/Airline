@@ -28,8 +28,8 @@
     <mat-form-field class="airportField" appearance="outline">
       <mat-label>Status</mat-label>
       <mat-select formControlName="status">
-        <mat-option *ngFor="let status of statuses" [value]="status">
-          {{status}}
+        <mat-option *ngFor="let status of airplaneStatuses | keyvalue" [value]="status.value">
+          {{status.value}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -37,7 +37,7 @@
     <div *ngIf="message" class="mat-error">
       {{message}}
     </div>
-    <button type="submit" mat-raised-button class="signUpButton" [disabled]="!airplaneForm.valid">Add</button>
+    <button type="submit" mat-raised-button class="addButton" [disabled]="!airplaneForm.valid">Add</button>
   </form>
   <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
 </div>

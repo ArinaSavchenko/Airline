@@ -30,6 +30,7 @@ namespace Airline_Web_API
             CreateMap<Seat, SeatViewModel>();
             CreateMap<SeatViewModel, Seat>();
             CreateMap<NewFlightModel, Flight>();
+            CreateMap<NewTicketModel, Ticket>();
         }
     }
 }

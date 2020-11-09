@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
@@ -16,6 +16,7 @@ import { AirplaneService } from '../Services/airplane.service';
 import { AirportService } from '../Services/airport.service';
 import { FlightService } from '../Services/flight.service';
 import { ConfirmActionDialogComponent } from '../confirm-action-dialog/confirm-action-dialog.component';
+import { FlightStatuses } from '../Enums/FlightStatuses';
 
 @Component( {
   selector: 'app-flight-details',
@@ -28,7 +29,7 @@ export class FlightDetailsComponent implements OnInit {
 
   airports: Airport[];
   airplanes$: Observable<Airplane[]>;
-  statuses = ['Active', 'Delayed', 'Canceled', 'In process'];
+  flightStatuses = FlightStatuses;
   private searchTermsAirport = new Subject<string>();
   private searchTermsAirplanes = new Subject<string>();
   flight: Flight;
@@ -81,12 +82,12 @@ export class FlightDetailsComponent implements OnInit {
       .subscribe( flight => {
         this.flight = flight;
         this.flightForm = this.formBuilder.group( {
-          departureAirport: new FormControl( this.flight.departureAirport ),
-          arrivalAirport: new FormControl( this.flight.arrivalAirport ),
-          departureDate: new FormControl( this.flight.departureDate ),
-          arrivalDate: new FormControl( this.flight.arrivalDate ),
-          airplane: new FormControl( this.flight.airplane ),
-          status: new FormControl( this.flight.status )
+          departureAirport: new FormControl( this.flight.departureAirport, Validators.required ),
+          arrivalAirport: new FormControl( this.flight.arrivalAirport, Validators.required ),
+          departureDate: new FormControl( this.flight.departureDate, Validators.required ),
+          arrivalDate: new FormControl( this.flight.arrivalDate, Validators.required ),
+          airplane: new FormControl( this.flight.airplane, Validators.required ),
+          status: new FormControl( this.flight.status, Validators.required )
         } );
       } );
   }

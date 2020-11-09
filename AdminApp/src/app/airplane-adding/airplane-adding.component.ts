@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 
 import { Airplane } from '../Models/Airplane';
 import { AirplaneService } from '../Services/airplane.service';
+import { AirplaneStatuses } from '../Enums/AirplaneStatuses';
 
 @Component( {
   selector: 'app-airplane-adding',
@@ -13,8 +14,7 @@ import { AirplaneService } from '../Services/airplane.service';
 } )
 export class AirplaneAddingComponent {
 
-  status: string;
-  statuses = ['Active', 'Closed', 'Temporary closed'];
+  airplaneStatuses = AirplaneStatuses;
   airplaneForm: FormGroup;
   nameFormat = '[a-zA-Z\s]+$';
   message: string;
@@ -34,7 +34,7 @@ export class AirplaneAddingComponent {
 
   onFormSubmit(): void {
     if (this.airplaneForm.valid) {
-      const airplane: Airplane = this.airplaneForm.value;
+      const airplane = this.airplaneForm.value;
       this.airplaneService.addAirplane( airplane ).subscribe( (newAirplaneId) => this.router.navigate(
         ['admin/airplane/seats-scheme/' + newAirplaneId] ) );
     }

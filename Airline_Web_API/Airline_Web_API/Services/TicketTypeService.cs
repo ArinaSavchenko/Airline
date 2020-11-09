@@ -1,4 +1,5 @@
-﻿using Airline_Web_API.Models;
+﻿using Airline_Web_API.Helpers;
+using Airline_Web_API.Models;
 using Airline_Web_API.ViewModels;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +45,52 @@ namespace Airline_Web_API.Services
 
             _context.TicketTypes.Add(ticketType);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<Response<string>> UpdateTicketTypeAsync(TicketTypeViewModel model)
+        {
+            var ticketType = await _context.TicketTypes.FindAsync(model.Id);
+
+            if (ticketType == null)
+            {
+                return new Response<string>
+                {
+                    Success = false,
+                    Message = "There is no such type of ticket"
+                };
+            }
+
+            _mapper.Map(model, ticketType);
+            await _context.SaveChangesAsync();
+
+            return new Response<string>
+            {
+                Success = true,
+                Message = "Type of ticket was succesfully updated"
+            };
+        }
+
+        public async Task<Response<string>> DeleteTicketTypeAsync(int id)
+        {
+            var ticketType = await _context.TicketTypes.FindAsync(id);
+
+            if (ticketType == null)
+            {
+                return new Response<string>
+                {
+                    Success = false,
+                    Message = "There is no such ticket type"
+                };
+            }
+
+            ticketType.Status = "Deleted";
+            await _context.SaveChangesAsync();
+
+            return new Response<string>
+            {
+                Success = true,
+                Message = "Type of ticket was succesfully deleted"
+            };
         }
     }
 }

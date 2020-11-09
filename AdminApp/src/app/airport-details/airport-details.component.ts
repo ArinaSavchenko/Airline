@@ -3,11 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Airport } from '../Models/Airport';
 import { AirportService } from '../Services/airport.service';
 import { ConfirmActionDialogComponent } from '../confirm-action-dialog/confirm-action-dialog.component';
 import { ResponseModel } from '../Models/ResponseModel';
+import { AirportStatuses } from '../Enums/AirportStatuses';
 
 @Component( {
   selector: 'app-airport-details',
@@ -16,9 +18,10 @@ import { ResponseModel } from '../Models/ResponseModel';
 } )
 export class AirportDetailsComponent implements OnInit {
 
-  statuses = ['Active', 'Closed', 'Temporary closed'];
+  airportStatuses = AirportStatuses;
   airport: Airport;
   message: string;
+  airportForm: FormGroup;
 
   @ViewChild( MatTable, {static: true} ) table: MatTable<any>;
 
@@ -26,8 +29,8 @@ export class AirportDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private airportService: AirportService,
     private location: Location,
-    public dialog: MatDialog
-  ) {
+    public dialog: MatDialog,
+    private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
@@ -39,6 +42,13 @@ export class AirportDetailsComponent implements OnInit {
     this.airportService.getAirport( id )
       .subscribe( airport => {
         this.airport = airport;
+        this.airportForm = this.formBuilder.group({
+          id: this.airport.id,
+          name: new FormControl(airport.name, Validators.required),
+          city: new FormControl(airport.city, Validators.required),
+          country: new FormControl(airport.country, Validators.required),
+          status: new FormControl(airport.status, Validators.required)
+        });
       } );
   }
 
@@ -72,8 +82,10 @@ export class AirportDetailsComponent implements OnInit {
   }
 
   save(): void {
-    this.airportService.updateAirport( this.airport )
-      .subscribe( response => this.checkResult( response ) );
+    if (this.airportForm.valid) {
+      this.airportService.updateAirport( this.airportForm.value )
+        .subscribe( response => this.checkResult( response ) );
+    }
   }
 
   delete(): void {

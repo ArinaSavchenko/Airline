@@ -13,4 +13,5 @@ export interface TicketType {
   changes: boolean;
   refund: string;
   seatType: string;
+  status?: string;
 }

@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { Ticket } from '../Models/Ticket';
 import { environment } from '../../environments/environment';
+import { TicketType } from '../Models/TicketType';
+import { ResponseModel } from '../Models/ResponseModel';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class TicketService {
@@ -17,11 +20,33 @@ export class TicketService {
 
     constructor(private http: HttpClient) { }
 
+    getTicket(id: number): Observable<Ticket> {
+        const url = `${this.ticketsUrl}/${id}`;
+        return this.http.get<Ticket>(url);
+    }
+
     getTickets(flightId: number): Observable<Ticket[]> {
         return this.http.get<Ticket[]>(this.ticketsUrl + '?flightId=' + flightId);
     }
 
-    addTicket(tickets: Ticket[]): Observable<any> {
-        return this.http.post(this.ticketsUrl, tickets, this.httpOptions);
+    addTicket(ticket: Ticket): Observable<any> {
+        return this.http.post(this.ticketsUrl, ticket, this.httpOptions);
+    }
+
+    updateTicket(ticket: Ticket): Observable<ResponseModel> {
+        return this.http.put<ResponseModel>(this.ticketsUrl, ticket, this.httpOptions).pipe(
+          catchError(error => this.handleError(error))
+        );
+    }
+
+    deleteTicket(id: number): Observable<ResponseModel> {
+        const url = `${this.ticketsUrl}/${id}`;
+        return this.http.delete<ResponseModel>(url, this.httpOptions).pipe(
+          catchError(error => this.handleError(error))
+        );
+    }
+
+    handleError(error: HttpErrorResponse): Observable<any> {
+        return of(error.error);
     }
 }

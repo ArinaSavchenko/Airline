@@ -20,7 +20,7 @@ export class TicketsInfoComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.flightId = +this.route.snapshot.paramMap.get( 'flightId' );
+    this.flightId = +this.route.snapshot.paramMap.get('id');
     this.tickets$ = this.ticketService.getTickets(this.flightId);
   }
 }

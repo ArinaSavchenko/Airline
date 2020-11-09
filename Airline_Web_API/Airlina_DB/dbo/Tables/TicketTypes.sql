@@ -13,5 +13,6 @@
 	[SeatReservation] BIT NULL,
 	[Changes] BIT NULL,
 	[Refund] NVARCHAR(250) NULL, 
-	[SeatType] NVARCHAR(250) NULL
+	[SeatType] NVARCHAR(250) NULL, 
+    [Status] NVARCHAR(250) NULL
 )

@@ -41,7 +41,7 @@ export class TicketTypeService {
     );
   }
 
-  deleteTicket(id: number): Observable<ResponseModel> {
+  deleteTicketType(id: number): Observable<ResponseModel> {
     const url = `${this.ticketTypesUrl}/${id}`;
     return this.http.delete<ResponseModel>(url, this.httpOptions).pipe(
       catchError(error => this.handleError(error))
