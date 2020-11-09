@@ -181,7 +181,6 @@ export class FlightDetailsComponent implements OnInit {
   }
 
   checkResult(response: ResponseModel): void {
-    console.log(response);
     if (!response.success) {
       this.message = response.message;
     } else {

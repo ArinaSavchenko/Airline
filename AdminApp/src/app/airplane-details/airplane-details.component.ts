@@ -3,6 +3,7 @@ import { MatTable } from '@angular/material/table';
 import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { AirplaneService } from '../Services/airplane.service';
 import { ConfirmActionDialogComponent } from '../confirm-action-dialog/confirm-action-dialog.component';
@@ -10,6 +11,7 @@ import { Airplane } from '../Models/Airplane';
 import { ResponseModel } from '../Models/ResponseModel';
 import { SeatsService } from '../Services/seats.service';
 import { SeatsSchemeService } from '../Services/seats-scheme.service';
+import { AirplaneStatuses } from '../Enums/AirplaneStatuses';
 
 @Component( {
   selector: 'app-airplane-details',
@@ -20,17 +22,19 @@ export class AirplaneDetailsComponent implements OnInit {
 
   @ViewChild( MatTable, {static: true} ) table: MatTable<any>;
 
-  statuses = ['Active', 'Closed', 'Temporary closed'];
   airplane: Airplane;
   message: string;
   theCabin = [];
+  airplaneForm: FormGroup;
 
   constructor(private route: ActivatedRoute,
               private airplaneService: AirplaneService,
               private location: Location,
               public dialog: MatDialog,
               private seatsService: SeatsService,
-              private seatsSchemeService: SeatsSchemeService) {
+              private seatsSchemeService: SeatsSchemeService,
+              private formBuilder: FormBuilder,
+              private statuses: AirplaneStatuses) {
   }
 
   ngOnInit(): void {
@@ -38,16 +42,25 @@ export class AirplaneDetailsComponent implements OnInit {
   }
 
   getAirplane(): void {
-    const id = +this.route.snapshot.paramMap.get( 'id' );
-    this.airplaneService.getAirplane( id )
-      .subscribe( airplane => {
-        this.airplane = airplane;
-        this.seatsService.getSeats( this.airplane.id ).subscribe( seats => this.theCabin = this.seatsSchemeService.drawScheme( seats ) );
-      } );
+    // const id = +this.route.snapshot.paramMap.get( 'id' );
+    // this.airplaneService.getAirplane( id )
+    //   .subscribe( airplane => {
+    //     this.airplane = airplane;
+    //     this.seatsService.getSeats( this.airplane.id ).subscribe( seats => {
+    //       this.theCabin = this.seatsSchemeService.drawScheme( seats );
+    //       });
+    //     this.airplaneForm = this.formBuilder.group({
+    //       id: new FormControl(airplane.id, Validators.required),
+    //       name: new FormControl(airplane.name, Validators.required),
+    //       seatsNumber: new FormControl(airplane.seatsNumber, Validators.required),
+    //       maxWeight: new FormControl(airplane.maxWeight, Validators.required),
+    //       status: new FormControl(airplane.status, Validators.required)
+    //     });
+    //   } );
   }
 
   save(): void {
-    this.airplaneService.updateAirplane( this.airplane )
+    this.airplaneService.updateAirplane( this.airplaneForm.value )
       .subscribe( response => this.checkResult( response ) );
   }
 
@@ -78,7 +91,9 @@ export class AirplaneDetailsComponent implements OnInit {
   }
 
   onSave(): void {
-    this.openDialog( 'Are you sure that you want to save changes?' );
+    if (this.airplaneForm.valid) {
+      this.openDialog( 'Are you sure that you want to save changes?' );
+    }
   }
 
   onDelete(): void {

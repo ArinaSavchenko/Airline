@@ -37,7 +37,7 @@ export class TicketTypeAddingComponent {
 
   addTicketType(): void {
     const ticketType = this.ticketTypeForm.value;
-    this.ticketTypeService.addTicketType(ticketType).subscribe();
+    this.ticketTypeService.addTicketType(ticketType).subscribe(() => this.goBack());
   }
 
   goBack(): void {
