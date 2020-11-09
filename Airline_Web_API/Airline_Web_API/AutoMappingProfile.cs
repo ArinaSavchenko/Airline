@@ -11,17 +11,24 @@ namespace Airline_Web_API
     {
         public AutoMapperProfile()
         {
-            CreateMap<Airport, AirportViewModel>();
+            CreateMap<Airport, AirportUserViewModel>();
+            CreateMap<AirportAdminViewModel, Airport>();
+            CreateMap<Airport, AirportAdminViewModel>();
             CreateMap<TicketType, TicketTypeViewModel>();
             CreateMap<Ticket, TicketsViewModel>();
             CreateMap<Flight, FlightViewModel>();
+            CreateMap<FlightViewModel, Flight>();
             CreateMap<RegisterModel, User>();
             CreateMap<User, UserViewModel>();
             CreateMap<AuthenticateModel, User>();
             CreateMap<UpdateUserModel, User>()
                 .ForMember(user => user.Password, opt => opt.Ignore())
                 .ForMember(user => user.Role, opt => opt.Ignore());
-            CreateMap<AirportViewModel, Airport>();
+            CreateMap<Airplane, AirplaneViewModel>();
+            CreateMap<AirplaneViewModel, Airplane>();
+            CreateMap<Seat, SeatViewModel>();
+            CreateMap<SeatViewModel, Seat>();
+            CreateMap<NewFlightModel, Flight>();
         }
     }
 }

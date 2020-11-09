@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError} from 'rxjs/operators';
 
 import { Airport } from '../Models/Airport';
-import {environment} from '../../environments/environment';
-
+import { ResponseModel } from '../Models/ResponseModel';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AirportService {
 
-  private airportsUrl = environment.baseUrl + '/airports';  // URL to web api
+  private airportsUrl = environment.baseUrl + '/airports';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -31,19 +32,27 @@ export class AirportService {
     if (!term.trim()){
       return this.getAirports();
     }
-    return  this.http.get<Airport[]>(`${this.airportsUrl}/?value=${term}`);
+    return this.http.get<Airport[]>(`${this.airportsUrl}/?value=${term}`);
   }
 
-  addAirport(airport: Airport): Observable<Airport> {
-    return this.http.post<Airport>(this.airportsUrl, airport, this.httpOptions);
+  addAirport(airport: Airport): Observable<any> {
+    return this.http.post(this.airportsUrl, airport, this.httpOptions);
   }
 
-  updateAirport(airport: Airport): Observable<any> {
-    return this.http.put(this.airportsUrl, airport, this.httpOptions);
+  updateAirport(airport: Airport): Observable<ResponseModel> {
+    return this.http.put<ResponseModel>(this.airportsUrl, airport, this.httpOptions).pipe(
+        catchError(error => this.handleError(error))
+    );
   }
 
-  deleteAirport(airport: Airport): Observable<any> {
-    const url = `${this.airportsUrl}/${airport.id}`;
-    return this.http.delete(url, this.httpOptions);
+  deleteAirport(id: number): Observable<ResponseModel> {
+    const url = `${this.airportsUrl}/${id}`;
+    return this.http.delete<ResponseModel>(url, this.httpOptions).pipe(
+        catchError(error => this.handleError(error))
+    );
+  }
+
+  handleError(error: HttpErrorResponse): Observable<any> {
+    return of(error.error);
   }
 }

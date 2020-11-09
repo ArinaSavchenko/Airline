@@ -1,4 +1,5 @@
 <div class="mainContainer">
+  <h1 class="header">Airplanes info</h1>
   <mat-form-field appearance="outline">
     <mat-label>Sector name:</mat-label>
     <input type="text" class="form-control" matInput placeholder="Name"
@@ -7,7 +8,7 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Sector number:</mat-label>
-    <input type="text" class="form-control" matInput placeholder="Name"
+    <input type="number" class="form-control" matInput placeholder="Name"
            required [(ngModel)]="sectorNumber" name="name">
   </mat-form-field>
 
@@ -36,14 +37,15 @@
 
   <button mat-raised-button (click)="this.onSubmit()" class="submitButton">Add</button>
 
-  <h3 class="header">Airplane scheme</h3>
+  <h3 *ngIf="this.theCabin.length > 0" class="schemeHeader">Airplane scheme</h3>
 
-  <div *ngIf="this.seatsGroupedByColumn.length > 0">
-    <div *ngFor="let sectorName of seatsGroupedByColumn" >
-      <div *ngFor="let sectorNumber of sectorName">
-        <div *ngFor="let column of sectorNumber">
-          <div *ngFor="let seat of column">
-            {{3}}
+
+  <div *ngIf="this.theCabin.length > 0" class="sector">
+    <div *ngFor="let sectorName of this.theCabin" class="innerSector">
+      <div *ngFor="let innerSector of sectorName" class="column">
+        <div *ngFor="let column of innerSector" class="seat">
+          <div *ngFor="let seat of column" class="seatAppearance">
+            {{seat.column + seat.number}}
           </div>
         </div>
         <br/>
@@ -52,4 +54,10 @@
     </div>
 
   </div>
+
+  <button *ngIf="this.theCabin.length > 0" mat-raised-button (click)="this.add()" class="submitButton">Add airplane
+    seats scheme
+  </button>
+  <button mat-raised-button class="submitButton" routerLink="/admin/airplanes">Back to the airplanes</button>
+
 </div>

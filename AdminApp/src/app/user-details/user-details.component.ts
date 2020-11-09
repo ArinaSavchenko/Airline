@@ -11,11 +11,11 @@ import { ConfirmActionDialogComponent } from '../confirm-action-dialog/confirm-a
 import { UpdateUserModel } from '../Models/UpdateUserModel';
 import { environment } from '../../environments/environment';
 
-@Component({
+@Component( {
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
   styleUrls: ['./user-details.component.css']
-})
+} )
 export class UserDetailsComponent implements OnInit {
 
   user: User;
@@ -33,16 +33,15 @@ export class UserDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUser().subscribe(user =>
-    {
+    this.userService.getUser().subscribe( user => {
       this.user = user;
-      this.userForm = this.formBuilder.group({
-        firstName: new FormControl(this.user.firstName, [Validators.required, Validators.pattern(this.nameFormat)]),
-        lastName: new FormControl(this.user.lastName, [Validators.required, Validators.pattern(this.nameFormat)]),
-        email: new FormControl(this.user.email, [Validators.required, Validators.email]),
-        birthDate: new FormControl(this.user.birthDate, Validators.required)
-      });
-    });
+      this.userForm = this.formBuilder.group( {
+        firstName: new FormControl( this.user.firstName, [Validators.required, Validators.pattern( this.nameFormat )] ),
+        lastName: new FormControl( this.user.lastName, [Validators.required, Validators.pattern( this.nameFormat )] ),
+        email: new FormControl( this.user.email, [Validators.required, Validators.email] ),
+        birthDate: new FormControl( this.user.birthDate, Validators.required )
+      } );
+    } );
   }
 
   save(): void {
@@ -57,28 +56,27 @@ export class UserDetailsComponent implements OnInit {
 
       const message = `Are you sure you want to change info in your account?`;
 
-      const dialogRef = this.dialog.open(ConfirmActionDialogComponent, {
+      const dialogRef = this.dialog.open( ConfirmActionDialogComponent, {
         data: message
-      });
+      } );
 
-      dialogRef.afterClosed().subscribe(dialogResult => {
+      dialogRef.afterClosed().subscribe( dialogResult => {
         if (dialogResult.event === true) {
-          this.userService.updateUser(this.updateUser).subscribe(response => this.checkResult(response));
+          this.userService.updateUser( this.updateUser ).subscribe( response => this.checkResult( response ) );
         }
-      });
+      } );
     }
   }
 
   checkResult(response: ResponseModel): void {
-    if (!response.success === true){
+    if (!response.success) {
       this.message = response.message;
-    }
-    else{
+    } else {
       this.goBack();
     }
   }
 
   goBack(): void {
-    this.router.navigate(['/admin/account']);
+    this.router.navigate( ['/admin/account'] );
   }
 }

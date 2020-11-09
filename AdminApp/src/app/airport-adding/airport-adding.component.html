@@ -2,7 +2,7 @@
   <h1 class="header">Add new airport</h1>
   <form [formGroup]="airportForm" (ngSubmit)="onFormSubmit()">
     <mat-form-field appearance="outline">
-      <mat-label>Enter airport name:</mat-label>
+      <mat-label>Enter airport name</mat-label>
       <input matInput formControlName="name" placeholder="Name">
       <mat-error>
         Name is required
@@ -10,7 +10,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Enter airport city:</mat-label>
+      <mat-label>Enter airport city</mat-label>
       <input matInput formControlName="city" placeholder="City">
       <mat-error>
         City is required
@@ -18,12 +18,25 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Enter airport country:</mat-label>
+      <mat-label>Enter airport country</mat-label>
       <input matInput formControlName="country" placeholder="country">
       <mat-error>
         Country is required
       </mat-error>
     </mat-form-field>
+
+    <mat-form-field class="airportField" appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option *ngFor="let status of statuses" [value]="status">
+          {{status}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="message" class="mat-error">
+      {{message}}
+    </div>
 
     <button type="submit" mat-raised-button class="signUpButton" [disabled]="!airportForm.valid">Add</button>
   </form>

@@ -9,6 +9,9 @@ using AutoMapper;
 using Airline_Web_API.Models;
 using Airline_Web_API.ViewModels;
 using Airline_Web_API.Services;
+using Microsoft.AspNetCore.Authorization;
+using Airline_Web_API.Helpers;
+using Airline_Web_API.DTOs;
 
 namespace Airline_Web_API.Controllers
 {
@@ -23,20 +26,18 @@ namespace Airline_Web_API.Controllers
             _flightService = flightService;
         }
 
-        // GET: api/flights
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Flight>>> GetFlights([FromQuery] int departureAirportId, int arrivalAirportId, DateTime date, int ticketsNumber)
         {
-            var results = await _flightService.GetFlights(departureAirportId, arrivalAirportId, date, ticketsNumber);
+            var results = await _flightService.GetFlightsAsync(departureAirportId, arrivalAirportId, date, ticketsNumber);
 
             return Ok(results);
         }
 
-        //GET: api/flights/id
         [HttpGet("{id}")]
         public async Task<ActionResult<FlightViewModel>> GetFlight(int id)
         {
-            var result = await _flightService.GetFlight(id);
+            var result = await _flightService.GetFlightAsync(id);
 
             if (result == null)
             {
@@ -44,6 +45,57 @@ namespace Airline_Web_API.Controllers
             }
 
             return Ok(result);
+        }
+
+
+        [HttpGet("parallel-search")]
+        public async Task<ActionResult<FlightViewModel>> GetFlightParallel([FromQuery] int? departureAirportId, int? arrivalAirportId, DateTime date)
+        {
+            var result = await _flightService.GetFlightsAsync(departureAirportId, arrivalAirportId, date);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public async Task<ActionResult> PostFlight([FromBody] NewFlightModel model)
+        {
+            await _flightService.AddFlightAsync(model);
+
+            return Ok();
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPut]
+        public async Task<ActionResult<Response<string>>> UpdateFlight([FromBody] FlightViewModel model)
+        {
+            Response<string> updateResult = await _flightService.UpdateFlightAsync(model);
+
+            if (updateResult.Success == false)
+            {
+                return BadRequest(updateResult);
+            }
+
+            return Ok(updateResult);
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Response<string>>> DeleteFlight(int id)
+        {
+            Response<string> updateResult = await _flightService.DeleteFlightAsync(id);
+
+            if (updateResult.Success == false)
+            {
+                return BadRequest(updateResult);
+            }
+
+            return Ok(updateResult);
         }
     }
 }

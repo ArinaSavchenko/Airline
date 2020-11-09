@@ -19,6 +19,9 @@
     </div>
   </div>
   <a class="changePassword" routerLink="/admin/account/change-password">Change password</a>
+  <div *ngIf="message" class="mat-error">
+    {{message}}
+  </div>
   <div class="actionButtons">
     <button mat-raised-button routerLink="/admin/account/details">Update</button>
     <button mat-raised-button (click)="delete()">Delete</button>

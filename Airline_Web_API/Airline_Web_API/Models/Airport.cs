@@ -15,6 +15,7 @@ namespace Airline_Web_API.Models
         public string City { get; set; }
         [Required(ErrorMessage = "Country is required")]
         public string Country { get; set; }
+        public string Status { get; set; }
 
         public ICollection<Flight> FlightsFrom { get; set; }
         public ICollection<Flight> FlightsTo { get; set; }

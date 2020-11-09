@@ -1,10 +1,12 @@
 <div class="infoContainer">
   <h1 class="header">Airports info</h1>
   <div>
-    <button mat-raised-button color="accent" class="addButton" routerLink="/admin/airports/new">Add new airport</button>
+    <button mat-raised-button color="accent" class="addButton" routerLink="/admin/airports/new">Add new airport
+    </button>
   </div>
 
   <div class="searchArea">
+
     <mat-form-field class="airportField" appearance="outline">
       <input #airport
              placeholder="Enter airport name or city"
@@ -15,12 +17,11 @@
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
         <mat-option *ngFor="let airport of airports$ | async" [value]="airport"
                     routerLink="/admin/airports/{{airport.id}}">
-              {{airport.city}}, {{airport.country}}<br>
-              <q class="airportName">{{airport.name}}</q>
+          {{airport.city}}, {{airport.country}}<br>
+          <q class="airportName">{{airport.name}}</q>
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
   </div>
-
   <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
 </div>

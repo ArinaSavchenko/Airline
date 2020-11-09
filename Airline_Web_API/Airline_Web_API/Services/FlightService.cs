@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using Airline_Web_API.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Airline_Web_API.Helpers;
+using Airline_Web_API.DTOs;
+
 namespace Airline_Web_API.Services
 {
     public class FlightService
@@ -20,7 +23,7 @@ namespace Airline_Web_API.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<FlightViewModel>> GetFlights(int departureAirportId, int arrivalAirportId, DateTime date, int ticketsNumber)
+        public async Task<IEnumerable<FlightViewModel>> GetFlightsAsync(int departureAirportId, int arrivalAirportId, DateTime date, int ticketsNumber)
         {
             var flights = _context.Flights
                 .Include(flight => flight.DepartureAirport)
@@ -45,11 +48,12 @@ namespace Airline_Web_API.Services
             return results;
         }
 
-        public async Task<FlightViewModel> GetFlight(int id)
+        public async Task<FlightViewModel> GetFlightAsync(int id)
         {
             var flight = await _context.Flights
                 .Include(flight => flight.DepartureAirport)
                 .Include(flight => flight.ArrivalAirport)
+                .Include(flight => flight.Airplane)
                 .Where(flight => flight.Id == id)
                 .FirstOrDefaultAsync();
 
@@ -61,6 +65,92 @@ namespace Airline_Web_API.Services
             var result = _mapper.Map<FlightViewModel>(flight);
 
             return result;
+        }
+
+        public async Task<List<FlightViewModel>> GetFlightsAsync(int? departureAirportId, int? arrivalAirportId, DateTime date)
+        {
+            var flights = _context.Flights
+                .Include(flight => flight.DepartureAirport)
+                .Include(flight => flight.ArrivalAirport)
+                .AsQueryable();
+
+            if (departureAirportId != null)
+            {
+                flights = flights.Where(flight => flight.DepartureAirportId == departureAirportId);
+            }
+
+            if (arrivalAirportId != null)
+            {
+                flights = flights.Where(flight => flight.ArrivalAirportId == arrivalAirportId);
+            }
+
+            if (date != default(DateTime))
+            {
+                flights = flights.Where(flight => flight.DepartureDate.Date == date.Date);
+            }
+
+            var flightsSearchResults = await flights
+                .OrderBy(flight => flight.Id)
+                .ToListAsync();
+
+            var results = _mapper.Map<List<FlightViewModel>>(flightsSearchResults);
+
+            return results;
+        }
+
+        public async Task<int> AddFlightAsync(NewFlightModel model)
+        {
+            var flight = _mapper.Map<Flight>(model);
+            _context.Flights.Add(flight);
+            await _context.SaveChangesAsync();
+
+            return flight.Id;
+        }
+
+        public async Task<Response<string>> UpdateFlightAsync(FlightViewModel model)
+        {
+            var flight = await _context.Flights.FindAsync(model.Id);
+
+            if (flight == null)
+            {
+                return new Response<string>
+                {
+                    Success = false,
+                    Message = "There is no such flight"
+                };
+            }
+
+            _mapper.Map(model, flight);
+            await _context.SaveChangesAsync();
+
+            return new Response<string>
+            {
+                Success = true,
+                Message = "Flight was succesfully updated"
+            };
+        }
+
+        public async Task<Response<string>> DeleteFlightAsync(int id)
+        {
+            var flight = await _context.Flights.FindAsync(id);
+
+            if (flight == null)
+            {
+                return new Response<string>
+                {
+                    Success = false,
+                    Message = "There is no such flight"
+                };
+            }
+
+            flight.Status = "Deleted";
+            await _context.SaveChangesAsync();
+
+            return new Response<string>
+            {
+                Success = true,
+                Message = "FLight was succesfully deleted"
+            };
         }
     }
 }
