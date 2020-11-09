@@ -1,15 +1,15 @@
 <div class="infoContainer">
     <h1 class="header">Tickets type info</h1>
     <div>
-        <button mat-raised-button color="accent" class="addButton"
-                routerLink="/admin/tickets/{{flightId ? flightId : 0}}/new">Add new ticket
+        <button mat-raised-button color="accent" class="addButton" routerLink="/admin/ticket-type/new">Add new ticket
+            type
         </button>
     </div>
     <div class="list">
         <mat-selection-list [multiple]="false">
-            <mat-list-option *ngFor="let ticket of tickets$ | async" [value]="ticket"
-                             routerLink="/admin/tickets/{{ticket.id}}">
-                {{ticket.ticketType.name}}
+            <mat-list-option *ngFor="let type of ticketTypes$ | async" [value]="type"
+                             routerLink="/admin/ticket-type/{{type.id}}">
+                {{type.name}}
             </mat-list-option>
         </mat-selection-list>
     </div>

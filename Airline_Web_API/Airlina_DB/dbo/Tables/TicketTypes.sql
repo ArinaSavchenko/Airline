@@ -2,12 +2,16 @@
 (
 	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
 	[Name] NVARCHAR(50) NOT NULL,
-	[CarryOnBagsNumber] INT NULL,
-	[CarryOnBagMaxWeight] INT NULL,
-	[BaggageNumber] INT NULL,
-	[BaggageMaxWeight] INT NULL,
+	[CarryOnBagsNumber] INT NOT NULL,
+	[CarryOnBagMaxWeight] INT NOT NULL,
+	[BaggageNumber] INT NOT NULL,
+	[BaggageMaxWeight] INT NOT NULL,
+	[PricePerExtraCarryOnBag] MONEY NOT NULL,
+	[PricePerExtraCarryOnBagKg] MONEY NOT NULL,
+	[PricePerExtraBaggage] MONEY NOT NULL,
+	[PricePerExtraBaggageKg] MONEY NOT NULL,
 	[SeatReservation] BIT NOT NULL,
 	[Changes] BIT NOT NULL,
-	[Refund] BIT NULL, 
-	[SeatType] NVARCHAR(50) NOT NULL
+	[Refund] NVARCHAR(250) NOT NULL, 
+	[SeatType] NVARCHAR(250) NOT NULL
 )

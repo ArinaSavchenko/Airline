@@ -18,6 +18,10 @@ import { UserDetailsComponent } from './user-details/user-details.component';
 import { SeatsSchemeComponent } from './seats-scheme/seats-scheme.component';
 import { FlightDetailsComponent } from './flight-details/flight-details.component';
 import { FlightAddingComponent } from './flight-adding/flight-adding.component';
+import { TicketsTypeInfoComponent } from './ticket-types-info/tickets-type-info.component';
+import { TicketTypeAddingComponent } from './ticket-type-adding/ticket-type-adding.component';
+import { TicketTypeDetailsComponent } from './ticket-type-details/ticket-type-details.component';
+import { TicketAddingComponent } from './ticket-adding/ticket-adding.component';
 
 const routes: Routes = [
 
@@ -38,7 +42,16 @@ const routes: Routes = [
   { path: 'admin/airplane/seats-scheme/:airplaneId', canActivate: [AuthGuard], component: SeatsSchemeComponent},
   { path: 'admin/flights/new', canActivate: [AuthGuard], component: FlightAddingComponent},
   { path: 'admin/flights/:id', canActivate: [AuthGuard], component: FlightDetailsComponent},
+<<<<<<< HEAD
   { path: 'admin/tickets/:id', canActivate: [AuthGuard], component: TicketsInfoComponent}
+=======
+  { path: 'admin/tickets/:flightId', canActivate: [AuthGuard], component: TicketsInfoComponent},
+  { path: 'admin/ticket-types', canActivate: [AuthGuard], component: TicketsTypeInfoComponent},
+  { path: 'admin/ticket-type/new', canActivate: [AuthGuard], component: TicketTypeAddingComponent},
+  { path: 'admin/ticket-type/:id', canActivate: [AuthGuard], component: TicketTypeDetailsComponent},
+  { path: 'admin/tickets/:flightId/new', canActivate: [AuthGuard], component: TicketAddingComponent},
+
+>>>>>>> 224d70503e3f34d6205d9d933cfded6ba2f5a955
 ];
 
 @NgModule({

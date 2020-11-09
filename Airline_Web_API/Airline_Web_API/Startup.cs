@@ -34,13 +34,16 @@ namespace Airline_Web_API
 
             services.AddControllers();
 
+            services.AddTransient<AirlineContext>();
+
             services.AddTransient<FlightService>();
             services.AddTransient<AirportService>();
             services.AddTransient<UserService>();
             services.AddTransient<JwtService>();
-            services.AddTransient<AirlineContext>();
             services.AddTransient<AirplaneService>();
             services.AddTransient<SeatsService>();
+            services.AddTransient<TicketService>();
+            services.AddTransient<TicketTypeService>();
 
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

@@ -8,8 +8,10 @@ namespace Airline_Web_API.ViewModels
     public class TicketsViewModel
     {
         public int Id { get; set; }
-        public decimal Price { get; set; }
         public int FlightId { get; set; }
+        public decimal Price { get; set; }
+        public int TicketsLeftNumber { get; set; }
+        public string Status { get; set; }
         public TicketTypeViewModel TicketType { get; set; }
     }
 }

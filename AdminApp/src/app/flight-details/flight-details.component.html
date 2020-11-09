@@ -103,7 +103,7 @@
     </div>
   </form>
 
-  <a class="ticketsLink" routerLink="/admin/tickets">Tickets</a>
+  <a class="ticketsLink" routerLink="/admin/tickets/{{flight.id}}">Tickets</a>
 
   <div *ngIf="message" class="mat-error">
     {{message}}
