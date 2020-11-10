@@ -13,7 +13,6 @@ import { AirportService } from '../Services/airport.service';
 export class AirportsInfoComponent implements OnInit {
 
   airportStatus: string;
-  statuses: string[] = ['Any', 'Active', 'Closed', 'Temporary closed'];
   airports$: Observable<Airport[]>;
   private searchTerms = new Subject<string>();
 

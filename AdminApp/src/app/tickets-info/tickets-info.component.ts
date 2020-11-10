@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
 import { Observable } from 'rxjs';
+
 import { Ticket } from '../Models/Ticket';
 import { TicketService } from '../Services/ticket.service';
-import { ActivatedRoute } from '@angular/router';
-import { tick } from '@angular/core/testing';
 
 @Component({
   selector: 'app-tickets-info',

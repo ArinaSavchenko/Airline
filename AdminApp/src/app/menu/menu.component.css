@@ -1,29 +1,16 @@
 .buttonsContainer {
-  margin-top: 4em;
   height: 58em;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
 }
 
 .chooseActionButton,
 .addUser,
 .logOutButton,
-.accountButton
-{
+.accountButton {
   color: #404040;
   font-size: 26px;
   margin: auto;
   height: 4em;
   width: 20em;
-}
-
-.header {
-  font-weight: bolder;
-  font-size: 55px;
-  font-family: "Helvetica Neue", sans-serif;
-  color: dimgrey;
-  text-align: center;
 }
 
 .userControlButtons {
@@ -39,7 +26,7 @@
 
 .addUser,
 .logOutButton,
-.accountButton{
+.accountButton {
   height: 3em;
   width: 9em;
 }

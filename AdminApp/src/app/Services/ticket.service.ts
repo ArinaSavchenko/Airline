@@ -5,48 +5,48 @@ import { Observable, of } from 'rxjs';
 
 import { Ticket } from '../Models/Ticket';
 import { environment } from '../../environments/environment';
-import { TicketType } from '../Models/TicketType';
 import { ResponseModel } from '../Models/ResponseModel';
 import { catchError } from 'rxjs/operators';
 
-@Injectable({ providedIn: 'root' })
+@Injectable( {providedIn: 'root'} )
 export class TicketService {
 
-    private ticketsUrl = environment.baseUrl + '/tickets';  // URL to web api
+  private ticketsUrl = environment.baseUrl + '/tickets';  // URL to web api
 
-    httpOptions = {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
+  httpOptions = {
+    headers: new HttpHeaders( {'Content-Type': 'application/json'} )
+  };
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-    getTicket(id: number): Observable<Ticket> {
-        const url = `${this.ticketsUrl}/${id}`;
-        return this.http.get<Ticket>(url);
-    }
+  getTicket(id: number): Observable<Ticket> {
+    const url = `${this.ticketsUrl}/${id}`;
+    return this.http.get<Ticket>( url );
+  }
 
-    getTickets(flightId: number): Observable<Ticket[]> {
-        return this.http.get<Ticket[]>(this.ticketsUrl + '?flightId=' + flightId);
-    }
+  getTickets(flightId: number): Observable<Ticket[]> {
+    return this.http.get<Ticket[]>( this.ticketsUrl + '?flightId=' + flightId );
+  }
 
-    addTicket(ticket: Ticket): Observable<any> {
-        return this.http.post(this.ticketsUrl, ticket, this.httpOptions);
-    }
+  addTicket(ticket: Ticket): Observable<any> {
+    return this.http.post( this.ticketsUrl, ticket, this.httpOptions );
+  }
 
-    updateTicket(ticket: Ticket): Observable<ResponseModel> {
-        return this.http.put<ResponseModel>(this.ticketsUrl, ticket, this.httpOptions).pipe(
-          catchError(error => this.handleError(error))
-        );
-    }
+  updateTicket(ticket: Ticket): Observable<ResponseModel> {
+    return this.http.put<ResponseModel>( this.ticketsUrl, ticket, this.httpOptions ).pipe(
+      catchError( error => this.handleError( error ) )
+    );
+  }
 
-    deleteTicket(id: number): Observable<ResponseModel> {
-        const url = `${this.ticketsUrl}/${id}`;
-        return this.http.delete<ResponseModel>(url, this.httpOptions).pipe(
-          catchError(error => this.handleError(error))
-        );
-    }
+  deleteTicket(id: number): Observable<ResponseModel> {
+    const url = `${this.ticketsUrl}/${id}`;
+    return this.http.delete<ResponseModel>( url, this.httpOptions ).pipe(
+      catchError( error => this.handleError( error ) )
+    );
+  }
 
-    handleError(error: HttpErrorResponse): Observable<any> {
-        return of(error.error);
-    }
+  handleError(error: HttpErrorResponse): Observable<any> {
+    return of( error.error );
+  }
 }

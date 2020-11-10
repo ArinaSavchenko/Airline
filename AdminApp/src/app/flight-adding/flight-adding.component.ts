@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
@@ -37,6 +37,7 @@ export class FlightAddingComponent implements OnInit {
   public stepSecond = 1;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private flightService: FlightService,
     private location: Location,
@@ -94,15 +95,17 @@ export class FlightAddingComponent implements OnInit {
   }
 
   addFlight(): void {
-    const flight = {
-      departureAirportId: this.flightForm.controls.departureAirport.value.id,
-      arrivalAirportId: this.flightForm.controls.arrivalAirport.value.id,
-      departureDate: this.flightForm.controls.departureDate.value,
-      arrivalDate: this.flightForm.controls.arrivalDate.value,
-      airplaneId: this.flightForm.controls.airplane.value.id,
-      status: this.flightForm.controls.status.value
-    };
-    this.flightService.addFlight( flight )
-      .subscribe( () => this.goBack() );
+    if (this.flightForm.valid) {
+      const flight = {
+        departureAirportId: this.flightForm.controls.departureAirport.value.id,
+        arrivalAirportId: this.flightForm.controls.arrivalAirport.value.id,
+        departureDate: this.flightForm.controls.departureDate.value,
+        arrivalDate: this.flightForm.controls.arrivalDate.value,
+        airplaneId: this.flightForm.controls.airplane.value.id,
+        status: this.flightForm.controls.status.value
+      };
+      this.flightService.addFlight( flight )
+        .subscribe( (flightId) => this.router.navigate( [`/admin/flights/tickets/${flightId}`] ) );
+    }
   }
 }

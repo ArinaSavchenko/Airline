@@ -1,6 +1,6 @@
-<div>
+<div class="infoContainer">
   <h1 class="header">Registration</h1>
-  <form [formGroup]="userForm" (ngSubmit)="onFormSubmit()">
+  <form [formGroup]="userForm" (ngSubmit)="onFormSubmit()" class="infoArea">
     <mat-form-field appearance="outline">
       <mat-label>Enter first name:</mat-label>
       <input matInput formControlName="firstName" placeholder="First name">
@@ -55,9 +55,11 @@
         Passwords don't match
       </mat-error>
     </mat-form-field>
-    <p *ngIf="message" class="mat-error">{{message}}</p>
-    <button type="submit" mat-raised-button class="signUpButton">Sign up</button>
   </form>
-  <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
+  <p *ngIf="message" class="mat-error">{{message}}</p>
+  <div class="buttonsContainer">
+      <button type="submit" mat-raised-button class="addButton">Sign up</button>
+      <button mat-raised-button class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
+  </div>
 </div>
 

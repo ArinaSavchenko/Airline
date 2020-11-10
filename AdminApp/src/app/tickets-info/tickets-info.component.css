@@ -1,12 +1,12 @@
 .list {
-    margin: 1em;
+  margin: 1em;
 }
 
 .mat-selection-list {
-    border-bottom: #97b703 solid 2px;
+  border-bottom: #97b703 solid 2px;
 }
 
 .mat-list-option {
-    width: 100%;
-    border-top: #97b703 solid 2px;
+  width: 100%;
+  border-top: #97b703 solid 2px;
 }

@@ -42,22 +42,22 @@ export class AirportDetailsComponent implements OnInit {
     this.airportService.getAirport( id )
       .subscribe( airport => {
         this.airport = airport;
-        this.airportForm = this.formBuilder.group({
+        this.airportForm = this.formBuilder.group( {
           id: this.airport.id,
-          name: new FormControl(airport.name, Validators.required),
-          city: new FormControl(airport.city, Validators.required),
-          country: new FormControl(airport.country, Validators.required),
-          status: new FormControl(airport.status, Validators.required)
-        });
+          name: new FormControl( airport.name, Validators.required ),
+          city: new FormControl( airport.city, Validators.required ),
+          country: new FormControl( airport.country, Validators.required ),
+          status: new FormControl( airport.status, Validators.required )
+        } );
       } );
   }
 
   onSave(): void {
-    this.openDialog( 'Are you sure that you want to save changes' );
+    this.openDialog( 'Are you sure that you want to save changes?' );
   }
 
   onDelete(): void {
-    this.openDialog( 'Are you sure that you want to delete this airport' );
+    this.openDialog( 'Are you sure that you want to delete this airport?' );
   }
 
   openDialog(value: string): void {
@@ -68,11 +68,11 @@ export class AirportDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe( result => {
       if (result.event === true) {
         switch (value) {
-          case 'Are you sure that you want to save changes': {
+          case 'Are you sure that you want to save changes?': {
             this.save();
             break;
           }
-          case 'Are you sure that you want to delete this airport': {
+          case 'Are you sure that you want to delete this airport?': {
             this.delete();
             break;
           }

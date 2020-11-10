@@ -65,9 +65,9 @@ namespace Airline_Web_API.Controllers
         [HttpPost]
         public async Task<ActionResult> PostFlight([FromBody] NewFlightModel model)
         {
-            await _flightService.AddFlightAsync(model);
+            var fligthId = await _flightService.AddFlightAsync(model);
 
-            return Ok();
+            return Ok(fligthId);
         }
 
         [Authorize(Roles = "admin")]

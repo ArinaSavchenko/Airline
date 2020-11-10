@@ -44,7 +44,7 @@ export class TicketAddingComponent implements OnInit {
   addTicket(): void {
     if (this.ticketForm.valid) {
       const ticket = this.ticketForm.value;
-      this.ticketService.addTicket(ticket).subscribe(() => this.goBack());
+      this.ticketService.addTicket( ticket ).subscribe( () => this.goBack() );
     }
   }
 

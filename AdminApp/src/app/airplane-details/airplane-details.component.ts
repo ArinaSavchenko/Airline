@@ -48,14 +48,14 @@ export class AirplaneDetailsComponent implements OnInit {
         this.airplane = airplane;
         this.seatsService.getSeats( this.airplane.id ).subscribe( seats => {
           this.theCabin = this.seatsSchemeService.drawScheme( seats );
-          });
-        this.airplaneForm = this.formBuilder.group({
+        } );
+        this.airplaneForm = this.formBuilder.group( {
           id: this.airplane.id,
-          name: new FormControl(airplane.name, Validators.required),
-          seatsNumber: new FormControl(airplane.seatsNumber, Validators.required),
-          maxWeight: new FormControl(airplane.maxWeight, Validators.required),
-          status: new FormControl(airplane.status, Validators.required)
-        });
+          name: new FormControl( airplane.name, Validators.required ),
+          seatsNumber: new FormControl( airplane.seatsNumber, Validators.required ),
+          maxWeight: new FormControl( airplane.maxWeight, Validators.required ),
+          status: new FormControl( airplane.status, Validators.required )
+        } );
       } );
   }
 

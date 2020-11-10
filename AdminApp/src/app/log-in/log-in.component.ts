@@ -33,7 +33,6 @@ export class LogInComponent {
       this.message = response.message;
     } else {
       localStorage.setItem( 'token', response.data );
-      this.userService.getUserRole();
       this.router.navigate( ['/admin/menu'] );
     }
   }

@@ -1,6 +1,6 @@
 <div *ngIf="ticketType" class="infoContainer">
   <h1 class="header">Ticket type details</h1>
-  <form [formGroup]="ticketTypeForm" class="details">
+  <form [formGroup]="ticketTypeForm" class="infoArea">
     <mat-form-field appearance="outline">
       <mat-label>Ticket type name:</mat-label>
       <input type="text" matInput formControlName="name">
@@ -113,15 +113,17 @@
 
   <div class="buttonsContainer">
     <div>
-      <button mat-raised-button color="accent" class="saveButton" (click)="onSave()">Save</button>
+      <button mat-raised-button class="saveButton" [disabled]="!ticketTypeForm.valid" (click)="onSave()">
+        Save
+      </button>
     </div>
     <div>
-      <button mat-raised-button color="accent" class="deleteButton" (click)="onDelete()">Delete airplane</button>
+      <button mat-raised-button class="deleteButton" (click)="onDelete()">Delete ticket type</button>
     </div>
-    <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/ticket-types">Back to the
+    <button mat-raised-button class="goBackButton" routerLink="/admin/ticket-types">Back to the
       airplanes
     </button>
-    <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
+    <button mat-raised-button class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
   </div>
 </div>
 

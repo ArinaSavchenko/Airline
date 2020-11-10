@@ -51,10 +51,6 @@ export class TicketDetailsComponent implements OnInit {
     } );
   }
 
-  goBack(): void {
-    this.location.back();
-  }
-
   onSave(): void {
     if (this.ticketForm.valid) {
       this.openDialog( 'Are you sure that you want to save changes?' );
@@ -87,8 +83,11 @@ export class TicketDetailsComponent implements OnInit {
   }
 
   save(): void {
-    this.ticketService.updateTicket( this.ticketForm.value )
-      .subscribe( response => this.checkResult( response ) );
+    if (this.ticketForm.valid) {
+      const ticket = this.ticketForm.value;
+      this.ticketService.updateTicket( ticket )
+        .subscribe( response => this.checkResult( response ) );
+    }
   }
 
   delete(): void {
@@ -103,5 +102,9 @@ export class TicketDetailsComponent implements OnInit {
     } else {
       this.goBack();
     }
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }

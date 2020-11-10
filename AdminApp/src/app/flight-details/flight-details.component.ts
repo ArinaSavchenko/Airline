@@ -82,6 +82,7 @@ export class FlightDetailsComponent implements OnInit {
       .subscribe( flight => {
         this.flight = flight;
         this.flightForm = this.formBuilder.group( {
+          id: this.flight.id,
           departureAirport: new FormControl( this.flight.departureAirport, Validators.required ),
           arrivalAirport: new FormControl( this.flight.arrivalAirport, Validators.required ),
           departureDate: new FormControl( this.flight.departureDate, Validators.required ),
@@ -108,10 +109,6 @@ export class FlightDetailsComponent implements OnInit {
     this.searchTermsAirplanes.next( value );
   }
 
-  goBack(): void {
-    this.location.back();
-  }
-
   onSave(): void {
     if (this.flightForm.valid) {
       this.openDialog( 'Are you sure that you want to save changes?' );
@@ -119,13 +116,12 @@ export class FlightDetailsComponent implements OnInit {
   }
 
   onDelete(): void {
-    if (this.flightForm.valid) {
-      this.openDialog( 'Are you sure that you want to delete this flight?' );
-    }
+    this.openDialog( 'Are you sure that you want to delete this flight?' );
   }
 
   save(): void {
-    this.flightService.updateFlight( this.flight )
+    const flight = this.flightForm.value;
+    this.flightService.updateFlight( flight )
       .subscribe( response => this.checkResult( response ) );
   }
 
@@ -156,29 +152,11 @@ export class FlightDetailsComponent implements OnInit {
   }
 
   setDepartureAirport(value): void {
-    this.flight.departureAirport = value;
     this.airports = this.airports.filter( airport => airport.id !== value );
   }
 
   setArrivalAirport(value): void {
-    this.flight.arrivalAirport = value;
     this.airports = this.airports.filter( airport => airport.id !== value.id );
-  }
-
-  setDepartureDate(value): void {
-    this.flight.departureDate = new Date( value );
-  }
-
-  setArrivalDate(value): void {
-    this.flight.departureDate = new Date( value );
-  }
-
-  setAirplane(value): void {
-    this.flight.airplane = value;
-  }
-
-  setStatus(value): void {
-    this.flight.status = value;
   }
 
   checkResult(response: ResponseModel): void {
@@ -187,5 +165,9 @@ export class FlightDetailsComponent implements OnInit {
     } else {
       this.goBack();
     }
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 }

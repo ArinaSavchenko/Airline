@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 
-import { Airplane } from '../Models/Airplane';
 import { AirplaneService } from '../Services/airplane.service';
 import { AirplaneStatuses } from '../Enums/AirplaneStatuses';
 
@@ -17,7 +16,6 @@ export class AirplaneAddingComponent {
   airplaneStatuses = AirplaneStatuses;
   airplaneForm: FormGroup;
   nameFormat = '[a-zA-Z\s]+$';
-  message: string;
 
   constructor(private formBuilder: FormBuilder,
               private airplaneService: AirplaneService,
@@ -38,9 +36,5 @@ export class AirplaneAddingComponent {
       this.airplaneService.addAirplane( airplane ).subscribe( (newAirplaneId) => this.router.navigate(
         ['admin/airplane/seats-scheme/' + newAirplaneId] ) );
     }
-  }
-
-  goBack(): void {
-    this.location.back();
   }
 }

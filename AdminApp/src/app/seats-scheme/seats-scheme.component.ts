@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Seat } from '../Models/Seat';
-import { ActivatedRoute, Router } from '@angular/router';
 import { SeatsService } from '../Services/seats.service';
 import { SeatsSchemeService } from '../Services/seats-scheme.service';
+import { SeatTypes } from '../Enums/SeatTypes';
 
 @Component( {
   selector: 'app-seats-scheme',
@@ -15,7 +16,7 @@ export class SeatsSchemeComponent implements OnInit {
   airplaneId: number;
 
   selectedSeatType: string;
-  types = ['Business', 'Standard'];
+  seatTypes = SeatTypes;
   sectorName: string;
   sectorNumber: number;
   column: string;

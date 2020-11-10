@@ -1,6 +1,6 @@
 <div *ngIf="ticket" class="infoContainer">
   <h1 class="header">Ticket info</h1>
-  <form [formGroup]="ticketForm" class="details">
+  <form [formGroup]="ticketForm" class="infoArea">
 
     <mat-form-field appearance="outline">
       <mat-label>Ticket type</mat-label>
@@ -36,20 +36,21 @@
       </mat-select>
     </mat-form-field>
   </form>
+
   <div *ngIf="message" class="mat-error">
     {{message}}
   </div>
 
   <div class="buttonsContainer">
     <div>
-      <button mat-raised-button color="accent" class="saveButton" (click)="onSave()">Save</button>
+      <button mat-raised-button class="saveButton" (click)="onSave()">Save</button>
     </div>
     <div>
-      <button mat-raised-button color="accent" class="deleteButton" (click)="onDelete()">Delete ticket</button>
+      <button mat-raised-button class="deleteButton" (click)="onDelete()">Delete ticket</button>
     </div>
-    <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/flights">Back to the tickets
+    <button mat-raised-button class="goBackButton" routerLink="/admin/flights">Back to the tickets
     </button>
-    <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
+    <button mat-raised-button class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
   </div>
 </div>
 

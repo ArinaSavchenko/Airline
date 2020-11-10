@@ -28,8 +28,8 @@
     <mat-form-field appearance="outline">
       <mat-label>Seat type</mat-label>
       <mat-select [(ngModel)]="selectedSeatType" name="food">
-        <mat-option *ngFor="let type of types" [value]="type">
-          {{type}}
+        <mat-option *ngFor="let type of seatTypes | keyvalue" [value]="type.value">
+          {{type.value}}
         </mat-option>
       </mat-select>
     </mat-form-field>
