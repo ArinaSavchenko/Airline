@@ -38,10 +38,10 @@ namespace Airline_Web_API.Controllers
 
 
         [Authorize]
-        [HttpPut("update")]
-        public async Task<ActionResult> Update([FromBody] UpdateUserModel model)
+        [HttpPut("update/{id}")]
+        public async Task<ActionResult> Update(int id, [FromBody] UpdateUserModel model)
         {
-            Response<string> updateResult = await _userService.UpdateUserAsync(model);
+            Response<string> updateResult = await _userService.UpdateUserAsync(id, model);
 
             if (updateResult.Success == false)
             {
@@ -52,10 +52,10 @@ namespace Airline_Web_API.Controllers
         }
 
         [Authorize]
-        [HttpPut("update-password")]
-        public async Task<ActionResult> ChangePassword([FromBody] ChangePasswordModel model)
+        [HttpPut("update-password/{id}")]
+        public async Task<ActionResult> ChangePassword(int id, [FromBody] ChangePasswordModel model)
         {
-            Response<string> updateResult = await _userService.ChangePasswordAsync(model);
+            Response<string> updateResult = await _userService.ChangePasswordAsync(id, model);
 
             if (updateResult.Success == false)
             {

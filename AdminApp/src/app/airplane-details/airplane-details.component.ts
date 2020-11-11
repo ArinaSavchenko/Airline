@@ -13,14 +13,14 @@ import { SeatsService } from '../Services/seats.service';
 import { SeatsSchemeService } from '../Services/seats-scheme.service';
 import { AirplaneStatuses } from '../Enums/AirplaneStatuses';
 
-@Component( {
+@Component({
   selector: 'app-airplane-details',
   templateUrl: './airplane-details.component.html',
   styleUrls: ['./airplane-details.component.css']
-} )
+})
 export class AirplaneDetailsComponent implements OnInit {
 
-  @ViewChild( MatTable, {static: true} ) table: MatTable<any>;
+  @ViewChild(MatTable, {static: true}) table: MatTable<any>;
 
   airplane: Airplane;
   message: string;
@@ -42,39 +42,39 @@ export class AirplaneDetailsComponent implements OnInit {
   }
 
   getAirplane(): void {
-    const id = +this.route.snapshot.paramMap.get( 'id' );
-    this.airplaneService.getAirplane( id )
-      .subscribe( airplane => {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.airplaneService.getAirplane(id)
+      .subscribe(airplane => {
         this.airplane = airplane;
-        this.seatsService.getSeats( this.airplane.id ).subscribe( seats => {
-          this.theCabin = this.seatsSchemeService.drawScheme( seats );
-        } );
-        this.airplaneForm = this.formBuilder.group( {
+        this.seatsService.getSeats(this.airplane.id).subscribe(seats => {
+          this.theCabin = this.seatsSchemeService.drawScheme(seats);
+        });
+        this.airplaneForm = this.formBuilder.group({
           id: this.airplane.id,
-          name: new FormControl( airplane.name, Validators.required ),
-          seatsNumber: new FormControl( airplane.seatsNumber, Validators.required ),
-          maxWeight: new FormControl( airplane.maxWeight, Validators.required ),
-          status: new FormControl( airplane.status, Validators.required )
-        } );
-      } );
+          name: new FormControl(airplane.name, Validators.required),
+          seatsNumber: new FormControl(airplane.seatsNumber, Validators.required),
+          maxWeight: new FormControl(airplane.maxWeight, Validators.required),
+          status: new FormControl(airplane.status, Validators.required)
+        });
+      });
   }
 
   save(): void {
-    this.airplaneService.updateAirplane( this.airplaneForm.value )
-      .subscribe( response => this.checkResult( response ) );
+    this.airplaneService.updateAirplane(this.airplaneForm.value)
+      .subscribe(response => this.checkResult(response));
   }
 
   delete(): void {
-    this.airplaneService.deleteAirplane( this.airplane.id )
-      .subscribe( response => this.checkResult( response ) );
+    this.airplaneService.deleteAirplane(this.airplane.id)
+      .subscribe(response => this.checkResult(response));
   }
 
   openDialog(value: string): void {
-    const dialogRef = this.dialog.open( ConfirmActionDialogComponent, {
+    const dialogRef = this.dialog.open(ConfirmActionDialogComponent, {
       data: value
-    } );
+    });
 
-    dialogRef.afterClosed().subscribe( result => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result.event === true) {
         switch (value) {
           case 'Are you sure that you want to save changes?': {
@@ -87,17 +87,17 @@ export class AirplaneDetailsComponent implements OnInit {
           }
         }
       }
-    } );
+    });
   }
 
   onSave(): void {
     if (this.airplaneForm.valid) {
-      this.openDialog( 'Are you sure that you want to save changes?' );
+      this.openDialog('Are you sure that you want to save changes?');
     }
   }
 
   onDelete(): void {
-    this.openDialog( 'Are you sure that you want to delete this airplane?' );
+    this.openDialog('Are you sure that you want to delete this airplane?');
   }
 
   checkResult(response: ResponseModel): void {

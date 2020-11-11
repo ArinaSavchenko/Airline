@@ -30,7 +30,7 @@ namespace Airline_Web_API.Services
                 .OrderBy(seat => seat.Id)
                 .ToListAsync();
 
-            var results = _mapper.Map<List<SeatViewModel>>(seatsSearchResults);
+            var results = _mapper.Map<IEnumerable<SeatViewModel>>(seatsSearchResults);
 
             return results;
         }

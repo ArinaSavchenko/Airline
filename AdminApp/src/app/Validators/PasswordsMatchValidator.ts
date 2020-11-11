@@ -6,9 +6,9 @@ export function PasswordsMatchValidator(formControlName: string, formControlName
     const controlToCompare = formGroup.controls[formControlNameToCompare];
 
     if (control.value !== controlToCompare.value) {
-      controlToCompare.setErrors( {mustMatch: true} );
+      controlToCompare.setErrors({mustMatch: true});
     } else {
-      controlToCompare.setErrors( null );
+      controlToCompare.setErrors(null);
     }
     return;
   };

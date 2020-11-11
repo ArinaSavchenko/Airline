@@ -8,11 +8,11 @@ import { ResponseModel } from '../Models/ResponseModel';
 import { PasswordsMatchValidator } from '../Validators/PasswordsMatchValidator';
 import { UserService } from '../Services/user.service';
 
-@Component( {
+@Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.css']
-} )
+})
 export class ChangePasswordComponent implements OnInit {
 
   oldHide = true;
@@ -25,12 +25,12 @@ export class ChangePasswordComponent implements OnInit {
   constructor(public userService: UserService,
               private formBuilder: FormBuilder,
               private location: Location) {
-    this.passwordForm = this.formBuilder.group( {
-      oldPassword: new FormControl( null, Validators.required ),
-      newPassword: new FormControl( null, Validators.required ),
-      confirmPassword: new FormControl( null, Validators.required )
-    } );
-    this.passwordForm.setValidators( PasswordsMatchValidator( 'newPassword', 'confirmPassword' ) );
+    this.passwordForm = this.formBuilder.group({
+      oldPassword: new FormControl(null, Validators.required),
+      newPassword: new FormControl(null, Validators.required),
+      confirmPassword: new FormControl(null, Validators.required)
+    });
+    this.passwordForm.setValidators(PasswordsMatchValidator('newPassword', 'confirmPassword'));
   }
 
   onFormSubmit(): void {
@@ -40,19 +40,18 @@ export class ChangePasswordComponent implements OnInit {
         oldPassword: this.passwordForm.controls.oldPassword.value,
         newPassword: this.passwordForm.controls.newPassword.value
       };
-      this.userService.changePassword( password ).subscribe( response => this.checkResult( response ) );
+      this.userService.changePassword(password).subscribe(response => this.checkResult(response));
     }
   }
 
   ngOnInit(): void {
-    this.userService.getUser().subscribe( user => this.user = user );
+    this.userService.getUser().subscribe(user => this.user = user);
   }
 
   checkResult(response: ResponseModel): void {
     if (!response.success) {
       this.message = response.message;
-    }
-    else{
+    } else {
       this.goBack();
     }
   }

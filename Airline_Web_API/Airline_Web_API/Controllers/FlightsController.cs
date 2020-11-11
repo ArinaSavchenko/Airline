@@ -65,16 +65,16 @@ namespace Airline_Web_API.Controllers
         [HttpPost]
         public async Task<ActionResult> PostFlight([FromBody] NewFlightModel model)
         {
-            var fligthId = await _flightService.AddFlightAsync(model);
+            var flightId = await _flightService.AddFlightAsync(model);
 
-            return Ok(fligthId);
+            return Ok(flightId);
         }
 
         [Authorize(Roles = "admin")]
-        [HttpPut]
-        public async Task<ActionResult<Response<string>>> UpdateFlight([FromBody] FlightViewModel model)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Response<string>>> UpdateFlight(int id, [FromBody] FlightViewModel model)
         {
-            Response<string> updateResult = await _flightService.UpdateFlightAsync(model);
+            Response<string> updateResult = await _flightService.UpdateFlightAsync(id, model);
 
             if (updateResult.Success == false)
             {

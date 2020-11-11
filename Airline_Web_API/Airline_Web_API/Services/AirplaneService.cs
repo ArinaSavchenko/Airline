@@ -57,9 +57,9 @@ namespace Airline_Web_API.Services
             return airplane.Id;
         }
 
-        public async Task<Response<string>> UpdateAirplaneAsync(AirplaneViewModel model)
+        public async Task<Response<string>> UpdateAirplaneAsync(int id, AirplaneViewModel model)
         {
-            var airplane = await _context.Airplanes.FindAsync(model.Id);
+            var airplane = await _context.Airplanes.FindAsync(id);
 
             if (airplane == null)
             {

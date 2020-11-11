@@ -11,7 +11,7 @@ import { TicketService } from '../Services/ticket.service';
   templateUrl: './tickets-info.component.html',
   styleUrls: ['./tickets-info.component.css']
 })
-export class TicketsInfoComponent implements OnInit{
+export class TicketsInfoComponent implements OnInit {
 
   flightId: number;
   tickets$: Observable<Ticket[]>;
@@ -20,7 +20,7 @@ export class TicketsInfoComponent implements OnInit{
               private route: ActivatedRoute) {
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.flightId = +this.route.snapshot.paramMap.get('id');
     this.tickets$ = this.ticketService.getTickets(this.flightId);
   }

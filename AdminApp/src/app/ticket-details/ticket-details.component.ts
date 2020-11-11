@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 
 import { Observable } from 'rxjs';
 
@@ -11,14 +12,13 @@ import { TicketType } from '../Models/TicketType';
 import { TicketTypeService } from '../Services/ticket-type.service';
 import { ConfirmActionDialogComponent } from '../confirm-action-dialog/confirm-action-dialog.component';
 import { ResponseModel } from '../Models/ResponseModel';
-import { MatDialog } from '@angular/material/dialog';
 import { TicketStatuses } from '../Enums/TicketStatuses';
 
-@Component( {
+@Component({
   selector: 'app-ticket-details',
   templateUrl: './ticket-details.component.html',
   styleUrls: ['./ticket-details.component.css']
-} )
+})
 export class TicketDetailsComponent implements OnInit {
 
   ticketStatuses = TicketStatuses;
@@ -36,37 +36,37 @@ export class TicketDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const ticketId = +this.route.snapshot.paramMap.get( 'id' );
-    this.ticketService.getTicket( ticketId ).subscribe( ticket => {
+    const ticketId = +this.route.snapshot.paramMap.get('id');
+    this.ticketService.getTicket(ticketId).subscribe(ticket => {
       this.ticket = ticket;
-      this.ticketForm = this.formBuilder.group( {
+      this.ticketForm = this.formBuilder.group({
         id: this.ticket.id,
         flightId: this.ticket.flightId,
-        ticketType: new FormControl( this.ticket.ticketType, Validators.required ),
-        price: new FormControl( this.ticket.price, Validators.required ),
-        ticketsLeftNumber: new FormControl( this.ticket.ticketsLeftNumber, Validators.required ),
-        status: new FormControl( this.ticket.status, Validators.required )
-      } );
+        ticketType: new FormControl(this.ticket.ticketType, Validators.required),
+        price: new FormControl(this.ticket.price, Validators.required),
+        ticketsLeftNumber: new FormControl(this.ticket.ticketsLeftNumber, Validators.required),
+        status: new FormControl(this.ticket.status, Validators.required)
+      });
       this.types$ = this.ticketTypeService.getTicketTypes();
-    } );
+    });
   }
 
   onSave(): void {
     if (this.ticketForm.valid) {
-      this.openDialog( 'Are you sure that you want to save changes?' );
+      this.openDialog('Are you sure that you want to save changes?');
     }
   }
 
   onDelete(): void {
-    this.openDialog( 'Are you sure that you want to delete this ticket?' );
+    this.openDialog('Are you sure that you want to delete this ticket?');
   }
 
   openDialog(value: string): void {
-    const dialogRef = this.dialog.open( ConfirmActionDialogComponent, {
+    const dialogRef = this.dialog.open(ConfirmActionDialogComponent, {
       data: value
-    } );
+    });
 
-    dialogRef.afterClosed().subscribe( result => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result.event === true) {
         switch (value) {
           case 'Are you sure that you want to save changes?': {
@@ -79,20 +79,20 @@ export class TicketDetailsComponent implements OnInit {
           }
         }
       }
-    } );
+    });
   }
 
   save(): void {
     if (this.ticketForm.valid) {
       const ticket = this.ticketForm.value;
-      this.ticketService.updateTicket( ticket )
-        .subscribe( response => this.checkResult( response ) );
+      this.ticketService.updateTicket(ticket)
+        .subscribe(response => this.checkResult(response));
     }
   }
 
   delete(): void {
-    this.ticketService.deleteTicket( this.ticket.id )
-      .subscribe( response => this.checkResult( response ) );
+    this.ticketService.deleteTicket(this.ticket.id)
+      .subscribe(response => this.checkResult(response));
   }
 
 

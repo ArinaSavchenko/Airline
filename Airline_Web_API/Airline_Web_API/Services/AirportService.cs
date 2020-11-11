@@ -45,7 +45,7 @@ namespace Airline_Web_API.Services
                 .OrderBy(airport => airport.Id)
                 .ToListAsync();
 
-            var results = _mapper.Map<List<AirportViewModel>>(airportsSearchResults);
+            var results = _mapper.Map<IEnumerable<AirportViewModel>>(airportsSearchResults);
 
             return results;
         }
@@ -56,9 +56,9 @@ namespace Airline_Web_API.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Response<string>> UpdateAirportAsync(AirportViewModel model)
+        public async Task<Response<string>> UpdateAirportAsync(int id, AirportViewModel model)
         {
-            var airport = await _context.Airports.FindAsync(model.Id);
+            var airport = await _context.Airports.FindAsync(id);
 
             if (airport == null)
             {

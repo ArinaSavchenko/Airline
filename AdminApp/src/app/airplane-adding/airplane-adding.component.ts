@@ -6,11 +6,11 @@ import { Router } from '@angular/router';
 import { AirplaneService } from '../Services/airplane.service';
 import { AirplaneStatuses } from '../Enums/AirplaneStatuses';
 
-@Component( {
+@Component({
   selector: 'app-airplane-adding',
   templateUrl: './airplane-adding.component.html',
   styleUrls: ['./airplane-adding.component.css']
-} )
+})
 export class AirplaneAddingComponent {
 
   airplaneStatuses = AirplaneStatuses;
@@ -22,19 +22,19 @@ export class AirplaneAddingComponent {
               private location: Location,
               private router: Router
   ) {
-    this.airplaneForm = this.formBuilder.group( {
-      name: new FormControl( null, [Validators.required] ),
-      seatsNumber: new FormControl( null, [Validators.required, Validators.min( 1 )] ),
-      maxWeight: new FormControl( null, [Validators.required, Validators.min( 400 )] ),
-      status: new FormControl( null, Validators.required )
-    } );
+    this.airplaneForm = this.formBuilder.group({
+      name: new FormControl(null, [Validators.required]),
+      seatsNumber: new FormControl(null, [Validators.required, Validators.min(1)]),
+      maxWeight: new FormControl(null, [Validators.required, Validators.min(400)]),
+      status: new FormControl(null, Validators.required)
+    });
   }
 
   onFormSubmit(): void {
     if (this.airplaneForm.valid) {
       const airplane = this.airplaneForm.value;
-      this.airplaneService.addAirplane( airplane ).subscribe( (newAirplaneId) => this.router.navigate(
-        ['admin/airplane/seats-scheme/' + newAirplaneId] ) );
+      this.airplaneService.addAirplane(airplane).subscribe((newAirplaneId) => this.router.navigate(
+        ['admin/airplane/seats-scheme/' + newAirplaneId]));
     }
   }
 }

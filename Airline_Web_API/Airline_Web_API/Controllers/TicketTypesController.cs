@@ -26,11 +26,6 @@ namespace Airline_Web_API.Controllers
         {
             var ticketTypes = await _ticketTypeService.GetTicketTypesAsync();
 
-            if (ticketTypes == null)
-            {
-                return NoContent();
-            }
-
             return Ok(ticketTypes);
         }
 
@@ -41,7 +36,7 @@ namespace Airline_Web_API.Controllers
 
             if (ticketType == null)
             {
-                return NoContent();
+                return NotFound();
             }
 
             return Ok(ticketType);
@@ -57,10 +52,10 @@ namespace Airline_Web_API.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        [HttpPut]
-        public async Task<ActionResult<Response<string>>> Put([FromBody] TicketTypeViewModel model)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Response<string>>> Put(int id, [FromBody] TicketTypeViewModel model)
         {
-            var updateResult = await _ticketTypeService.UpdateTicketTypeAsync(model);
+            var updateResult = await _ticketTypeService.UpdateTicketTypeAsync(id, model);
 
             if (updateResult.Success == false)
             {

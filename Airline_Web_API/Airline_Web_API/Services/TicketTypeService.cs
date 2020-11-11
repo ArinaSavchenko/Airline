@@ -25,7 +25,7 @@ namespace Airline_Web_API.Services
         {
             var ticketTypes = await _context.TicketTypes.ToListAsync();
 
-            var result = _mapper.Map<List<TicketTypeViewModel>>(ticketTypes);
+            var result = _mapper.Map<IEnumerable<TicketTypeViewModel>>(ticketTypes);
 
             return result;
         }
@@ -47,9 +47,9 @@ namespace Airline_Web_API.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Response<string>> UpdateTicketTypeAsync(TicketTypeViewModel model)
+        public async Task<Response<string>> UpdateTicketTypeAsync(int id, TicketTypeViewModel model)
         {
-            var ticketType = await _context.TicketTypes.FindAsync(model.Id);
+            var ticketType = await _context.TicketTypes.FindAsync(id);
 
             if (ticketType == null)
             {

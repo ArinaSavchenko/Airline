@@ -52,10 +52,10 @@ namespace Airline_Web_API.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        [HttpPut]
-        public async Task<ActionResult<Response<string>>> UpdateAirport([FromBody] AirplaneViewModel model)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Response<string>>> UpdateAirport(int id, [FromBody] AirplaneViewModel model)
         {
-            Response<string> updateResult = await _airplaneService.UpdateAirplaneAsync(model);
+            Response<string> updateResult = await _airplaneService.UpdateAirplaneAsync(id, model);
 
             if (updateResult.Success == false)
             {

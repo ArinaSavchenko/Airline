@@ -18,14 +18,14 @@ import { FlightService } from '../Services/flight.service';
 import { ConfirmActionDialogComponent } from '../confirm-action-dialog/confirm-action-dialog.component';
 import { FlightStatuses } from '../Enums/FlightStatuses';
 
-@Component( {
+@Component({
   selector: 'app-flight-details',
   templateUrl: './flight-details.component.html',
   styleUrls: ['./flight-details.component.css']
-} )
+})
 export class FlightDetailsComponent implements OnInit {
 
-  @ViewChild( MatTable, {static: true} ) table: MatTable<any>;
+  @ViewChild(MatTable, {static: true}) table: MatTable<any>;
 
   airports: Airport[];
   airplanes$: Observable<Airplane[]>;
@@ -59,38 +59,38 @@ export class FlightDetailsComponent implements OnInit {
     this.getFlight();
     this.searchTermsAirport.pipe(
       distinctUntilChanged(),
-      switchMap( value => this.airportService.searchAirports( value ) )
-    ).subscribe( airports => {
+      switchMap(value => this.airportService.searchAirports(value))
+    ).subscribe(airports => {
       this.airports = airports;
       if (this.flightForm.controls.departureAirport.value) {
-        this.airports = this.airports.filter( airport => airport.id !== this.flightForm.controls.departureAirport.value.id );
+        this.airports = this.airports.filter(airport => airport.id !== this.flightForm.controls.departureAirport.value.id);
       }
       if (this.flightForm.controls.arrivalAirport.value) {
-        this.airports = this.airports.filter( airport => airport.id !== this.flightForm.controls.arrivalAirport.value.id );
+        this.airports = this.airports.filter(airport => airport.id !== this.flightForm.controls.arrivalAirport.value.id);
       }
-    } );
+    });
     this.airplanes$ = this.searchTermsAirplanes.pipe(
-      debounceTime( 100 ),
+      debounceTime(100),
       distinctUntilChanged(),
-      switchMap( (value: string) => this.airplaneService.searchAirplanes( value ) )
+      switchMap((value: string) => this.airplaneService.searchAirplanes(value))
     );
   }
 
   getFlight(): void {
-    const id = +this.route.snapshot.paramMap.get( 'id' );
-    this.flightService.getFlight( id )
-      .subscribe( flight => {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.flightService.getFlight(id)
+      .subscribe(flight => {
         this.flight = flight;
-        this.flightForm = this.formBuilder.group( {
+        this.flightForm = this.formBuilder.group({
           id: this.flight.id,
-          departureAirport: new FormControl( this.flight.departureAirport, Validators.required ),
-          arrivalAirport: new FormControl( this.flight.arrivalAirport, Validators.required ),
-          departureDate: new FormControl( this.flight.departureDate, Validators.required ),
-          arrivalDate: new FormControl( this.flight.arrivalDate, Validators.required ),
-          airplane: new FormControl( this.flight.airplane, Validators.required ),
-          status: new FormControl( this.flight.status, Validators.required )
-        } );
-      } );
+          departureAirport: new FormControl(this.flight.departureAirport, Validators.required),
+          arrivalAirport: new FormControl(this.flight.arrivalAirport, Validators.required),
+          departureDate: new FormControl(this.flight.departureDate, Validators.required),
+          arrivalDate: new FormControl(this.flight.arrivalDate, Validators.required),
+          airplane: new FormControl(this.flight.airplane, Validators.required),
+          status: new FormControl(this.flight.status, Validators.required)
+        });
+      });
   }
 
   displayFnForAirport(subject): string {
@@ -102,40 +102,40 @@ export class FlightDetailsComponent implements OnInit {
   }
 
   searchAirports(value): void {
-    this.searchTermsAirport.next( value );
+    this.searchTermsAirport.next(value);
   }
 
   searchAirplanes(value): void {
-    this.searchTermsAirplanes.next( value );
+    this.searchTermsAirplanes.next(value);
   }
 
   onSave(): void {
     if (this.flightForm.valid) {
-      this.openDialog( 'Are you sure that you want to save changes?' );
+      this.openDialog('Are you sure that you want to save changes?');
     }
   }
 
   onDelete(): void {
-    this.openDialog( 'Are you sure that you want to delete this flight?' );
+    this.openDialog('Are you sure that you want to delete this flight?');
   }
 
   save(): void {
     const flight = this.flightForm.value;
-    this.flightService.updateFlight( flight )
-      .subscribe( response => this.checkResult( response ) );
+    this.flightService.updateFlight(flight)
+      .subscribe(response => this.checkResult(response));
   }
 
   delete(): void {
-    this.flightService.deleteFlight( this.flight.id )
-      .subscribe( response => this.checkResult( response ) );
+    this.flightService.deleteFlight(this.flight.id)
+      .subscribe(response => this.checkResult(response));
   }
 
   openDialog(value: string): void {
-    const dialogRef = this.dialog.open( ConfirmActionDialogComponent, {
+    const dialogRef = this.dialog.open(ConfirmActionDialogComponent, {
       data: value
-    } );
+    });
 
-    dialogRef.afterClosed().subscribe( result => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result.event === true) {
         switch (value) {
           case 'Are you sure that you want to save changes?': {
@@ -148,15 +148,15 @@ export class FlightDetailsComponent implements OnInit {
           }
         }
       }
-    } );
+    });
   }
 
   setDepartureAirport(value): void {
-    this.airports = this.airports.filter( airport => airport.id !== value );
+    this.airports = this.airports.filter(airport => airport.id !== value);
   }
 
   setArrivalAirport(value): void {
-    this.airports = this.airports.filter( airport => airport.id !== value.id );
+    this.airports = this.airports.filter(airport => airport.id !== value.id);
   }
 
   checkResult(response: ResponseModel): void {

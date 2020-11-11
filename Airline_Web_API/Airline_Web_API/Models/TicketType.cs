@@ -12,9 +12,9 @@ namespace Airline_Web_API.Models
         public int BaggageNumber { get; set; }
         public int BaggageMaxWeight { get; set; }
         public decimal PricePerExtraCarryOnBag { get; set; }
-	    public decimal PricePerExtraCarryOnBagKg { get; set; }
-	    public decimal PricePerExtraBaggage { get; set; }
-	    public decimal PricePerExtraBaggageKg { get; set; }
+        public decimal PricePerExtraCarryOnBagKg { get; set; }
+        public decimal PricePerExtraBaggage { get; set; }
+        public decimal PricePerExtraBaggageKg { get; set; }
         public bool SeatReservation { get; set; }
         public bool Changes { get; set; }
         public string Refund { get; set; }

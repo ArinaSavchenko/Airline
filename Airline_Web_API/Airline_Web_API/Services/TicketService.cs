@@ -33,7 +33,7 @@ namespace Airline_Web_API.Services
             return result;
         }
 
-        public async Task<List<TicketsViewModel>> GetTicketsAsync(int flightId)
+        public async Task<IEnumerable<TicketsViewModel>> GetTicketsAsync(int flightId)
         {
             var tickets = await _context.Tickets
                 .Include(ticket => ticket.TicketType)
@@ -42,7 +42,7 @@ namespace Airline_Web_API.Services
                 .OrderBy(ticket => ticket.Id)
                 .ToListAsync();
 
-            var result = _mapper.Map<List<TicketsViewModel>>(tickets);
+            var result = _mapper.Map<IEnumerable<TicketsViewModel>>(tickets);
 
             return result;
         }
@@ -55,9 +55,9 @@ namespace Airline_Web_API.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Response<string>> UpdateTicketAsync(TicketsViewModel model)
+        public async Task<Response<string>> UpdateTicketAsync(int id, TicketsViewModel model)
         {
-            var ticket = await _context.Tickets.FindAsync(model.Id);
+            var ticket = await _context.Tickets.FindAsync(id);
 
             if (ticket == null)
             {

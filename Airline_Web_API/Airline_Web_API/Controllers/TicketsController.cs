@@ -60,10 +60,10 @@ namespace Airline_Web_API.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        [HttpPut]
-        public async Task<ActionResult<Response<string>>> Put([FromBody] TicketsViewModel model)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Response<string>>> Put(int id, [FromBody] TicketsViewModel model)
         {
-            var updateResult = await _ticketService.UpdateTicketAsync(model);
+            var updateResult = await _ticketService.UpdateTicketAsync(id, model);
 
             if (updateResult.Success == false)
             {

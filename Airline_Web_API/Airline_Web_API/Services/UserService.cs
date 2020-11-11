@@ -28,9 +28,9 @@ namespace Airline_Web_API.Services
             return _mapper.Map<UserViewModel>(user);
         }
 
-        public async Task<Response<string>> UpdateUserAsync(UpdateUserModel model)
+        public async Task<Response<string>> UpdateUserAsync(int id, UpdateUserModel model)
         {
-            var user = await _context.Users.FindAsync(model.Id);
+            var user = await _context.Users.FindAsync(id);
 
             if (user == null)
             {
@@ -51,10 +51,10 @@ namespace Airline_Web_API.Services
             };
         }
 
-        public async Task<Response<string>> ChangePasswordAsync(ChangePasswordModel model)
+        public async Task<Response<string>> ChangePasswordAsync(int id, ChangePasswordModel model)
         {
 
-            var user = await _context.Users.FindAsync(model.UserId);
+            var user = await _context.Users.FindAsync(id);
 
             if (user == null)
             {
