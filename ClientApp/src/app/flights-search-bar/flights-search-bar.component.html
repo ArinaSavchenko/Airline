@@ -1,5 +1,5 @@
 <div class="mainContainer">
-  <form [formGroup]="myForm" (ngSubmit)="sendSearchRequest()">
+  <form [formGroup]="myForm">
     <div class="airports">
       <mat-form-field class="directionField">
         <input #departureAirportIdInput
@@ -78,7 +78,7 @@
     </div>
 
     <div class="submitButton">
-      <button type="submit" mat-flat-button [disabled]="!myForm.valid" id="search" routerLink="/search">Search</button>
+      <button mat-flat-button [disabled]="!myForm.valid" id="search" (click)="sendSearchRequest()" routerLink="/search">Search</button>
     </div>
   </form>
 </div>

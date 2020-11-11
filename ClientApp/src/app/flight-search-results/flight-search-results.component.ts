@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Observable, of, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { Flight } from '../Models/Flight';
@@ -18,8 +18,8 @@ import { Ticket } from '../Models/Ticket';
 })
 export class FlightSearchResultsComponent implements OnInit {
 
-  flightsTo$: Observable<Flight[]>;
-  flightsBack$: Observable<Flight[]>;
+  flightsTo: Flight[];
+  flightsBack: Flight[];
   flightTo: FlightForSearch;
   flightBack: FlightForSearch;
   selectedTickets: SelectedTickets;
@@ -31,14 +31,24 @@ export class FlightSearchResultsComponent implements OnInit {
   selectedFlightBack: Flight;
   private searchTermsTo = new Subject<FlightForSearch>();
   private searchTermsBack = new Subject<FlightForSearch>();
+  flightBackIsRequired = false;
+  flightsBackFound = false;
+  flightsToFound = false;
+  searchOfFlightsToIsFinished = false;
+  searchOfFlightsBackIsFinished = false;
 
-  constructor(private sharedService: SharedService, private flightService: FlightService, private ticketsService: TicketsService) {
+  constructor(private sharedService: SharedService,
+              private flightService: FlightService,
+              private ticketsService: TicketsService) {
   }
 
   search(): void {
     this.searchTermsTo.next(this.flightTo);
     if (this.flightBack.departureAirportId) {
+      this.flightBackIsRequired = true;
       this.searchTermsBack.next(this.flightBack);
+    } else {
+      this.searchOfFlightsBackIsFinished = true;
     }
   }
 
@@ -81,12 +91,24 @@ export class FlightSearchResultsComponent implements OnInit {
     this.searchTermsTo.pipe(
       distinctUntilChanged(),
       switchMap((term: FlightForSearch) => this.flightService.searchFlights(term)),
-    ).subscribe(results => this.flightsTo$ = of(results));
+    ).subscribe(results => {
+      this.flightsTo = results;
+      this.searchOfFlightsToIsFinished = true;
+      if (this.flightsTo.length > 0) {
+        this.flightsToFound = true;
+      }
+    });
 
     this.searchTermsBack.pipe(
       distinctUntilChanged(),
       switchMap((term: FlightForSearch) => this.flightService.searchFlights(term)),
-    ).subscribe(results => this.flightsBack$ = of(results));
+    ).subscribe(results => {
+      this.flightsBack = results;
+      this.searchOfFlightsBackIsFinished = true;
+      if (this.flightsBack.length > 0) {
+        this.flightsBackFound = true;
+      }
+    });
     this.search();
   }
 }

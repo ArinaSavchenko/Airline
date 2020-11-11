@@ -37,6 +37,7 @@ namespace Airline_Web_API.Services
                 && flight.ArrivalAirportId == arrivalAirportId
                 && flight.DepartureDate.Date == date.Date
                 && flight.Tickets.Count(ticket => ticket.TicketsLeftNumber >= ticketsNumber) >= 0
+                && flight.Status == "Active"
             );
 
             var flightsSearchResults = await flights
