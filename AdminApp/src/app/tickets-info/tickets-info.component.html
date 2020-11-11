@@ -1,1 +1,17 @@
-<p>tickets-info works!</p>
+<div class="infoContainer">
+  <h1 class="header">Tickets info</h1>
+  <div>
+    <button mat-raised-button class="addButton"
+            routerLink="/admin/flights/tickets/{{flightId ? flightId : 0}}/new">Add new ticket
+    </button>
+  </div>
+  <div class="list">
+    <mat-selection-list [multiple]="false">
+      <mat-list-option *ngFor="let ticket of tickets$ | async" [value]="ticket"
+                       routerLink="/admin/tickets/{{ticket.id}}">
+        {{ticket.ticketType.name}}
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+  <button mat-raised-button class="goBackButton" routerLink="/admin/flights">Back to the flights</button>
+</div>

@@ -21,16 +21,16 @@ namespace Airline_Web_API.Services
             _mapper = mapper;
         }
 
-        public async Task<AirportAdminViewModel> GetAirportByIdAsync(int id)
+        public async Task<AirportViewModel> GetAirportByIdAsync(int id)
         {
             var airport = await _context.Airports.FindAsync(id);
 
-            var results = _mapper.Map<AirportAdminViewModel>(airport);
+            var results = _mapper.Map<AirportViewModel>(airport);
 
             return results;
         }
 
-        public async Task<IEnumerable<AirportUserViewModel>> GetAirportsAsync(string value)
+        public async Task<IEnumerable<AirportViewModel>> GetAirportsAsync(string value)
         {
             var airports = _context.Airports.AsQueryable();
 
@@ -45,7 +45,7 @@ namespace Airline_Web_API.Services
                 .OrderBy(airport => airport.Id)
                 .ToListAsync();
 
-            var results = _mapper.Map<List<AirportUserViewModel>>(airportsSearchResults);
+            var results = _mapper.Map<IEnumerable<AirportViewModel>>(airportsSearchResults);
 
             return results;
         }
@@ -56,9 +56,9 @@ namespace Airline_Web_API.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Response<string>> UpdateAirportAsync(AirportAdminViewModel model)
+        public async Task<Response<string>> UpdateAirportAsync(int id, AirportViewModel model)
         {
-            var airport = await _context.Airports.FindAsync(model.Id);
+            var airport = await _context.Airports.FindAsync(id);
 
             if (airport == null)
             {

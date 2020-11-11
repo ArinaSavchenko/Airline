@@ -1,5 +1,5 @@
-<div *ngIf="this.userService.isLoggedIn && user" class="accountInfoContainer">
-  <p class="header">Account</p>
+<div *ngIf="this.userService.isLoggedIn && user" class="infoContainer">
+  <h1 class="header">Account</h1>
   <div class="fieldsContainer">
     <div class="userInfo">
       <h2 class="fieldName">First name:</h2>
@@ -27,5 +27,5 @@
     <button mat-raised-button (click)="delete()">Delete</button>
   </div>
   <button mat-raised-button class="logOutButton" (click)="logOut()">Log out</button>
-  <button mat-raised-button class="backButton" routerLink="/admin/menu">Back to the main page</button>
+  <button mat-raised-button class="goBackButton" routerLink="/admin/menu">Back to the main page</button>
 </div>

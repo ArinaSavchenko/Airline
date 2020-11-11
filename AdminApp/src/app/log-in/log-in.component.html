@@ -1,6 +1,6 @@
-<div *ngIf="!userService.isLoggedIn" class="loggedOutContainer">
-  <h2 class="header">Log in</h2>
-  <form class="logInForm" [formGroup]="userInfo">
+<div *ngIf="!userService.isLoggedIn" class="infoContainer">
+  <h1 class="header">Log in</h1>
+  <form [formGroup]="userInfo">
     <mat-form-field appearance="outline">
       <mat-label>Enter email:</mat-label>
       <input matInput formControlName="email" placeholder="Ex. pat@example.com">
@@ -22,7 +22,7 @@
     </mat-form-field>
     <a class="forgotPassword" routerLink="/resetPassword">Forgot password?</a>
   </form>
-  <div class="logInButtonContainer">
+  <div class="buttonsContainer">
     <button mat-raised-button class="logInButton" [disabled]="!userInfo.valid" (click)="logIn()">Log in</button>
   </div>
   <p *ngIf="message" id="error_message" class="mat-error">{{this.message}}</p>

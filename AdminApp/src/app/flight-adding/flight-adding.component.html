@@ -1,9 +1,8 @@
 <div class="infoContainer">
   <h1 class="header">Flight info</h1>
-  <form [formGroup]="flightForm" (ngSubmit)="addFlight()">
-    <div class="infoArea">
+  <form [formGroup]="flightForm" class="infoArea">
       <h3>Departure airport:</h3>
-      <mat-form-field class="airportField" appearance="outline">
+      <mat-form-field appearance="outline">
         <input #departureAirportInput
                placeholder="From:"
                matInput
@@ -12,7 +11,7 @@
                (click)="searchAirports('')"
                (input)="searchAirports(departureAirportInput.value)">
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnForAirport">
-          <mat-option *ngFor="let airport of airports" [value]="airport">
+          <mat-option *ngFor="let airport of airports" [value]="airport" class="searchResultOption">
             {{airport.city}}, {{airport.country}}<br>
             <q class="airportName">{{airport.name}}</q>
           </mat-option>
@@ -20,7 +19,7 @@
       </mat-form-field>
 
       <h3>Arrival airport:</h3>
-      <mat-form-field class="airportField" appearance="outline">
+      <mat-form-field appearance="outline">
         <input #arrivalAirportInput
                placeholder="From:"
                matInput
@@ -29,7 +28,7 @@
                (click)="searchAirports('')"
                (input)="searchAirports(arrivalAirportInput.value)">
         <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFnForAirport">
-          <mat-option *ngFor="let airport of airports" [value]="airport">
+          <mat-option *ngFor="let airport of airports" [value]="airport" class="searchResultOption">
             {{airport.city}}, {{airport.country}}<br>
             <q class="airportName">{{airport.name}}</q>
           </mat-option>
@@ -37,7 +36,7 @@
       </mat-form-field>
 
       <h3>Departure date:</h3>
-      <mat-form-field appearance="outline" class="airportField">
+      <mat-form-field appearance="outline">
         <input matInput [ngxMatDatetimePicker]="pickerTo"
                placeholder="Choose departure date"
                formControlName="departureDate">
@@ -53,7 +52,7 @@
       </mat-form-field>
 
       <h3>Arrival date:</h3>
-      <mat-form-field appearance="outline" class="airportField">
+      <mat-form-field appearance="outline">
         <input matInput [ngxMatDatetimePicker]="pickerBack"
                placeholder="Choose arrival date"
                formControlName="arrivalDate">
@@ -69,7 +68,7 @@
       </mat-form-field>
 
       <h3>Airplane:</h3>
-      <mat-form-field class="airportField" appearance="outline">
+      <mat-form-field appearance="outline">
         <input #airplaneInput
                placeholder="From:"
                matInput
@@ -85,27 +84,26 @@
       </mat-form-field>
 
       <h3>Status:</h3>
-      <mat-form-field class="airportField" appearance="outline">
+      <mat-form-field appearance="outline">
         <mat-label>Status</mat-label>
         <mat-select formControlName="status">
-          <mat-option *ngFor="let status of statuses" [value]="status">
-            {{status}}
+          <mat-option *ngFor="let status of flightStatuses | keyvalue" [value]="status.value">
+            {{status.value}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
   </form>
-
-  <a class="ticketsLink" routerLink="/admin/tickets">Tickets</a>
 
   <div class="buttonsContainer">
 
     <div>
-      <button type="submit" mat-raised-button color="accent" class="addButton">Add</button>
+      <button mat-raised-button [disabled]="!flightForm.valid" class="addButton"
+              (click)="addFlight()">Add
+      </button>
     </div>
 
-    <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/flights">Back to the flights
+    <button mat-raised-button class="goBackButton" routerLink="/admin/flights">Back to the flights
     </button>
-    <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
+    <button mat-raised-button class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
   </div>
 </div>

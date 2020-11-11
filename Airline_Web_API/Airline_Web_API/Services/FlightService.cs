@@ -43,7 +43,7 @@ namespace Airline_Web_API.Services
                 .OrderBy(flight => flight.Id)
                 .ToListAsync();
 
-            var results = _mapper.Map<List<FlightViewModel>>(flightsSearchResults);
+            var results = _mapper.Map<IEnumerable<FlightViewModel>>(flightsSearchResults);
 
             return results;
         }
@@ -67,7 +67,7 @@ namespace Airline_Web_API.Services
             return result;
         }
 
-        public async Task<List<FlightViewModel>> GetFlightsAsync(int? departureAirportId, int? arrivalAirportId, DateTime date)
+        public async Task<IEnumerable<FlightViewModel>> GetFlightsAsync(int? departureAirportId, int? arrivalAirportId, DateTime date)
         {
             var flights = _context.Flights
                 .Include(flight => flight.DepartureAirport)
@@ -93,7 +93,7 @@ namespace Airline_Web_API.Services
                 .OrderBy(flight => flight.Id)
                 .ToListAsync();
 
-            var results = _mapper.Map<List<FlightViewModel>>(flightsSearchResults);
+            var results = _mapper.Map<IEnumerable<FlightViewModel>>(flightsSearchResults);
 
             return results;
         }
@@ -107,9 +107,9 @@ namespace Airline_Web_API.Services
             return flight.Id;
         }
 
-        public async Task<Response<string>> UpdateFlightAsync(FlightViewModel model)
+        public async Task<Response<string>> UpdateFlightAsync(int id, FlightViewModel model)
         {
-            var flight = await _context.Flights.FindAsync(model.Id);
+            var flight = await _context.Flights.FindAsync(id);
 
             if (flight == null)
             {

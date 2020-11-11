@@ -1,50 +1,50 @@
 <div *ngIf="airport" class="infoContainer">
   <h1 class="header">Airport info</h1>
-
-  <div class="infoArea">
+  <form [formGroup]="airportForm" class="infoArea">
     <div><h2>id: {{airport.id}}</h2></div>
     <h3>Name:</h3>
-    <mat-form-field class="airportField" appearance="outline">
-      <input [(ngModel)]="airport.name" placeholder="name"
+    <mat-form-field appearance="outline">
+      <input formControlName="name" placeholder="name"
              matInput/>
     </mat-form-field>
 
     <h3>City:</h3>
-    <mat-form-field class="airportField" appearance="outline">
-      <input [(ngModel)]="airport.city" placeholder="city"
+    <mat-form-field appearance="outline">
+      <input formControlName="city" placeholder="city"
              matInput/>
     </mat-form-field>
 
     <h3>Country:</h3>
-    <mat-form-field class="airportField" appearance="outline">
-      <input [(ngModel)]="airport.country" placeholder="country"
+    <mat-form-field appearance="outline">
+      <input formControlName="country" placeholder="country"
              matInput/>
     </mat-form-field>
 
     <h3>Status:</h3>
-    <mat-form-field class="airportField" appearance="outline">
+    <mat-form-field appearance="outline">
       <mat-label>{{airport.status}}</mat-label>
-      <mat-select [(ngModel)]="airport.status">
-        <mat-option *ngFor="let status of statuses" [value]="status">
-          {{status}}
+      <mat-select formControlName="status">
+        <mat-option *ngFor="let status of airportStatuses | keyvalue" [value]="status.value">
+          {{status.value}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-  </div>
-
+  </form>
   <div *ngIf="message" class="mat-error">
     {{message}}
   </div>
 
   <div class="buttonsContainer">
     <div>
-      <button mat-raised-button color="accent" class="saveButton" (click)="onSave()">Save</button>
+      <button mat-raised-button class="saveButton" [disabled]="!airportForm.valid" (click)="onSave()">
+        Save
+      </button>
     </div>
     <div>
-      <button mat-raised-button color="accent" class="deleteButton" (click)="onDelete()">Delete airport</button>
+      <button mat-raised-button class="deleteButton" (click)="onDelete()">Delete airport</button>
     </div>
-    <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/airports">Back to the airports
+    <button mat-raised-button class="goBackButton" routerLink="/admin/airports">Back to the airports
     </button>
-    <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
+    <button mat-raised-button class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
   </div>
 </div>

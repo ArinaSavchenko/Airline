@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of} from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { RegisterModel } from '../Models/RegisterModel';
@@ -13,7 +13,6 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-
 export class UserService {
 
   private usersUrl = environment.baseUrl + '/users';
@@ -44,7 +43,8 @@ export class UserService {
   }
 
   updateUser(user: UpdateUserModel): Observable<ResponseModel> {
-    return this.http.put<ResponseModel>(this.usersUrl + '/update', user, this.httpOptions).pipe(
+    const url = `${this.usersUrl}/update/${user.id}`;
+    return this.http.put<ResponseModel>(url, user, this.httpOptions).pipe(
       catchError(error => this.handleError(error))
     );
   }

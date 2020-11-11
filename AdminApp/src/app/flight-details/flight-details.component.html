@@ -1,10 +1,9 @@
 <div *ngIf="flight" class="infoContainer">
   <h1 class="header">Flight info</h1>
-  <form [formGroup]="flightForm">
-    <div class="infoArea">
+  <form [formGroup]="flightForm" class="infoArea">
       <div><h2>id: {{flight.id}}</h2></div>
       <h3>Departure airport:</h3>
-      <mat-form-field class="airportField" appearance="outline">
+      <mat-form-field class="flightField" appearance="outline">
         <input #departureAirportInput
                placeholder="From:"
                matInput
@@ -14,7 +13,7 @@
                (input)="searchAirports(departureAirportInput.value)">
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnForAirport"
                           (optionSelected)="setDepartureAirport($event.option.value)">
-          <mat-option *ngFor="let airport of airports" [value]="airport">
+          <mat-option *ngFor="let airport of airports" [value]="airport" class="searchResultOption">
             {{airport.city}}, {{airport.country}}<br>
             <q class="airportName">{{airport.name}}</q>
           </mat-option>
@@ -22,7 +21,7 @@
       </mat-form-field>
 
       <h3>Arrival airport:</h3>
-      <mat-form-field class="airportField" appearance="outline">
+      <mat-form-field class="flightField" appearance="outline">
         <input #arrivalAirportInput
                placeholder="From:"
                matInput
@@ -32,7 +31,7 @@
                (input)="searchAirports(arrivalAirportInput.value)">
         <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFnForAirport"
                           (optionSelected)="setArrivalAirport($event.option.value)">
-          <mat-option *ngFor="let airport of airports" [value]="airport">
+          <mat-option *ngFor="let airport of airports" [value]="airport" class="searchResultOption">
             {{airport.city}}, {{airport.country}}<br>
             <q class="airportName">{{airport.name}}</q>
           </mat-option>
@@ -40,10 +39,9 @@
       </mat-form-field>
 
       <h3>Departure date:</h3>
-      <mat-form-field appearance="outline" class="airportField">
+      <mat-form-field appearance="outline" class="flightField">
         <input matInput [ngxMatDatetimePicker]="pickerTo"
                placeholder="Choose departure date"
-               (ngModelChange)="setDepartureDate($event)"
                formControlName="departureDate">
         <mat-datepicker-toggle matSuffix [for]="pickerTo">
         </mat-datepicker-toggle>
@@ -57,10 +55,9 @@
       </mat-form-field>
 
       <h3>Arrival date:</h3>
-      <mat-form-field appearance="outline" class="airportField">
+      <mat-form-field appearance="outline">
         <input matInput [ngxMatDatetimePicker]="pickerBack"
                placeholder="Choose arrival date"
-               (ngModelChange)="setArrivalDate($event)"
                formControlName="arrivalDate">
         <mat-datepicker-toggle matSuffix [for]="pickerBack">
         </mat-datepicker-toggle>
@@ -74,7 +71,7 @@
       </mat-form-field>
 
       <h3>Airplane:</h3>
-      <mat-form-field class="airportField" appearance="outline">
+      <mat-form-field appearance="outline">
         <input #airplaneInput
                placeholder="From:"
                matInput
@@ -82,8 +79,7 @@
                formControlName="airplane"
                (click)="searchAirplanes('')"
                (input)="searchAirplanes(airplaneInput.value)">
-        <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayFnForAirplane"
-                          (optionSelected)="setAirplane($event.option.value)">
+        <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayFnForAirplane">
           <mat-option *ngFor="let airplane of airplanes$ | async" [value]="airplane">
             {{airplane.name}}<br>
           </mat-option>
@@ -91,19 +87,18 @@
       </mat-form-field>
 
       <h3>Status:</h3>
-      <mat-form-field class="airportField" appearance="outline">
+      <mat-form-field appearance="outline">
         <mat-label>{{flight.status}}</mat-label>
-        <mat-select formControlName="status" (selectionChange)="setStatus($event.value)">
-          <mat-option *ngFor="let status of statuses" [value]="status">
-            {{status}}
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let status of flightStatuses | keyvalue" [value]="status.value">
+            {{status.value}}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
-    </div>
   </form>
 
-  <a class="ticketsLink" routerLink="/admin/tickets">Tickets</a>
+  <a class="ticketsLink" routerLink="/admin/flights/tickets/{{flight.id}}">Tickets</a>
 
   <div *ngIf="message" class="mat-error">
     {{message}}
@@ -112,13 +107,13 @@
   <div class="buttonsContainer">
 
     <div>
-      <button mat-raised-button color="accent" class="saveButton" (click)="onSave()">Save</button>
+      <button mat-raised-button class="saveButton" (click)="onSave()">Save</button>
     </div>
     <div>
-      <button mat-raised-button color="accent" class="deleteButton" (click)="onDelete()">Delete flight</button>
+      <button mat-raised-button class="deleteButton" (click)="onDelete()">Delete flight</button>
     </div>
-    <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/flights">Back to the flights
+    <button mat-raised-button class="goBackButton" routerLink="/admin/flights">Back to the flights
     </button>
-    <button mat-raised-button color="accent" class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
+    <button mat-raised-button class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
   </div>
 </div>

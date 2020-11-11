@@ -6,8 +6,13 @@
 	[CarryOnBagMaxWeight] INT NULL,
 	[BaggageNumber] INT NULL,
 	[BaggageMaxWeight] INT NULL,
-	[SeatReservation] BIT NOT NULL,
-	[Changes] BIT NOT NULL,
-	[Refund] BIT NULL, 
-	[SeatType] NVARCHAR(50) NOT NULL
+	[PricePerExtraCarryOnBag] MONEY NULL,
+	[PricePerExtraCarryOnBagKg] MONEY NULL,
+	[PricePerExtraBaggage] MONEY NOT NULL,
+	[PricePerExtraBaggageKg] MONEY NULL,
+	[SeatReservation] BIT NULL,
+	[Changes] BIT NULL,
+	[Refund] NVARCHAR(250) NULL, 
+	[SeatType] NVARCHAR(250) NULL, 
+    [Status] NVARCHAR(250) NULL
 )

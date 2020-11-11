@@ -1,14 +1,6 @@
-.accountInfoContainer {
-  padding-top: 8em;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-}
-
-.header,
 .fieldName {
   text-align: center;
-  font-size: 45px;
+  font-size: 20px;
   font-weight: bolder;
   font-family: "Helvetica Neue", sans-serif;
   color: dimgrey;
@@ -19,10 +11,6 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-}
-
-.fieldName {
-  font-size: 20px;
 }
 
 .fieldsContainer {
@@ -42,32 +30,22 @@
   color: dimgrey;
 }
 
-.mat-raised-button {
-  font-size: 16px;
-  background-color: #bcd30b;
-  color: #ffffff;
-}
-
 .actionButtons {
   margin-right: auto;
   margin-left: auto;
   display: flex;
   justify-content: space-between;
-  width: 13em;
+  width: 14em;
   margin-top: 2em;
 }
 
-.logOutButton,
-.backButton {
+.logOutButton {
   align-self: center;
   margin-top: 2em;
   width: fit-content;
 }
 
-.backButton {
-  margin-top: 5em;
-}
-
 .changePassword {
+  text-align: center;
   margin-top: 2em;
 }

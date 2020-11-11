@@ -42,20 +42,7 @@
   margin-right: auto;
 }
 
-.header, .schemeHeader {
-  margin-top: 1em;
-  font-weight: bolder;
-  font-size: 30px;
-  font-family: "Helvetica Neue", sans-serif;
-  color: dimgrey;
-  text-align: center;
-}
-
-.schemeHeader {
-  font-size: 20px;
-}
-
-.submitButton{
+.submitButton {
   margin-top: 1em;
   margin-right: auto;
   margin-left: auto;

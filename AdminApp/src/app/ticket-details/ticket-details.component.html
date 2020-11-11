@@ -1,0 +1,56 @@
+<div *ngIf="ticket" class="infoContainer">
+  <h1 class="header">Ticket info</h1>
+  <form [formGroup]="ticketForm" class="infoArea">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Ticket type</mat-label>
+      <mat-select formControlName="ticketType">
+        <mat-option *ngFor="let type of types$ | async" [value]="type">
+          {{type.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Price</mat-label>
+      <input type="number" matInput formControlName="price">
+      <mat-error>
+        Price is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Number</mat-label>
+      <input type="number" matInput formControlName="ticketsLeftNumber">
+      <mat-error>
+        Number is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option *ngFor="let status of ticketStatuses | keyvalue" [value]="status.value">
+          {{status.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+  <div *ngIf="message" class="mat-error">
+    {{message}}
+  </div>
+
+  <div class="buttonsContainer">
+    <div>
+      <button mat-raised-button class="saveButton" (click)="onSave()">Save</button>
+    </div>
+    <div>
+      <button mat-raised-button class="deleteButton" (click)="onDelete()">Delete ticket</button>
+    </div>
+    <button mat-raised-button class="goBackButton" routerLink="/admin/flights">Back to the tickets
+    </button>
+    <button mat-raised-button class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
+  </div>
+</div>
+

@@ -1,0 +1,12 @@
+div.checkBox {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-bottom: 1em;
+}
+
+.checkBoxSection {
+  margin: 0.5em;
+}
+

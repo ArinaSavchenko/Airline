@@ -11,11 +11,12 @@ namespace Airline_Web_API
     {
         public AutoMapperProfile()
         {
-            CreateMap<Airport, AirportUserViewModel>();
-            CreateMap<AirportAdminViewModel, Airport>();
-            CreateMap<Airport, AirportAdminViewModel>();
+            CreateMap<Airport, AirportViewModel>();
+            CreateMap<AirportViewModel, Airport>();
             CreateMap<TicketType, TicketTypeViewModel>();
+            CreateMap<TicketTypeViewModel, TicketType>();
             CreateMap<Ticket, TicketsViewModel>();
+            CreateMap<TicketsViewModel, Ticket>();
             CreateMap<Flight, FlightViewModel>();
             CreateMap<FlightViewModel, Flight>();
             CreateMap<RegisterModel, User>();
@@ -29,6 +30,7 @@ namespace Airline_Web_API
             CreateMap<Seat, SeatViewModel>();
             CreateMap<SeatViewModel, Seat>();
             CreateMap<NewFlightModel, Flight>();
+            CreateMap<NewTicketModel, Ticket>();
         }
     }
 }

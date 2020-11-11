@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Airline_Web_API.ViewModels
 {
-    public class AirportAdminViewModel
+    public class AirportViewModel
     {
         [Required]
         public int Id { get; set; }

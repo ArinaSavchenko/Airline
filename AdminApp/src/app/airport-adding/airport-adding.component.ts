@@ -4,16 +4,16 @@ import { Location } from '@angular/common';
 
 import { Airport } from '../Models/Airport';
 import { AirportService } from '../Services/airport.service';
+import { AirportStatuses } from '../Enums/AirportStatuses';
 
-@Component( {
+@Component({
   selector: 'app-airport-adding',
   templateUrl: './airport-adding.component.html',
   styleUrls: ['./airport-adding.component.css']
-} )
+})
 export class AirportAddingComponent {
 
-  status: string;
-  statuses = ['Active', 'Closed', 'Temporary closed'];
+  airportStatuses = AirportStatuses;
   airportForm: FormGroup;
   nameFormat = '[a-zA-Z\s]+$';
   message: string;
@@ -21,12 +21,12 @@ export class AirportAddingComponent {
   constructor(private formBuilder: FormBuilder,
               private airportService: AirportService,
               private location: Location) {
-    this.airportForm = this.formBuilder.group( {
-      name: new FormControl( null, [Validators.required] ),
-      city: new FormControl( null, [Validators.required, Validators.pattern( this.nameFormat )] ),
-      country: new FormControl( null, [Validators.required, Validators.pattern( this.nameFormat )] ),
-      status: new FormControl( null, [Validators.required] )
-    } );
+    this.airportForm = this.formBuilder.group({
+      name: new FormControl(null, [Validators.required]),
+      city: new FormControl(null, [Validators.required, Validators.pattern(this.nameFormat)]),
+      country: new FormControl(null, [Validators.required, Validators.pattern(this.nameFormat)]),
+      status: new FormControl(null, [Validators.required])
+    });
   }
 
   onFormSubmit(): void {
@@ -37,7 +37,7 @@ export class AirportAddingComponent {
         country: this.airportForm.controls.country.value,
         status: this.airportForm.controls.status.value
       };
-      this.airportService.addAirport( airport ).subscribe( () => this.goBack() );
+      this.airportService.addAirport(airport).subscribe(() => this.goBack());
     }
   }
 
