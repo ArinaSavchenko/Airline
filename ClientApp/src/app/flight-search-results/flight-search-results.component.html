@@ -163,10 +163,12 @@
       <div class="totalPrice">
         Total price:
         {{((this.outboundTicket ? this.outboundTicket.price : 0) +
-          (this.inboundTicket ? this.inboundTicket.price : 0)) * this.selectedTickets.number}} $
+          (this.inboundTicket ? this.inboundTicket.price : 0)) * this.ticketsNumber}} $
       </div>
       <div class="nextButtonLocation">
-        <button *ngIf="clickedInbound || clickedOutbound" mat-raised-button class="nextButton">Next</button>
+        <button *ngIf="clickedInbound || clickedOutbound" mat-raised-button class="nextButton" (click)="bookTicket()">
+          Next
+        </button>
       </div>
     </div>
   </div>

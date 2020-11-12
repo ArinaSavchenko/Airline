@@ -23,7 +23,6 @@ export class AuthGuard implements CanActivate {
     }
 
     this.userService.logOut();
-    this.router.navigate(['/airline']);
     this.openLogInForm();
     return false;
   }

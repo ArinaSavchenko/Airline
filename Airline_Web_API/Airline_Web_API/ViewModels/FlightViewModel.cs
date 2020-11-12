@@ -16,6 +16,6 @@ namespace Airline_Web_API.ViewModels
         public AirportViewModel ArrivalAirport { get; set; }
         public AirplaneViewModel Airplane { get; set; }
 
-        public ICollection<TicketsViewModel> Tickets { get; set; }
+        public ICollection<TicketViewModel> Tickets { get; set; }
     }
 }

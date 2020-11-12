@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Airline_Web_API.ViewModels
 {
-    public class TicketsViewModel
+    public class TicketViewModel
     {
         public int Id { get; set; }
         public int FlightId { get; set; }

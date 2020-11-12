@@ -25,7 +25,7 @@ namespace Airline_Web_API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TicketsViewModel>> GetTicket(int id)
+        public async Task<ActionResult<TicketViewModel>> GetTicket(int id)
         {
             var ticket = await _ticketService.GetTicketByIdAsync(id);
 
@@ -61,7 +61,7 @@ namespace Airline_Web_API.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
-        public async Task<ActionResult<Response<string>>> Put(int id, [FromBody] TicketsViewModel model)
+        public async Task<ActionResult<Response<string>>> Put(int id, [FromBody] TicketViewModel model)
         {
             var updateResult = await _ticketService.UpdateTicketAsync(id, model);
 

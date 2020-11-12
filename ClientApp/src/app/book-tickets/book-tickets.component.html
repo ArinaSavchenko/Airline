@@ -1,0 +1,14 @@
+<div class="mainContainer">
+  <div class="header">Book tickets</div>
+  <div *ngIf="outboundTicketId">
+    <div *ngFor="let n of numSequence(this.ticketsNumber)" class="forms">
+      <app-ticket-booking-form [ticketId]="outboundTicketId"></app-ticket-booking-form>
+    </div>
+  </div>
+
+  <div *ngIf="inboundTicketId">
+    <div *ngFor="let n of numSequence(this.ticketsNumber)" class="forms">
+      <app-ticket-booking-form [ticketId]="inboundTicketId"></app-ticket-booking-form>
+    </div>
+  </div>
+</div>

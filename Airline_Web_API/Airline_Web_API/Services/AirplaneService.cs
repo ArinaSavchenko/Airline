@@ -25,9 +25,9 @@ namespace Airline_Web_API.Services
         {
             var airport = await _context.Airplanes.FindAsync(id);
 
-            var results = _mapper.Map<AirplaneViewModel>(airport);
+            var result = _mapper.Map<AirplaneViewModel>(airport);
 
-            return results;
+            return result;
         }
 
         public async Task<IEnumerable<AirplaneViewModel>> GetAirplanesAsync(string name)

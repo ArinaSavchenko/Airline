@@ -32,7 +32,7 @@ namespace Airline_Web_API.Services
         {
             var user = await _context.Users.FindAsync(id);
 
-            if (user == null)
+            if (user == null || user.Status == "Deleted")
             {
                 return new Response<string>
                 {
@@ -56,7 +56,7 @@ namespace Airline_Web_API.Services
 
             var user = await _context.Users.FindAsync(id);
 
-            if (user == null)
+            if (user == null || user.Status == "Deleted")
             {
                 return new Response<string>
                 {
@@ -110,7 +110,7 @@ namespace Airline_Web_API.Services
 
         public async Task<Response<User>> AuthenticateAsync(AuthenticateModel model)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == model.Email);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == model.Email && x.Status != "Deleted");
 
             if (user == null)
             {
@@ -139,7 +139,9 @@ namespace Airline_Web_API.Services
 
         public async Task<Response<string>> RegisterAsync(RegisterModel model)
         {
-            if (_context.Users.Any(x => x.Email == model.Email))
+            var activeUserExists = _context.Users.Any(x => x.Email == model.Email && x.Status != "Deleted");
+
+            if (activeUserExists)
             {
                 return new Response<string>
                 {

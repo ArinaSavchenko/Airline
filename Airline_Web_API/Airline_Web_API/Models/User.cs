@@ -9,8 +9,6 @@ namespace Airline_Web_API.Models
 {
     public class User
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -18,5 +16,8 @@ namespace Airline_Web_API.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
+        public string Status { get; set; }
+        
+        public ICollection<BookedTicket> BookedTickets { get; set; }
     }
 }

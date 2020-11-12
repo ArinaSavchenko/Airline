@@ -35,6 +35,8 @@ import { AuthGuard } from './AuthGuard';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { ConfirmActionDialogComponent } from './confirm-action-dialog/confirm-action-dialog.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { BookTicketsComponent } from './book-tickets/book-tickets.component';
+import { TicketBookingFormComponent } from './ticket-booking-form/ticket-booking-form.component';
 
 export function tokenGetter(): any {
   return localStorage.getItem('token');
@@ -54,7 +56,9 @@ export function tokenGetter(): any {
     AccountComponent,
     UserDetailsComponent,
     ConfirmActionDialogComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    BookTicketsComponent,
+    TicketBookingFormComponent
   ],
     imports: [
         BrowserModule,

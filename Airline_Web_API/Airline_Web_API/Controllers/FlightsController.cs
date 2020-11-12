@@ -27,9 +27,9 @@ namespace Airline_Web_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Flight>>> GetFlights([FromQuery] int departureAirportId, int arrivalAirportId, DateTime date, int ticketsNumber)
+        public async Task<ActionResult<IEnumerable<Flight>>> GetFlights([FromQuery] FlightForSearchModel model)
         {
-            var results = await _flightService.GetFlightsAsync(departureAirportId, arrivalAirportId, date, ticketsNumber);
+            var results = await _flightService.GetFlightsAsync(model);
 
             return Ok(results);
         }
@@ -37,21 +37,7 @@ namespace Airline_Web_API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<FlightViewModel>> GetFlight(int id)
         {
-            var result = await _flightService.GetFlightAsync(id);
-
-            if (result == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(result);
-        }
-
-
-        [HttpGet("parallel-search")]
-        public async Task<ActionResult<FlightViewModel>> GetFlightParallel([FromQuery] int? departureAirportId, int? arrivalAirportId, DateTime date)
-        {
-            var result = await _flightService.GetFlightsAsync(departureAirportId, arrivalAirportId, date);
+            var result = await _flightService.GetFlightByIdAsync(id);
 
             if (result == null)
             {

@@ -19,7 +19,7 @@ export class TicketAddingComponent implements OnInit {
 
   ticketStatuses = TicketStatuses;
   ticketForm: FormGroup;
-  types$: Observable<TicketType[]>;
+  ticketTypes: TicketType[];
   flightId: number;
 
   constructor(private route: ActivatedRoute,
@@ -38,7 +38,9 @@ export class TicketAddingComponent implements OnInit {
       ticketsLeftNumber: new FormControl(null, Validators.required),
       status: new FormControl(null, Validators.required)
     });
-    this.types$ = this.ticketTypeService.getTicketTypes();
+    this.ticketTypeService.getTicketTypes().subscribe(ticketTypes => {
+      this.ticketTypes = ticketTypes.filter(ticketType => ticketType.status !== 'Delted');
+    });
   }
 
   addTicket(): void {

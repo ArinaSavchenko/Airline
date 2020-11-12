@@ -8,6 +8,7 @@ import { AccountComponent } from './account/account.component';
 import { AuthGuard } from './AuthGuard';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { BookTicketsComponent } from './book-tickets/book-tickets.component';
 
 const routes: Routes = [
   { path: 'airline', component: MainPageComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'airline/account', canActivate: [AuthGuard], component: AccountComponent },
   { path: 'airline/account/details', canActivate: [AuthGuard], component: UserDetailsComponent},
   { path: 'airline/account/change-password', canActivate: [AuthGuard], component: ChangePasswordComponent},
+  { path: 'booking', canActivate: [AuthGuard], component: BookTicketsComponent}
 ];
 
 @NgModule({

@@ -16,5 +16,7 @@ namespace Airline_Web_API.Models
 
         public Flight Flight { get; set; }
         public TicketType TicketType { get; set; }
+
+        public ICollection<BookedTicket> BookedTickets { get; set; }
     }
 }

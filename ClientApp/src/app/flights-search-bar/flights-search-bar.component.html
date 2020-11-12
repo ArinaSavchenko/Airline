@@ -1,5 +1,5 @@
 <div class="mainContainer">
-  <form [formGroup]="myForm">
+  <form [formGroup]="flightForm">
     <div class="airports">
       <mat-form-field class="directionField">
         <input #departureAirportIdInput
@@ -73,12 +73,12 @@
     <div class="ticketsNumber">
       <mat-form-field class="example-full-width">
         <mat-label>Enter number of tickets</mat-label>
-        <input matInput (ngModelChange)="setTicketsNumber($event)" formControlName="ticketsNumber">
+        <input matInput formControlName="ticketsNumber">
       </mat-form-field>
     </div>
 
     <div class="submitButton">
-      <button mat-flat-button [disabled]="!myForm.valid" id="search" (click)="sendSearchRequest()" routerLink="/search">Search</button>
+      <button mat-flat-button [disabled]="!flightForm.valid" id="search" (click)="sendSearchRequest()" routerLink="/search">Search</button>
     </div>
   </form>
 </div>

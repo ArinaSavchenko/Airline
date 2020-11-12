@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Airline_Web_API.Helpers;
 using Airline_Web_API.DTOs;
+using IdentityServer4.Extensions;
 
 namespace Airline_Web_API.Services
 {
@@ -23,33 +24,7 @@ namespace Airline_Web_API.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<FlightViewModel>> GetFlightsAsync(int departureAirportId, int arrivalAirportId, DateTime date, int ticketsNumber)
-        {
-            var flights = _context.Flights
-                .Include(flight => flight.DepartureAirport)
-                .Include(flight => flight.ArrivalAirport)
-                .Include(flight => flight.Tickets)
-                    .ThenInclude(ticket => ticket.TicketType)
-                .AsQueryable();
-
-            flights = flights.Where(flight =>
-                flight.DepartureAirportId == departureAirportId
-                && flight.ArrivalAirportId == arrivalAirportId
-                && flight.DepartureDate.Date == date.Date
-                && flight.Tickets.Count(ticket => ticket.TicketsLeftNumber >= ticketsNumber) >= 0
-                && flight.Status == "Active"
-            );
-
-            var flightsSearchResults = await flights
-                .OrderBy(flight => flight.Id)
-                .ToListAsync();
-
-            var results = _mapper.Map<IEnumerable<FlightViewModel>>(flightsSearchResults);
-
-            return results;
-        }
-
-        public async Task<FlightViewModel> GetFlightAsync(int id)
+        public async Task<FlightViewModel> GetFlightByIdAsync(int id)
         {
             var flight = await _context.Flights
                 .Include(flight => flight.DepartureAirport)
@@ -68,26 +43,38 @@ namespace Airline_Web_API.Services
             return result;
         }
 
-        public async Task<IEnumerable<FlightViewModel>> GetFlightsAsync(int? departureAirportId, int? arrivalAirportId, DateTime date)
+        public async Task<IEnumerable<FlightViewModel>> GetFlightsAsync(FlightForSearchModel model)
         {
             var flights = _context.Flights
                 .Include(flight => flight.DepartureAirport)
                 .Include(flight => flight.ArrivalAirport)
+                .Include(flight => flight.Tickets)
+                    .ThenInclude(ticket => ticket.TicketType)
                 .AsQueryable();
 
-            if (departureAirportId != null)
+            if (model.departureAirportId != null)
             {
-                flights = flights.Where(flight => flight.DepartureAirportId == departureAirportId);
+                flights = flights.Where(flight => flight.DepartureAirportId == model.departureAirportId);
             }
 
-            if (arrivalAirportId != null)
+            if (model.arrivalAirportId != null)
             {
-                flights = flights.Where(flight => flight.ArrivalAirportId == arrivalAirportId);
+                flights = flights.Where(flight => flight.ArrivalAirportId == model.arrivalAirportId);
             }
 
-            if (date != default(DateTime))
+            if (model.date != default(DateTime))
             {
-                flights = flights.Where(flight => flight.DepartureDate.Date == date.Date);
+                flights = flights.Where(flight => flight.DepartureDate.Date == model.date.Date);
+            }
+
+            if (model.ticketsNumber != null)
+            {
+                flights = flights.Where(flight => flight.Tickets.Count >= model.ticketsNumber);
+            }
+
+            if (!string.IsNullOrEmpty(model.Status))
+            {
+                flights = flights.Where(flight => flight.Status == model.Status);
             }
 
             var flightsSearchResults = await flights

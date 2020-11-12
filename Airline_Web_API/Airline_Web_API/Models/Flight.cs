@@ -22,6 +22,5 @@ namespace Airline_Web_API.Models
         public Airport ArrivalAirport { get; set; }
         public Airplane Airplane { get; set; }
 
-        public ICollection<Ticket> Tickets { get; set; }
-    }
+        public ICollection<Ticket> Tickets { get; set; }    }
 }
