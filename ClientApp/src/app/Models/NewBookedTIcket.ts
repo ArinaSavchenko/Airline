@@ -1,8 +1,6 @@
-import { User } from './User';
-import { Ticket } from './Ticket';
-
-export interface BookedTicket{
-  id?: number;
+export interface NewBookedTicket{
+  ticketId: number;
+  userId: number;
   passport: string;
   passengerFirstName: string;
   passengerLastName: string;
@@ -10,6 +8,4 @@ export interface BookedTicket{
   baggageNumber: number;
   totalPrice: number;
   status: string;
-  user: User;
-  ticket: Ticket;
 }

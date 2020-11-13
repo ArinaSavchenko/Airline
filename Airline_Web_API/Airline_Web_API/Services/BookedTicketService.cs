@@ -1,4 +1,5 @@
-﻿using Airline_Web_API.Models;
+﻿using Airline_Web_API.DTOs;
+using Airline_Web_API.Models;
 using Airline_Web_API.ViewModels;
 using AutoMapper;
 using System;
@@ -28,12 +29,25 @@ namespace Airline_Web_API.Services
             return result;
         }
 
-        public async Task<int> AddBookedTicketAsync(BookedTicket bookedTicket)
+        public async Task<List<TicketWasBookedResponseModel>> AddBookedTicketAsync(NewBookedTicketModel[] models)
         {
-            _context.BookedTickets.Add(bookedTicket);
+            var bookedTickets = _mapper.Map<List<BookedTicket>>(models);
+
+            _context.BookedTickets.AddRange(bookedTickets);
             await _context.SaveChangesAsync();
 
-            return bookedTicket.Id;
+            List<TicketWasBookedResponseModel> reponse = new List<TicketWasBookedResponseModel>();
+
+            foreach (var ticket in bookedTickets)
+            {
+                reponse.Add(new TicketWasBookedResponseModel { 
+                    Id = ticket.Id,
+                    PassengerFirstName = ticket.PassengerFirstName,
+                    PassengerLastName = ticket.PassengerLastName
+                });
+            }
+
+            return reponse;
         }
     }
 }

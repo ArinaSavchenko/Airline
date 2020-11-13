@@ -4,6 +4,8 @@ import { Observable, of } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { BookedTicket } from '../Models/BookedTicket';
+import { NewBookedTicket } from '../Models/NewBookedTIcket';
+import { TicketWasBookedResponse } from '../Models/TicketWasBookedResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +27,7 @@ export class BookedTicketsService {
     return this.http.get<BookedTicket>(url);
   }
 
-  postBookedTicket(bookedTicket: BookedTicket): Observable<any> {
-    return this.http.post(this.bookedTicketUrl, bookedTicket, this.httpOptions);
+  postBookedTicket(tickets: NewBookedTicket[]): Observable<TicketWasBookedResponse[]> {
+    return this.http.post<TicketWasBookedResponse[]>(this.bookedTicketUrl, tickets, this.httpOptions);
   }
 }

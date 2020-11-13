@@ -37,6 +37,7 @@ import { ConfirmActionDialogComponent } from './confirm-action-dialog/confirm-ac
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { BookTicketsComponent } from './book-tickets/book-tickets.component';
 import { TicketBookingFormComponent } from './ticket-booking-form/ticket-booking-form.component';
+import { BookingResultComponent } from './booking-result/booking-result.component';
 
 export function tokenGetter(): any {
   return localStorage.getItem('token');
@@ -58,7 +59,8 @@ export function tokenGetter(): any {
     ConfirmActionDialogComponent,
     ChangePasswordComponent,
     BookTicketsComponent,
-    TicketBookingFormComponent
+    TicketBookingFormComponent,
+    BookingResultComponent
   ],
     imports: [
         BrowserModule,

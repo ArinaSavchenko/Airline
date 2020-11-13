@@ -1,1 +1,53 @@
-<p>Ticket id: {{ticketId}}</p>
+<div *ngIf="ticket" class="infoContainer">
+  <h1 class="header">Ticket form</h1>
+  <form [formGroup]="bookedTicketForm" class="infoArea">
+    <mat-form-field appearance="outline">
+      <mat-label>Passenger first name</mat-label>
+      <input matInput formControlName="passengerFirstName">
+      <mat-error>
+        First name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Passenger last name</mat-label>
+      <input matInput formControlName="passengerLastName">
+      <mat-error>
+        Last name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Passport</mat-label>
+      <input matInput formControlName="passport">
+      <mat-error>
+        Passport is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Carry on bags number</mat-label>
+      <input type="number" matInput formControlName="carryOnBagsNumber"
+             (input)="luggageNumberChanged()"
+             (change)="luggageNumberChanged()">
+      <mat-error>
+        Field is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Baggage number</mat-label>
+      <input type="number" matInput formControlName="baggageNumber"
+             (input)="luggageNumberChanged()"
+             (change)="luggageNumberChanged()">
+      <mat-error>
+        Field is required
+      </mat-error>
+    </mat-form-field>
+  </form>
+  <p class="price">Total price: {{totalTicketPrice}}$</p>
+  <div class="actionButtons">
+    <button mat-raised-button [disabled]="saved" (click)="onSaveTicket()">{{saved ? 'Saved' : 'Save'}}</button>
+    <button mat-raised-button class="saved" *ngIf="saved" (click)="change()">X</button>
+  </div>
+</div>

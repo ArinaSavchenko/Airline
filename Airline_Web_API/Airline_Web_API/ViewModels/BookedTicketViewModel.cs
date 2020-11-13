@@ -13,8 +13,6 @@ namespace Airline_Web_API.ViewModels
         public string PassengerLastName { get; set; }
         public int CarryOnBagsNumber { get; set; }
         public int BaggageNumber { get; set; }
-        public decimal ExtraCarryOnBagNumber { get; set; }
-        public decimal ExtraBaggageNumber { get; set; }
         public decimal TotalPrice { get; set; }
         public string Status { get; set; }
 
