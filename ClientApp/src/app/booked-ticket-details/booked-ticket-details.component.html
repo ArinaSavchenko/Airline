@@ -1,15 +1,14 @@
 <div class="infoContainer">
   <h1>Booked ticket info</h1>
-  <div class="fieldsContainer">
+  <div class="fieldsContainer" *ngIf="bookedTicket">
     <div class="ticketInfo">
       <p class="fieldName">Direction:</p>
-      <p class="fieldValue">{{bookedTicket.ticket.flight.departureAirport.city}}
-        , {{bookedTicket.ticket.flight.departureAirport.country}}
-        - {{bookedTicket.ticket.flight.arrivalAirport.city}}, {{bookedTicket.ticket.flight.arrivalAirport.country}}</p>
+      <p class="fieldValue">{{bookedTicket.departureCity}}, {{bookedTicket.departureCountry}}
+        - {{bookedTicket.arrivalCity}}, {{bookedTicket.arrivalCountry}}</p>
     </div>
     <div class="ticketInfo">
       <p class="fieldName">Date:</p>
-      <p class="fieldValue">{{bookedTicket.ticket.flight.departureDate | date}}</p>
+      <p class="fieldValue">{{bookedTicket.date | date}}</p>
     </div>
     <div class="ticketInfo">
       <p class="fieldName">Passenger:</p>

@@ -34,7 +34,6 @@ export class BookedTicketsService {
     return this.http.get<BookedTicketHistoryModel[]>(url);
   }
 
-
   postBookedTicket(tickets: NewBookedTicket[]): Observable<TicketWasBookedResponse[]> {
     return this.http.post<TicketWasBookedResponse[]>(this.bookedTicketUrl, tickets, this.httpOptions);
   }

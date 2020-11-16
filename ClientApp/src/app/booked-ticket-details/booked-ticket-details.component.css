@@ -25,7 +25,6 @@ h1 {
 .ticketInfo {
     display: flex;
     flex-direction: row;
-    align-items: start;
 }
 
 .fieldName {
@@ -48,7 +47,6 @@ h1 {
     margin-right: auto;
     width: fit-content;
     border: dimgrey solid 1px;
-    text-align: left;
 }
 
 .mat-raised-button {

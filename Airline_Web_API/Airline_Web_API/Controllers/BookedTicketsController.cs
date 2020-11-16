@@ -41,11 +41,6 @@ namespace Airline_Web_API.Controllers
         {
             var bookedTickets = await _bookedTicketService.GetBookedTicketsByUserIdAsync(userId);
 
-            if (bookedTickets == null)
-            {
-                return NotFound();
-            }
-
             return Ok(bookedTickets);
         }
 
