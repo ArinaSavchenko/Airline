@@ -20,15 +20,15 @@ export class AirportService{
 
   constructor(private http: HttpClient) { }
 
-  /** GET */
   getAirports(): Observable<Airport[]>{
-    return this.http.get<Airport[]>(this.airportsUrl);
+    return this.http.get<Airport[]>(`${this.airportsUrl}/?status=Active`);
   }
 
   searchAirports(term: string): Observable<Airport[]>{
     if (!term.trim()){
       return this.getAirports();
     }
-    return  this.http.get<Airport[]>(`${this.airportsUrl}/?value=${term}`);
+
+    return  this.http.get<Airport[]>(`${this.airportsUrl}/?value=${term}&status=Active`);
   }
 }

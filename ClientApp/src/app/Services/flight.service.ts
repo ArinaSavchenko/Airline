@@ -34,6 +34,9 @@ export class FlightService {
     if (!flight) {
       return of([]);
     }
+
+    flight.status = 'Active';
+
     const options = {
       params: new HttpParams()
     };

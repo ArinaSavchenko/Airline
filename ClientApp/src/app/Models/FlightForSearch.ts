@@ -3,4 +3,5 @@ export interface FlightForSearch{
   arrivalAirportId?: number;
   date?: string;
   ticketsNumber?: number;
+  status?: string;
 }

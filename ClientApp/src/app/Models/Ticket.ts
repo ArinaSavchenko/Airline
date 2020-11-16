@@ -5,4 +5,6 @@ export interface Ticket {
   ticketType: TicketType;
   flightId: number;
   price: number;
+  ticketsLeftNumber: number;
+  status: string;
 }

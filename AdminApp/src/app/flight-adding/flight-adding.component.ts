@@ -21,7 +21,7 @@ import { FlightStatuses } from '../Enums/FlightStatuses';
 export class FlightAddingComponent implements OnInit {
 
   airports: Airport[];
-  airplanes$: Observable<Airplane[]>;
+  airplanes: Airplane[];
   flightStatuses = FlightStatuses;
   private searchTermsAirport = new Subject<string>();
   private searchTermsAirplanes = new Subject<string>();
@@ -59,7 +59,7 @@ export class FlightAddingComponent implements OnInit {
       distinctUntilChanged(),
       switchMap(value => this.airportService.searchAirports(value))
     ).subscribe(airports => {
-      this.airports = airports;
+      this.airports = airports.filter(airport => airport.status === 'Active');
       if (this.flightForm.controls.departureAirport.value) {
         this.airports = this.airports.filter(airport => airport.id !== this.flightForm.controls.departureAirport.value.id);
       }
@@ -67,11 +67,13 @@ export class FlightAddingComponent implements OnInit {
         this.airports = this.airports.filter(airport => airport.id !== this.flightForm.controls.arrivalAirport.value.id);
       }
     });
-    this.airplanes$ = this.searchTermsAirplanes.pipe(
+    this.searchTermsAirplanes.pipe(
       debounceTime(100),
       distinctUntilChanged(),
       switchMap((value: string) => this.airplaneService.searchAirplanes(value))
-    );
+    ).subscribe(airplanes => {
+      this.airplanes = airplanes.filter(airplane => airplane.status === 'Active');
+    });
   }
 
   displayFnForAirport(subject): string {

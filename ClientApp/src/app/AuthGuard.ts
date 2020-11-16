@@ -18,12 +18,11 @@ export class AuthGuard implements CanActivate {
   canActivate(): boolean {
     const token = localStorage.getItem('token');
 
-    if (this.userService.isLoggedIn && !this.jwtHelper.isTokenExpired(token)) {
+    if (this.userService.isLoggedIn && !this.jwtHelper.isTokenExpired(token) && this.userService.getUserRole() === 'user') {
       return true;
     }
 
     this.userService.logOut();
-    this.router.navigate(['/airline']);
     this.openLogInForm();
     return false;
   }

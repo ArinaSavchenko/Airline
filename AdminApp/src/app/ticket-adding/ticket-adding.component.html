@@ -4,8 +4,8 @@
     <mat-form-field appearance="outline">
       <mat-label>Ticket type</mat-label>
       <mat-select formControlName="ticketTypeId">
-        <mat-option *ngFor="let type of types$ | async" [value]="type.id">
-          {{type.name}}
+        <mat-option *ngFor="let ticketType of ticketTypes" [value]="ticketType.id">
+          {{ticketType.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>

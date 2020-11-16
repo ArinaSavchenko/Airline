@@ -1,7 +1,7 @@
 <div class="container">
-  <p class="header">Choose your outbound flight</p>
+  <p class="header" *ngIf="this.searchOfFlightsToIsFinished && this.flightsToFound">Choose your outbound flight</p>
   <mat-accordion id="flightsTo" class="searchResults">
-    <mat-expansion-panel *ngFor="let flight of flightsTo$ | async">
+    <mat-expansion-panel *ngFor="let flight of flightsTo">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <span class="flightInfo">
@@ -20,21 +20,18 @@
             <div class="ticketInfo">
               <div>
                 {{ticket.ticketType.carryOnBagsNumber == 1 ?
-                '1 carry on bag up to ' + ticket.ticketType.carryOnBagMaxWeight + 'kg' :
-                ticket.ticketType.carryOnBagsNumber + ' carry on bags up to ' + ticket.ticketType.carryOnBagMaxWeight + 'kg each'}}
+                  '1 carry on bag up to ' + ticket.ticketType.carryOnBagMaxWeight + 'kg' :
+                  ticket.ticketType.carryOnBagsNumber + ' carry on bags up to ' + ticket.ticketType.carryOnBagMaxWeight + 'kg each'}}
               </div>
               <div *ngIf="ticket.ticketType.baggageNumber !== null">
                 {{ticket.ticketType.baggageNumber == 1 ?
-                'Baggage to ' + ticket.ticketType.baggageMaxWeight + 'kg' :
-                ticket.ticketType.baggageNumber + ' pieces of baggage up to ' + ticket.ticketType.baggageNumber + 'kg each'}}
+                  'Baggage to ' + ticket.ticketType.baggageMaxWeight + 'kg' :
+                  ticket.ticketType.baggageNumber + ' pieces of baggage up to ' + ticket.ticketType.baggageNumber + 'kg each'}}
               </div>
               <div>Advanced seat reservation {{ticket.ticketType.seatReservation ? 'allowed' : 'for fee'}}</div>
               <div>{{ticket.ticketType.changes ? 'Free changes' : 'Changes for fee'}}</div>
-              <div *ngIf="ticket.ticketType.refund !== null">
-                {{ticket.ticketType.refund ? 'Full refund' : 'Refund for fee'}}
-              </div>
-              <div *ngIf="ticket.ticketType.refund === null">
-                Refund not allowed
+              <div>
+                {{ticket.ticketType.refund}}
               </div>
               <div>Price: {{ticket.price}} $</div>
             </div>
@@ -49,9 +46,18 @@
     </mat-expansion-panel>
   </mat-accordion>
 
-  <p id="flightBackHeader" class="header" *ngIf="flightBack.departureAirportId">Choose your inbound flight</p>
+  <div
+    *ngIf="this.searchOfFlightsToIsFinished && !this.flightsToFound && this.flightBackIsRequired && this.flightsBackFound"
+    class="noFlights">
+    <p class="header">Outbound flight</p>
+    <h1>Oops... There are no flights in this direction for chosen dates</h1>
+    <img src="https://pbs.twimg.com/media/C5kgxTZWYAE-yXw.jpg">
+  </div>
+
+  <p id="flightBackHeader" class="header" *ngIf="this.searchOfFlightsToIsFinished && this.flightsBackFound">
+    Choose your inbound flight</p>
   <mat-accordion id="flightsBack" class="searchResults">
-    <mat-expansion-panel *ngFor="let flight of flightsBack$ | async">
+    <mat-expansion-panel *ngFor="let flight of flightsBack">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <span class="flightInfo">
@@ -70,21 +76,18 @@
             <div class="ticketInfo">
               <div>
                 {{ticket.ticketType.carryOnBagsNumber == 1 ?
-                '1 carry on bag up to ' + ticket.ticketType.carryOnBagMaxWeight + 'kg' :
-                ticket.ticketType.carryOnBagsNumber + ' carry on bags up to ' + ticket.ticketType.carryOnBagMaxWeight + 'kg each'}}
+                  '1 carry on bag up to ' + ticket.ticketType.carryOnBagMaxWeight + 'kg' :
+                  ticket.ticketType.carryOnBagsNumber + ' carry on bags up to ' + ticket.ticketType.carryOnBagMaxWeight + 'kg each'}}
               </div>
               <div *ngIf="ticket.ticketType.baggageNumber !== null">
                 {{ticket.ticketType.baggageNumber == 1 ?
-                'Baggage to ' + ticket.ticketType.baggageMaxWeight + 'kg' :
-                ticket.ticketType.baggageNumber + ' pieces of baggage up to ' + ticket.ticketType.baggageNumber + 'kg each'}}
+                  'Baggage to ' + ticket.ticketType.baggageMaxWeight + 'kg' :
+                  ticket.ticketType.baggageNumber + ' pieces of baggage up to ' + ticket.ticketType.baggageNumber + 'kg each'}}
               </div>
               <div>Advanced seat reservation {{ticket.ticketType.seatReservation ? 'allowed' : 'for fee'}}</div>
               <div>{{ticket.ticketType.changes ? 'Free changes' : 'Changes for fee'}}</div>
-              <div *ngIf="ticket.ticketType.refund !== null">
-                {{ticket.ticketType.refund ? 'Full refund' : 'Refund for fee'}}
-              </div>
-              <div *ngIf="ticket.ticketType.refund === null">
-                Refund not allowed
+              <div>
+                {{ticket.ticketType.refund}}
               </div>
               <div>Price: {{ticket.price}} $</div>
             </div>
@@ -160,11 +163,27 @@
       <div class="totalPrice">
         Total price:
         {{((this.outboundTicket ? this.outboundTicket.price : 0) +
-        (this.inboundTicket ? this.inboundTicket.price : 0)) * this.selectedTickets.number}} $
+          (this.inboundTicket ? this.inboundTicket.price : 0)) * this.ticketsNumber}} $
       </div>
       <div class="nextButtonLocation">
-        <button *ngIf="clickedInbound || clickedOutbound" mat-raised-button class="nextButton">Next</button>
+        <button *ngIf="clickedInbound || clickedOutbound" mat-raised-button class="nextButton" (click)="bookTicket()">
+          Next
+        </button>
       </div>
     </div>
+  </div>
+
+  <div *ngIf="this.searchOfFlightsBackIsFinished && this.flightBackIsRequired && !this.flightsBackFound &&
+    this.searchOfFlightsToIsFinished && this.flightsToFound" class="noFlights">
+    <p class="header">Inbound flight</p>
+    <h1>Oops... There are no flights in this direction for chosen dates</h1>
+    <img src="https://pbs.twimg.com/media/C5kgxTZWYAE-yXw.jpg">
+  </div>
+
+  <div
+    *ngIf="this.searchOfFlightsToIsFinished && this.searchOfFlightsBackIsFinished && !this.flightsToFound
+    && !this.flightsBackFound" class="noFlights">
+    <h1>Oops... There are no flights in this direction for chosen dates</h1>
+    <img src="https://pbs.twimg.com/media/C5kgxTZWYAE-yXw.jpg">
   </div>
 </div>

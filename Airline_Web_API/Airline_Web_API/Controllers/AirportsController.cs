@@ -35,9 +35,9 @@ namespace Airline_Web_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Airport>>> GetAirports([FromQuery] string value)
+        public async Task<ActionResult<IEnumerable<Airport>>> GetAirports([FromQuery] string value, string status)
         {
-            var results = await _airportService.GetAirportsAsync(value);
+            var results = await _airportService.GetAirportsAsync(value, status);
 
             return Ok(results);
         }

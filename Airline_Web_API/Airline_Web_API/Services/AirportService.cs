@@ -7,6 +7,7 @@ using AutoMapper;
 using Airline_Web_API.ViewModels;
 using Airline_Web_API.Models;
 using Airline_Web_API.Helpers;
+using IdentityServer4.Extensions;
 
 namespace Airline_Web_API.Services
 {
@@ -25,14 +26,19 @@ namespace Airline_Web_API.Services
         {
             var airport = await _context.Airports.FindAsync(id);
 
-            var results = _mapper.Map<AirportViewModel>(airport);
+            var result = _mapper.Map<AirportViewModel>(airport);
 
-            return results;
+            return result;
         }
 
-        public async Task<IEnumerable<AirportViewModel>> GetAirportsAsync(string value)
+        public async Task<IEnumerable<AirportViewModel>> GetAirportsAsync(string value, string status)
         {
             var airports = _context.Airports.AsQueryable();
+
+            if (!string.IsNullOrEmpty(status))
+            {
+                airports = airports.Where(airport => airport.Status == status);
+            }
 
             if (!string.IsNullOrEmpty(value))
             {

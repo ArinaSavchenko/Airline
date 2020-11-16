@@ -1,0 +1,12 @@
+<div class="infoContainer">
+  <h1 class="header" *ngIf="tickets.length > 1">Tickets were successfully booked</h1>
+  <h1 class="header" *ngIf="tickets.length === 1">Ticket was successfully booked</h1>
+  <h1 class="header" *ngIf="!tickets">Errors while tickets booking occurred. Please try again later</h1>
+  <div class="bookedTicketInfo" *ngFor="let ticket of tickets">
+    <h2 class="header">Booked ticket info:</h2>
+    <h3>{{ticket.passengerFirstName}} {{ticket.passengerLastName}} - ticket uniq number: {{ticket.id}}</h3>
+  </div>
+  <div>
+    <button mat-raised-button routerLink="/airline">Go to the main page</button>
+  </div>
+</div>

@@ -15,8 +15,8 @@ namespace Airline_Web_API
             CreateMap<AirportViewModel, Airport>();
             CreateMap<TicketType, TicketTypeViewModel>();
             CreateMap<TicketTypeViewModel, TicketType>();
-            CreateMap<Ticket, TicketsViewModel>();
-            CreateMap<TicketsViewModel, Ticket>();
+            CreateMap<Ticket, TicketViewModel>();
+            CreateMap<TicketViewModel, Ticket>();
             CreateMap<Flight, FlightViewModel>();
             CreateMap<FlightViewModel, Flight>();
             CreateMap<RegisterModel, User>();
@@ -31,6 +31,12 @@ namespace Airline_Web_API
             CreateMap<SeatViewModel, Seat>();
             CreateMap<NewFlightModel, Flight>();
             CreateMap<NewTicketModel, Ticket>();
+            CreateMap<NewBookedTicketModel, BookedTicket>()
+                .ForMember(ticket => ticket.PassengerFirstName, opt => opt.MapFrom(s => s.PassengerFirstName.ToUpper()))
+                .ForMember(ticket => ticket.PassengerLastName, opt => opt.MapFrom(s => s.PassengerLastName.ToUpper()))
+                .ForMember(ticket => ticket.Passport, opt => opt.MapFrom(s => s.Passport.ToUpper()));
+            CreateMap<BookedTicket, BookedTicketViewModel>();
+            CreateMap<BookedTicketViewModel, BookedTicket>();
         }
     }
 }

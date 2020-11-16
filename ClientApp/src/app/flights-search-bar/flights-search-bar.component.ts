@@ -1,11 +1,12 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 
 import { Airport } from '../Models/Airport';
 import { FlightForSearch } from '../Models/FlightForSearch';
-import { SharedService } from '../Services/Shared.service';
 import { AirportService } from '../Services/airport.service';
 
 @Component({
@@ -16,18 +17,8 @@ import { AirportService } from '../Services/airport.service';
 
 export class FlightsSearchBarComponent implements OnInit, AfterViewChecked {
 
-  flightForSearchTo: FlightForSearch;
-  flightForSearchBack: FlightForSearch;
   ticketType = 'OneWay';
-
-  myForm = new FormGroup({
-    departureAirportId: new FormControl(null, Validators.required),
-    arrivalAirportId: new FormControl(null, Validators.required),
-    ticketType: new FormControl(this.ticketType),
-    dateTo: new FormControl(null, Validators.required),
-    dateBack: new FormControl(null),
-    ticketsNumber: new FormControl(1, Validators.min(1))
-  });
+  flightForm: FormGroup;
 
   airports: Airport[];
   airports$: Observable<Airport[]>;
@@ -38,31 +29,39 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked {
   minDate = this.today;
   maxDate = new Date();
 
-  constructor(
-    private airportService: AirportService,
-    private sharedService: SharedService,
-    private changes: ChangeDetectorRef) {
+  constructor(private airportService: AirportService,
+              private changes: ChangeDetectorRef,
+              private router: Router,
+              private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
+    this.flightForm = this.formBuilder.group({
+      departureAirportId: new FormControl(null, Validators.required),
+      arrivalAirportId: new FormControl(null, Validators.required),
+      ticketType: new FormControl(this.ticketType),
+      dateTo: new FormControl(null, Validators.required),
+      dateBack: new FormControl(null),
+      ticketsNumber: new FormControl(1, Validators.min(1))
+    });
+
     this.maxDate.setDate(this.today.getDate() + this.dateInterval);
-    this.sharedService.sharedFlightTo.subscribe(flight => this.flightForSearchTo = flight);
-    this.sharedService.sharedFlightBack.subscribe(flight => this.flightForSearchBack = flight);
+
     this.airports$ = this.searchTerms.pipe(
       debounceTime(300),
       distinctUntilChanged(),
       switchMap((term: string) => this.airportService.searchAirports(term))
     );
+
     this.airports$.subscribe(airports => {
       this.airports = airports;
-      if (this.myForm.controls.departureAirportId.value) {
-        this.airports = this.airports.filter(airport => airport.id !== this.myForm.controls.departureAirportId.value.id);
+      if (this.flightForm.controls.departureAirportId.value) {
+        this.airports = this.airports.filter(airport => airport.id !== this.flightForm.controls.departureAirportId.value.id);
       }
-      if (this.flightForSearchTo.arrivalAirportId) {
-        this.airports = this.airports.filter(airport => airport.id !== this.myForm.controls.arrivalAirportId.value.id);
+      if (this.flightForm.controls.arrivalAirportId.value) {
+        this.airports = this.airports.filter(airport => airport.id !== this.flightForm.controls.arrivalAirportId.value.id);
       }
     });
-    this.flightForSearchTo.ticketsNumber = 1;
   }
 
   ngAfterViewChecked(): void {
@@ -78,30 +77,19 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked {
   }
 
   setDepartureAirportId(subject): void {
-    this.flightForSearchTo.departureAirportId = subject.id;
     this.airports = this.airports.filter(airport => airport.id !== subject.id);
   }
 
   setArrivalAirportId(subject): void {
-    this.flightForSearchTo.arrivalAirportId = subject.id;
     this.airports = this.airports.filter(airport => airport.id !== subject.id);
-  }
-
-  setTicketsNumber(ticketsNumber): void {
-    this.flightForSearchTo.ticketsNumber = +ticketsNumber;
-    if (this.ticketType === 'Return') {
-      this.flightForSearchBack.ticketsNumber = +ticketsNumber;
-    }
   }
 
   setDateTo(date): void {
     this.minDate = date;
-    this.flightForSearchTo.date = new Date(date).toUTCString();
   }
 
   setDateBack(date): void {
     this.maxDate = date;
-    this.flightForSearchBack.date = new Date(date).toUTCString();
   }
 
   OnTicketTypeChange(value): void {
@@ -109,11 +97,15 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked {
   }
 
   sendSearchRequest(): void {
-    this.sharedService.nextFlightTo(this.flightForSearchTo);
-    if (this.ticketType === 'Return') {
-      this.flightForSearchBack.departureAirportId = this.flightForSearchTo.arrivalAirportId;
-      this.flightForSearchBack.arrivalAirportId = this.flightForSearchTo.departureAirportId;
-    }
-    this.sharedService.nextFlightBack(this.flightForSearchBack);
+    this.router.navigate(['/search'], {
+      queryParams: {
+        departureAirportId: this.flightForm.controls.departureAirportId.value.id,
+        arrivalAirportId: this.flightForm.controls.arrivalAirportId.value.id,
+        dateTo: this.flightForm.controls.dateTo.value,
+        dateBack: this.flightForm.controls.dateBack.value,
+        ticketType: this.ticketType,
+        ticketsNumber: this.flightForm.controls.ticketsNumber.value
+      }
+    });
   }
 }

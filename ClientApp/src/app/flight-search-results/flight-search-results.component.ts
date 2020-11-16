@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { Observable, of, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { Flight } from '../Models/Flight';
-import { FlightService } from '../Services/flight.service';
-import { SharedService } from '../Services/Shared.service';
-import { FlightForSearch } from '../Models/FlightForSearch';
-import { SelectedTickets } from '../Models/SelectedTickets';
-import { TicketsService } from '../Services/tickets.service';
 import { Ticket } from '../Models/Ticket';
+import { FlightForSearch } from '../Models/FlightForSearch';
+import { TicketsService } from '../Services/tickets.service';
+import { FlightService } from '../Services/flight.service';
 
 @Component({
   selector: 'app-flight-search-results',
@@ -18,11 +17,12 @@ import { Ticket } from '../Models/Ticket';
 })
 export class FlightSearchResultsComponent implements OnInit {
 
-  flightsTo$: Observable<Flight[]>;
-  flightsBack$: Observable<Flight[]>;
-  flightTo: FlightForSearch;
-  flightBack: FlightForSearch;
-  selectedTickets: SelectedTickets;
+  flightsTo: Flight[];
+  flightsBack: Flight[];
+  flightForSearchTo: FlightForSearch = {};
+  flightForSearchBack: FlightForSearch = {};
+  ticketsNumber: number;
+  ticketType: string;
   clickedOutbound = false;
   clickedInbound = false;
   outboundTicket: Ticket;
@@ -31,14 +31,25 @@ export class FlightSearchResultsComponent implements OnInit {
   selectedFlightBack: Flight;
   private searchTermsTo = new Subject<FlightForSearch>();
   private searchTermsBack = new Subject<FlightForSearch>();
+  flightBackIsRequired = false;
+  flightsBackFound = false;
+  flightsToFound = false;
+  searchOfFlightsToIsFinished = false;
+  searchOfFlightsBackIsFinished = false;
 
-  constructor(private sharedService: SharedService, private flightService: FlightService, private ticketsService: TicketsService) {
+  constructor(private flightService: FlightService,
+              private ticketsService: TicketsService,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   search(): void {
-    this.searchTermsTo.next(this.flightTo);
-    if (this.flightBack.departureAirportId) {
-      this.searchTermsBack.next(this.flightBack);
+    this.searchTermsTo.next(this.flightForSearchTo);
+
+    if (this.flightBackIsRequired) {
+      this.searchTermsBack.next(this.flightForSearchBack);
+    } else {
+      this.searchOfFlightsBackIsFinished = true;
     }
   }
 
@@ -53,7 +64,6 @@ export class FlightSearchResultsComponent implements OnInit {
   }
 
   setOutboundTicket(ticket): void {
-    this.selectedTickets.outboundTicketId = ticket.id;
     this.clickedOutbound = true;
     this.outboundTicket = ticket;
     this.flightService.getFlight(this.outboundTicket.flightId)
@@ -68,25 +78,67 @@ export class FlightSearchResultsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sharedService.sharedFlightTo.subscribe(flight => {
-      this.flightTo = flight;
-      this.selectedTickets = {
-        outboundTicketId: 0,
-        inboundTicketId: 0,
-        number: this.flightTo.ticketsNumber
-      };
-    });
-    this.sharedService.sharedFlightBack.subscribe(flight => this.flightBack = flight);
+    this.ticketType = this.parseQueryParameter('ticketType');
+
+    this.createFlightToAccordingToQuery();
+
+    if (this.ticketType === 'Return') {
+      this.flightBackIsRequired = true;
+      this.createFlightBackAccordingToQuery();
+    }
+
+    this.ticketsNumber = +this.parseQueryParameter('ticketsNumber');
 
     this.searchTermsTo.pipe(
       distinctUntilChanged(),
       switchMap((term: FlightForSearch) => this.flightService.searchFlights(term)),
-    ).subscribe(results => this.flightsTo$ = of(results));
+    ).subscribe(results => {
+      this.flightsTo = results;
+      this.searchOfFlightsToIsFinished = true;
+      if (this.flightsTo.length > 0) {
+        this.flightsToFound = true;
+      }
+    });
 
     this.searchTermsBack.pipe(
       distinctUntilChanged(),
       switchMap((term: FlightForSearch) => this.flightService.searchFlights(term)),
-    ).subscribe(results => this.flightsBack$ = of(results));
+    ).subscribe(results => {
+      this.flightsBack = results;
+      this.searchOfFlightsBackIsFinished = true;
+      if (this.flightsBack.length > 0) {
+        this.flightsBackFound = true;
+      }
+    });
+
     this.search();
+  }
+
+  parseQueryParameter(parameter: string): string {
+    return this.route.snapshot.queryParamMap.get(parameter);
+  }
+
+  createFlightToAccordingToQuery(): void {
+    this.flightForSearchTo.departureAirportId = +this.parseQueryParameter('departureAirportId');
+    this.flightForSearchTo.arrivalAirportId = + this.parseQueryParameter('arrivalAirportId');
+    this.flightForSearchTo.ticketsNumber = +this.parseQueryParameter('ticketsNumber');
+    this.flightForSearchTo.date = new Date(this.parseQueryParameter('dateTo')).toUTCString();
+  }
+
+  createFlightBackAccordingToQuery(): void {
+    this.flightForSearchBack.departureAirportId = +this.parseQueryParameter('arrivalAirportId');
+    this.flightForSearchBack.arrivalAirportId = + this.parseQueryParameter('departureAirportId');
+    this.flightForSearchBack.ticketsNumber = +this.parseQueryParameter('ticketsNumber');
+    this.flightForSearchBack.date = new Date(this.parseQueryParameter('dateBack')).toUTCString();
+  }
+
+  bookTicket(): void {
+    this.router.navigate(['booking'], {
+      queryParams: {
+        outboundTicketId: this.outboundTicket ? this.outboundTicket.id : null,
+        inboundTicketId: this.inboundTicket ? this.inboundTicket.id : null,
+        ticketsNumber: this.ticketsNumber,
+      }
+    });
   }
 }

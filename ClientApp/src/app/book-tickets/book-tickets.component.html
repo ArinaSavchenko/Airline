@@ -1,0 +1,21 @@
+<div class="mainContainer">
+  <div class="header">Book tickets</div>
+  <div *ngIf="outboundTicketId">
+    <div *ngFor="let n of numSequence(this.ticketsNumber)" class="forms">
+      <app-ticket-booking-form [ticketId]="outboundTicketId"
+                               (saveTicket)="addBookedTicket($event)"
+                               (changeTicket)="removeBookedTicket($event)"></app-ticket-booking-form>
+    </div>
+  </div>
+
+  <div *ngIf="inboundTicketId">
+    <div *ngFor="let n of numSequence(this.ticketsNumber)" class="forms">
+      <app-ticket-booking-form [ticketId]="inboundTicketId"
+                               (saveTicket)="addBookedTicket($event)"
+                               (changeTicket)="removeBookedTicket($event)"></app-ticket-booking-form>
+    </div>
+  </div>
+
+  <div class="header">Total price: {{this.totalPrice ? this.totalPrice : 0}}$</div>
+  <button mat-raised-button [disabled]="ticketsNumber !== tickets.length" (click)="buy()">Buy</button>
+</div>

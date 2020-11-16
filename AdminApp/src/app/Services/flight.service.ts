@@ -45,7 +45,7 @@ export class FlightService {
       options.params = options.params.set(key, flight[key]);
     });
 
-    return this.http.get<Flight[]>(this.flightsUrl + '/parallel-search', options);
+    return this.http.get<Flight[]>(this.flightsUrl, options);
   }
 
   addFlight(flight): Observable<number> {

@@ -78,7 +78,14 @@ export class UserService {
   getUserId(): number {
     const tokenParts = localStorage.getItem('token').split(/\./);
     const tokenDecoded = JSON.parse(window.atob(tokenParts[1]));
-    const userId = tokenDecoded.sub;
+    const userId = +tokenDecoded.sub;
     return userId;
+  }
+
+  getUserRole(): string {
+    const tokenParts = localStorage.getItem('token').split(/\./);
+    const tokenDecoded = JSON.parse(window.atob(tokenParts[1]));
+    const userRole = tokenDecoded.role;
+    return userRole;
   }
 }

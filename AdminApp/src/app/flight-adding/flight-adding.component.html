@@ -77,7 +77,7 @@
                (click)="searchAirplanes('')"
                (input)="searchAirplanes(airplaneInput.value)">
         <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayFnForAirplane">
-          <mat-option *ngFor="let airplane of airplanes$ | async" [value]="airplane">
+          <mat-option *ngFor="let airplane of airplanes" [value]="airplane">
             {{airplane.name}}<br>
           </mat-option>
         </mat-autocomplete>
