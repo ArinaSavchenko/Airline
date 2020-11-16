@@ -1,0 +1,31 @@
+<div class="infoContainer">
+  <h1>Booked ticket info</h1>
+  <div class="fieldsContainer" *ngIf="bookedTicket">
+    <div class="ticketInfo">
+      <p class="fieldName">Direction:</p>
+      <p class="fieldValue">{{bookedTicket.departureCity}}, {{bookedTicket.departureCountry}}
+        - {{bookedTicket.arrivalCity}}, {{bookedTicket.arrivalCountry}}</p>
+    </div>
+    <div class="ticketInfo">
+      <p class="fieldName">Date:</p>
+      <p class="fieldValue">{{bookedTicket.date | date}}</p>
+    </div>
+    <div class="ticketInfo">
+      <p class="fieldName">Passenger:</p>
+      <p class="fieldValue">{{bookedTicket.passengerFirstName}} {{bookedTicket.passengerLastName}}</p>
+    </div>
+    <div class="ticketInfo">
+      <p class="fieldName">Carry on bags number:</p>
+      <p class="fieldValue">{{bookedTicket.carryOnBagsNumber}}</p>
+    </div>
+    <div class="ticketInfo">
+      <p class="fieldName">Baggage number:</p>
+      <p class="fieldValue">{{bookedTicket.baggageNumber}}</p>
+    </div>
+    <div class="ticketInfo">
+      <p class="fieldName">Total price:</p>
+      <p class="fieldValue">{{bookedTicket.totalPrice}} $</p>
+    </div>
+  </div>
+  <button mat-raised-button routerLink="/airline/account/bookings-history">Go back</button>
+</div>

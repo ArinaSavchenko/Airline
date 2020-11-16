@@ -35,6 +35,15 @@ namespace Airline_Web_API.Controllers
             return Ok(bookedTicket);
         }
 
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<BookedTicketHistoryModel>>> GetBookedTicketsByUserId([FromQuery] int userId)
+        {
+            var bookedTickets = await _bookedTicketService.GetBookedTicketsByUserIdAsync(userId);
+
+            return Ok(bookedTickets);
+        }
+
         [Authorize(Roles = "user")]
         [HttpPost]
         public async Task<ActionResult<IEnumerable<TicketWasBookedResponseModel>>> Post([FromBody] NewBookedTicketModel[] models)

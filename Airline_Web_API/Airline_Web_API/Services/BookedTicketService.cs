@@ -2,6 +2,7 @@
 using Airline_Web_API.Models;
 using Airline_Web_API.ViewModels;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,11 +23,45 @@ namespace Airline_Web_API.Services
 
         public async Task<BookedTicketViewModel> GetBookedTicketByIdAsync(int id)
         {
-            var bookedTicket = await _context.BookedTickets.FindAsync(id);
+            var bookedTicket = await _context.BookedTickets
+                .Include("Ticket.Flight.DepartureAirport")
+                .Include("Ticket.Flight.ArrivalAirport")
+                .Where(ticket => ticket.Id == id)
+                .Select(ticket => new BookedTicketViewModel
+                {
+                    DepartureCity = ticket.Ticket.Flight.DepartureAirport.City,
+                    DepartureCountry = ticket.Ticket.Flight.DepartureAirport.Country,
+                    ArrivalCity = ticket.Ticket.Flight.ArrivalAirport.City,
+                    ArrivalCountry = ticket.Ticket.Flight.ArrivalAirport.Country,
+                    Date = ticket.Ticket.Flight.DepartureDate,
+                    PassengerFirstName = ticket.PassengerFirstName,
+                    PassengerLastName = ticket.PassengerLastName,
+                    CarryOnBagsNumber = ticket.CarryOnBagsNumber,
+                    BaggageNumber = ticket.BaggageNumber,
+                    TotalPrice = ticket.TotalPrice
+                })
+                .FirstOrDefaultAsync();
 
-            var result = _mapper.Map<BookedTicketViewModel>(bookedTicket);
+            return bookedTicket;
+        }
 
-            return result;
+        public async Task<List<BookedTicketHistoryModel>> GetBookedTicketsByUserIdAsync(int userId)
+        {
+            var bookedTickets = await _context.BookedTickets
+                .Include("Ticket.Flight.DepartureAirport")
+                .Include("Ticket.Flight.ArrivalAirport")
+                .Where(bookedTicket => bookedTicket.UserId == userId)
+                .Select(bookedTicket => new BookedTicketHistoryModel {
+                        BookedTicketId = bookedTicket.Id,
+                        DepartureCity = bookedTicket.Ticket.Flight.DepartureAirport.City,
+                        DepartureCountry = bookedTicket.Ticket.Flight.DepartureAirport.Country,
+                        ArrivalCity = bookedTicket.Ticket.Flight.ArrivalAirport.City,
+                        ArrivalCountry = bookedTicket.Ticket.Flight.ArrivalAirport.Country,
+                        Date = bookedTicket.Ticket.Flight.DepartureDate
+                    })
+                .ToListAsync();
+
+            return bookedTickets;
         }
 
         public async Task<List<TicketWasBookedResponseModel>> AddBookedTicketAsync(NewBookedTicketModel[] models)

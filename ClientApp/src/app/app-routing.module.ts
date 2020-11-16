@@ -10,6 +10,8 @@ import { UserDetailsComponent } from './user-details/user-details.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { BookTicketsComponent } from './book-tickets/book-tickets.component';
 import { BookingResultComponent } from './booking-result/booking-result.component';
+import { BookingsHistoryComponent } from './bookings-history/bookings-history.component';
+import { BookedTicketDetailsComponent } from './booked-ticket-details/booked-ticket-details.component';
 
 const routes: Routes = [
   { path: 'airline', component: MainPageComponent},
@@ -20,7 +22,9 @@ const routes: Routes = [
   { path: 'airline/account/details', canActivate: [AuthGuard], component: UserDetailsComponent},
   { path: 'airline/account/change-password', canActivate: [AuthGuard], component: ChangePasswordComponent},
   { path: 'booking', canActivate: [AuthGuard], component: BookTicketsComponent},
-  { path: 'booking-results', canActivate: [AuthGuard], component: BookingResultComponent}
+  { path: 'booking-results', canActivate: [AuthGuard], component: BookingResultComponent},
+  { path: 'airline/account/bookings-history', canActivate: [AuthGuard], component: BookingsHistoryComponent},
+  { path: 'airline/account/bookings-history/:id', canActivate: [AuthGuard], component: BookedTicketDetailsComponent}
 ];
 
 @NgModule({
