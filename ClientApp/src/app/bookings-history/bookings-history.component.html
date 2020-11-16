@@ -1,0 +1,20 @@
+<div class="infoContainer">
+  <h1>Bookings history</h1>
+  <section class="example-section">
+    <mat-checkbox
+      class="example-margin"
+      [(ngModel)]="plannedOnly"
+      (change)="search()">
+      Show only future flights
+    </mat-checkbox>
+  </section>
+  <mat-selection-list #bookedTickets [multiple]="false">
+    <mat-list-option *ngFor="let bookedTicket of bookedTickets$ | async" [value]="bookedTicket"
+                     routerLink="/airline/account/bookings-history/{{bookedTicket.bookedTicketId}}">
+      {{bookedTicket.departureCity}}, {{bookedTicket.departureCountry}} - {{bookedTicket.arrivalCity}}, {{bookedTicket.arrivalCountry}}
+      ----- {{bookedTicket.date | date}}
+    </mat-list-option>
+  </mat-selection-list>
+  <button mat-raised-button routerLink="/airline/account">Go back to account info</button>
+
+</div>
