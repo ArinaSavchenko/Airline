@@ -2,6 +2,7 @@
 using Airline_Web_API.Models;
 using Airline_Web_API.ViewModels;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,41 @@ namespace Airline_Web_API.Services
 
         public async Task<BookedTicketViewModel> GetBookedTicketByIdAsync(int id)
         {
-            var bookedTicket = await _context.BookedTickets.FindAsync(id);
+            var bookedTicket = await _context.BookedTickets
+                .Include("Ticket.Flight.DepartureAirport")
+                .Include("Ticket.Flight.ArrivalAirport")
+                .Where(ticket => ticket.Id == id)
+                .FirstOrDefaultAsync();
 
             var result = _mapper.Map<BookedTicketViewModel>(bookedTicket);
+
+            return result;
+        }
+
+        public async Task<List<BookedTicketHistoryModel>> GetBookedTicketsByUserIdAsync(int userId)
+        {
+            var bookedTickets = await _context.BookedTickets
+                .Include("Ticket.Flight.DepartureAirport")
+                .Include("Ticket.Flight.ArrivalAirport")
+                .Where(bookedTicket => bookedTicket.UserId == userId).ToListAsync();
+
+            List<BookedTicketHistoryModel> result = new List<BookedTicketHistoryModel>();
+
+            if (bookedTickets != null)
+            {
+                foreach (var bookedTicket in bookedTickets)
+                {
+                    result.Add(new BookedTicketHistoryModel
+                    {
+                        BookedTicketId = bookedTicket.Id,
+                        DepartureCity = bookedTicket.Ticket.Flight.DepartureAirport.City,
+                        DepartureCountry = bookedTicket.Ticket.Flight.DepartureAirport.Country,
+                        ArrivalCity = bookedTicket.Ticket.Flight.ArrivalAirport.City,
+                        ArrivalCountry = bookedTicket.Ticket.Flight.ArrivalAirport.Country,
+                        Date = bookedTicket.Ticket.Flight.DepartureDate
+                    });
+                }
+            }
 
             return result;
         }

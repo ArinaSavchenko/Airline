@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { Airport } from '../Models/Airport';
 import { Airplane } from '../Models/Airplane';
@@ -23,7 +23,7 @@ export class FlightAddingComponent implements OnInit {
   airports: Airport[];
   airplanes: Airplane[];
   flightStatuses = FlightStatuses;
-  private searchTermsAirport = new Subject<string>();
+  private searchTermsAirports = new Subject<string>();
   private searchTermsAirplanes = new Subject<string>();
   flightForm: FormGroup;
 
@@ -55,17 +55,12 @@ export class FlightAddingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.searchTermsAirport.pipe(
+    this.searchTermsAirports.pipe(
       distinctUntilChanged(),
       switchMap(value => this.airportService.searchAirports(value))
     ).subscribe(airports => {
       this.airports = airports.filter(airport => airport.status === 'Active');
-      if (this.flightForm.controls.departureAirport.value) {
-        this.airports = this.airports.filter(airport => airport.id !== this.flightForm.controls.departureAirport.value.id);
-      }
-      if (this.flightForm.controls.arrivalAirport.value) {
-        this.airports = this.airports.filter(airport => airport.id !== this.flightForm.controls.arrivalAirport.value.id);
-      }
+      this.filterAirports();
     });
     this.searchTermsAirplanes.pipe(
       debounceTime(100),
@@ -85,7 +80,7 @@ export class FlightAddingComponent implements OnInit {
   }
 
   searchAirports(value): void {
-    this.searchTermsAirport.next(value);
+    this.searchTermsAirports.next(value);
   }
 
   searchAirplanes(value): void {
@@ -108,6 +103,15 @@ export class FlightAddingComponent implements OnInit {
       };
       this.flightService.addFlight(flight)
         .subscribe((flightId) => this.router.navigate([`/admin/flights/tickets/${flightId}`]));
+    }
+  }
+
+  filterAirports(): void {
+    if (this.flightForm.controls.departureAirport.value) {
+      this.airports = this.airports.filter(airport => airport.id !== this.flightForm.controls.departureAirport.value.id);
+    }
+    if (this.flightForm.controls.arrivalAirport.value) {
+      this.airports = this.airports.filter(airport => airport.id !== this.flightForm.controls.arrivalAirport.value.id);
     }
   }
 }

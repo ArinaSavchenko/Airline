@@ -16,6 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { JwtModule } from '@auth0/angular-jwt';
 
@@ -38,6 +40,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { BookTicketsComponent } from './book-tickets/book-tickets.component';
 import { TicketBookingFormComponent } from './ticket-booking-form/ticket-booking-form.component';
 import { BookingResultComponent } from './booking-result/booking-result.component';
+import { BookingsHistoryComponent } from './bookings-history/bookings-history.component';
+import { BookedTicketDetailsComponent } from './booked-ticket-details/booked-ticket-details.component';
 
 export function tokenGetter(): any {
   return localStorage.getItem('token');
@@ -60,7 +64,9 @@ export function tokenGetter(): any {
     ChangePasswordComponent,
     BookTicketsComponent,
     TicketBookingFormComponent,
-    BookingResultComponent
+    BookingResultComponent,
+    BookingsHistoryComponent,
+    BookedTicketDetailsComponent
   ],
     imports: [
         BrowserModule,
@@ -88,7 +94,9 @@ export function tokenGetter(): any {
             whitelistedDomains: ['localhost:44392'],
             blacklistedRoutes: []
           }
-        })
+        }),
+      MatListModule,
+      MatCheckboxModule
     ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]
