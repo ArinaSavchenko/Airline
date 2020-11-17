@@ -20,6 +20,19 @@ namespace Airline_Web_API.Services
             _mapper = mapper;
         }
 
+        public async Task<IEnumerable<SeatViewModel>> GetSeatsByBookedTicketIdAsync(int bookedTicketId)
+        {
+            var airplaneId = await _context.BookedTickets
+                .Include("Ticket.Flight")
+                .Where(bookedTicket => bookedTicket.Id == bookedTicketId)
+                .Select(bookedTicket => bookedTicket.Ticket.Flight.AirplaneId)
+                .FirstOrDefaultAsync();
+
+            var seats = await GetSeatsAsync(airplaneId);
+
+            return seats;
+        }
+
         public async Task<IEnumerable<SeatViewModel>> GetSeatsAsync(int airplaneId)
         {
             var seats = _context.Seats.AsQueryable();

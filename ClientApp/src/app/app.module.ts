@@ -42,6 +42,8 @@ import { TicketBookingFormComponent } from './ticket-booking-form/ticket-booking
 import { BookingResultComponent } from './booking-result/booking-result.component';
 import { BookingsHistoryComponent } from './bookings-history/bookings-history.component';
 import { BookedTicketDetailsComponent } from './booked-ticket-details/booked-ticket-details.component';
+import { CheckInComponent } from './check-in/check-in.component';
+import { SeatReservationComponent } from './seat-reservation/seat-reservation.component';
 
 export function tokenGetter(): any {
   return localStorage.getItem('token');
@@ -66,7 +68,9 @@ export function tokenGetter(): any {
     TicketBookingFormComponent,
     BookingResultComponent,
     BookingsHistoryComponent,
-    BookedTicketDetailsComponent
+    BookedTicketDetailsComponent,
+    CheckInComponent,
+    SeatReservationComponent
   ],
     imports: [
         BrowserModule,

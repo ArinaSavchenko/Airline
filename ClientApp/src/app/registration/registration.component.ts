@@ -60,7 +60,7 @@ export class RegistrationComponent{
   }
 
   goToAccount(): void {
-    this.router.navigate(['airline/account']);
+    this.router.navigate(['/airline']);
   }
 
   logOut(): void {

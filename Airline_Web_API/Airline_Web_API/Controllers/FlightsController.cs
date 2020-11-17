@@ -27,7 +27,7 @@ namespace Airline_Web_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Flight>>> GetFlights([FromQuery] FlightForSearchModel model)
+        public async Task<ActionResult<IEnumerable<FlightViewModel>>> GetFlights([FromQuery] FlightForSearchModel model)
         {
             var results = await _flightService.GetFlightsAsync(model);
 

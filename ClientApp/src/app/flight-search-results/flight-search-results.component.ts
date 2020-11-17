@@ -122,14 +122,14 @@ export class FlightSearchResultsComponent implements OnInit {
     this.flightForSearchTo.departureAirportId = +this.parseQueryParameter('departureAirportId');
     this.flightForSearchTo.arrivalAirportId = + this.parseQueryParameter('arrivalAirportId');
     this.flightForSearchTo.ticketsNumber = +this.parseQueryParameter('ticketsNumber');
-    this.flightForSearchTo.date = new Date(this.parseQueryParameter('dateTo')).toUTCString();
+    this.flightForSearchTo.date = new Date(this.parseQueryParameter('dateTo')).toISOString();
   }
 
   createFlightBackAccordingToQuery(): void {
     this.flightForSearchBack.departureAirportId = +this.parseQueryParameter('arrivalAirportId');
     this.flightForSearchBack.arrivalAirportId = + this.parseQueryParameter('departureAirportId');
     this.flightForSearchBack.ticketsNumber = +this.parseQueryParameter('ticketsNumber');
-    this.flightForSearchBack.date = new Date(this.parseQueryParameter('dateBack')).toUTCString();
+    this.flightForSearchBack.date = new Date(this.parseQueryParameter('dateBack')).toISOString();
   }
 
   bookTicket(): void {

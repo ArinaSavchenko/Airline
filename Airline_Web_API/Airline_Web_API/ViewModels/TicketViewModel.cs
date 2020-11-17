@@ -13,7 +13,6 @@ namespace Airline_Web_API.ViewModels
         public int TicketsLeftNumber { get; set; }
         public string Status { get; set; }
 
-        public FlightViewModel Flight { get; set; }
         public TicketTypeViewModel TicketType { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 export interface FlightForSearch{
   departureAirportId?: number;
   arrivalAirportId?: number;
-  date?: string;
+  date?: any;
   ticketsNumber?: number;
   status?: string;
 }

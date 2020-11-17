@@ -1,0 +1,57 @@
+.infoContainer {
+    margin-top: 8em;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1.header {
+    font-size: 30px;
+    font-weight: bolder;
+    color: dimgrey;
+    text-align: center;
+    font-family: "Helvetica Neue", sans-serif;
+}
+
+.sector {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    border: solid darkgray 2px;
+    margin: 1em;
+    align-items: center;
+}
+
+.innerSector {
+    border: solid darkgray 2px;
+    width: fit-content;
+}
+
+.innerSector,
+.column {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    text-align: center;
+    margin: 1em;
+}
+
+.seat {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.seatAppearance {
+    margin: 0.5em;
+    background: lightgray;
+    width: 30px;
+    height: 20px;
+    text-align: center;
+}
+
+div.seatAppearance:hover {
+    background-color: #bcd30b;
+}

@@ -69,12 +69,20 @@ namespace Airline_Web_API.Services
 
             if (model.ticketsNumber != null)
             {
-                flights = flights.Where(flight => flight.Tickets.Count >= model.ticketsNumber);
+                /*flights = flights.Where(flight => flight.Tickets.Count >= model.ticketsNumber);*/
             }
 
             if (!string.IsNullOrEmpty(model.Status))
             {
                 flights = flights.Where(flight => flight.Status == model.Status);
+            }
+
+            foreach (var flight in flights)
+            {
+                flight.Tickets.Select(ticket => {
+                    ticket.Flight = null;
+                    return ticket;
+                });
             }
 
             var flightsSearchResults = await flights

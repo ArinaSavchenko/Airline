@@ -1,5 +1,4 @@
 import { TicketType } from './TicketType';
-import { Flight } from './Flight';
 
 export interface Ticket {
   id: number;
@@ -8,5 +7,4 @@ export interface Ticket {
   price: number;
   ticketsLeftNumber: number;
   status: string;
-  flight: Flight;
 }

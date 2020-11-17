@@ -20,6 +20,19 @@ namespace Airline_Web_API.Controllers
             _seatsService = seatsService;
         }
 
+        [HttpGet("booked-tickets")]
+        public async Task<ActionResult<IEnumerable<SeatViewModel>>> GetSeatsByBookedTicketID([FromQuery] int bookedTicketId)
+        {
+            var seats = await _seatsService.GetSeatsAsync(bookedTicketId);
+
+            if (seats == null)
+            {
+                return NoContent();
+            }
+
+            return Ok(seats);
+        }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SeatViewModel>>> GetSeats([FromQuery] int airplaneId)
         {

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Airline_Web_API.ViewModels;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airline_Web_API.Models
@@ -18,6 +13,7 @@ namespace Airline_Web_API.Models
         public DbSet<Seat> Seats { get; set; }
         public DbSet<Airplane> Airplanes { get; set; }
         public DbSet<BookedTicket> BookedTickets { get; set; }
+        public DbSet<FlightSeatsReservation> FlightSeatsReservations { get; set; }
 
         public AirlineContext(DbContextOptions<AirlineContext> options):
             base(options)
@@ -65,6 +61,16 @@ namespace Airline_Web_API.Models
                .HasOne<User>(bt => bt.User)
                .WithMany(u => u.BookedTickets)
                .HasForeignKey(bt => bt.UserId);
+
+            modelBuilder.Entity<FlightSeatsReservation>()
+                .HasOne<Seat>(fsr => fsr.Seat)
+                .WithMany(s => s.FlightSeatsReservations)
+                .HasForeignKey(fsr => fsr.Seat);
+
+            modelBuilder.Entity<FlightSeatsReservation>()
+                .HasOne<BookedTicket>(fsr => fsr.BookedTicket)
+                .WithOne(bt => bt.FlightSeatsReservation)
+                .HasForeignKey<BookedTicket>(bt => bt.Id);
         }
     }
 }

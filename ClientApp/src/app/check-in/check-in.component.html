@@ -1,0 +1,12 @@
+<div class="infoContainer">
+  <mat-form-field appearance="outline">
+    <mat-label>Booked ticket id</mat-label>
+    <input type="number" matInput [formControl]="bookedTicketId">
+    <mat-error>
+      Field is required
+    </mat-error>
+  </mat-form-field>
+
+  <div class="mat-error">{{message}}</div>
+  <button mat-raised-button (click)="onCheckIn()">Check in</button>
+</div>
