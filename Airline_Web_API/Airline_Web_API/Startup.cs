@@ -45,6 +45,7 @@ namespace Airline_Web_API
             services.AddTransient<TicketService>();
             services.AddTransient<TicketTypeService>();
             services.AddTransient<BookedTicketService>();
+            services.AddTransient<ReservedSeatService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

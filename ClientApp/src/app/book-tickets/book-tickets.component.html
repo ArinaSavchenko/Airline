@@ -17,5 +17,5 @@
   </div>
 
   <div class="header">Total price: {{this.totalPrice ? this.totalPrice : 0}}$</div>
-  <button mat-raised-button [disabled]="ticketsNumber !== tickets.length" (click)="buy()">Buy</button>
+  <button mat-raised-button [disabled]="numberOfRequiredTickets !== tickets.length" (click)="buy()">Buy</button>
 </div>

@@ -17,6 +17,7 @@ import { AirportService } from '../Services/airport.service';
 import { FlightService } from '../Services/flight.service';
 import { ConfirmActionDialogComponent } from '../confirm-action-dialog/confirm-action-dialog.component';
 import { FlightStatuses } from '../Enums/FlightStatuses';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-flight-details',
@@ -120,7 +121,15 @@ export class FlightDetailsComponent implements OnInit {
   }
 
   save(): void {
-    const flight = this.flightForm.value;
+    const flight = {
+      id: this.flight.id,
+      departureAirport: this.flightForm.controls.departureAirport.value,
+      arrivalAirport: this.flightForm.controls.arrivalAirport.value,
+      departureDate: moment(this.flightForm.controls.departureDate.value).format('YYYY-MM-DDTHH:mm:00.000Z'),
+      arrivalDate: moment(this.flightForm.controls.arrivalDate.value).format('YYYY-MM-DDTHH:mm:00.000Z'),
+      airplane: this.flightForm.controls.airplane.value,
+      status: this.flightForm.controls.status.value
+    };
     this.flightService.updateFlight(flight)
       .subscribe(response => this.checkResult(response));
   }

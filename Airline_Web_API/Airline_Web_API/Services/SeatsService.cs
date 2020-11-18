@@ -40,7 +40,10 @@ namespace Airline_Web_API.Services
             seats = seats.Where(seat => seat.AirplaneId == airplaneId);
 
             var seatsSearchResults = await seats
-                .OrderBy(seat => seat.Id)
+                .OrderBy(seat => seat.SectorName)
+                .ThenBy(seat => seat.SectorNumber)
+                .ThenBy(seat => seat.Column)
+                .ThenBy(seat => seat.Number)
                 .ToListAsync();
 
             var results = _mapper.Map<IEnumerable<SeatViewModel>>(seatsSearchResults);

@@ -37,6 +37,7 @@ namespace Airline_Web_API
                 .ForMember(ticket => ticket.Passport, opt => opt.MapFrom(s => s.Passport.ToUpper()));
             CreateMap<BookedTicket, BookedTicketViewModel>();
             CreateMap<BookedTicketViewModel, BookedTicket>();
+            CreateMap<ReservedSeat, ReservedSeatViewModel>();
         }
     }
 }

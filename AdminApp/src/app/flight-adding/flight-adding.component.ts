@@ -6,6 +6,8 @@ import { Location } from '@angular/common';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
+import * as moment from 'moment';
+
 import { Airport } from '../Models/Airport';
 import { Airplane } from '../Models/Airplane';
 import { FlightService } from '../Services/flight.service';
@@ -96,8 +98,8 @@ export class FlightAddingComponent implements OnInit {
       const flight = {
         departureAirportId: this.flightForm.controls.departureAirport.value.id,
         arrivalAirportId: this.flightForm.controls.arrivalAirport.value.id,
-        departureDate: this.flightForm.controls.departureDate.value,
-        arrivalDate: this.flightForm.controls.arrivalDate.value,
+        departureDate: moment(this.flightForm.controls.departureDate.value).format('YYYY-MM-DDTHH:mm:00.000Z'),
+        arrivalDate: moment(this.flightForm.controls.arrivalDate.value).format('YYYY-MM-DDTHH:mm:00.000Z'),
         airplaneId: this.flightForm.controls.airplane.value.id,
         status: this.flightForm.controls.status.value
       };

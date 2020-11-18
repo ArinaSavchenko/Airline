@@ -1,17 +1,29 @@
 <div class="infoContainer">
   <h1 class="header">Seat reservation</h1>
 
-  <div *ngIf="this.airplaneScheme" class="sector">
-    <div *ngFor="let sectorName of this.airplaneScheme" class="innerSector">
-      <div *ngFor="let innerSector of sectorName" class="column">
-        <div *ngFor="let column of innerSector" class="seat">
-          <div *ngFor="let seat of column" class="seatAppearance" (click)="seatWasChosen(seat.id)">
-            {{seat['column'] + seat['number']}}
+  <div *ngIf="!seatWasReserved" class="reservationContainer">
+    <div *ngIf="this.airplaneScheme" class="sector">
+      <div *ngFor="let sectorName of this.airplaneScheme" class="innerSector">
+        <div *ngFor="let innerSector of sectorName" class="column">
+          <div *ngFor="let column of innerSector" class="seat">
+            <div *ngFor="let seat of column" class="seatAppearance" (click)="seatWasChosen(seat)"
+                 [style.background-color]="seat['isReserved'] ? 'red' : '' || seat === selectedSeat ? 'blue' : ''">
+              {{seat['column'] + seat['number']}}
+            </div>
           </div>
+          <br/>
+          <br/>
         </div>
-        <br/>
-        <br/>
       </div>
     </div>
+
+    <div>
+      <h2 class="message">{{message}}</h2>
+    </div>
+
+    <div>
+      <button mat-raised-button [disabled]="!selectedSeat" (click)="reserveSeat()">Reserve seat</button>
+    </div>
   </div>
+
 </div>

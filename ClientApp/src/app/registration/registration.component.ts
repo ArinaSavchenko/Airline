@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import * as moment from 'moment';
+
 import { RegisterModel } from '../Models/RegisterModel';
 import { UserService } from '../Services/user.service';
 import { PasswordsMatchValidator } from '../Validators/PasswordsMatchValidator';
@@ -41,7 +43,7 @@ export class RegistrationComponent{
       const user: RegisterModel = {
         firstName: this.userForm.controls.firstName.value,
         lastName: this.userForm.controls.lastName.value,
-        birthDate: this.userForm.controls.birthDate.value,
+        birthDate: moment(this.userForm.controls.birthDate.value).format('YYYY-MM-DD'),
         email: this.userForm.controls.email.value,
         password: this.userForm.controls.password.value,
         role: 'user'

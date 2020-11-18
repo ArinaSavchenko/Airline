@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 
+import * as moment from 'moment';
+
 import { ResponseModel } from '../Models/ResponseModel';
+import { RegisterModel } from '../Models/RegisterModel';
 import { PasswordsMatchValidator } from '../Validators/PasswordsMatchValidator';
 import { environment } from '../../environments/environment';
 import { UserService } from '../Services/user.service';
@@ -32,14 +35,20 @@ export class RegistrationComponent {
       password: new FormControl(null, Validators.required),
       confirmPassword: new FormControl(null, Validators.required),
       birthDate: new FormControl(null, Validators.required),
-      role: 'admin'
     });
     this.userForm.setValidators(PasswordsMatchValidator('password', 'confirmPassword'));
   }
 
-  onFormSubmit(): void {
+  register(): void {
     if (this.userForm.valid) {
-      const user = this.userForm.value;
+      const user: RegisterModel = {
+        firstName: this.userForm.controls.firstName.value,
+        lastName: this.userForm.controls.lastName.value,
+        email: this.userForm.controls.email.value,
+        birthDate: moment(this.userForm.controls.birthDate.value).format('YYYY-MM-DD'),
+        password: this.userForm.controls.password.value,
+        role: 'admin'
+      };
       this.userService.registerUser(user).subscribe(response => this.checkResult(response));
     }
   }

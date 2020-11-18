@@ -4,6 +4,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { distinctUntilChanged, switchMap } from 'rxjs/operators';
 
+import * as moment from 'moment';
+
 import { Airport } from '../Models/Airport';
 import { FlightForSearch } from '../Models/FlightForSearch';
 import { Flight } from '../Models/Flight';
@@ -74,7 +76,7 @@ export class FlightsInfoComponent implements OnInit {
   }
 
   setDate(value): void {
-    this.flight.date = new Date(value).toUTCString();
+    this.flight.date = moment(value).format('YYYY-MM-DD');
     this.searchFlights();
   }
 }

@@ -4,6 +4,8 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
+import * as moment from 'moment';
+
 import { User } from '../Models/User';
 import { ResponseModel } from '../Models/ResponseModel';
 import { UpdateUserModel } from '../Models/UpdateUserModel';
@@ -36,7 +38,6 @@ export class UserDetailsComponent implements OnInit {
     this.userService.getUser().subscribe(user => {
       this.user = user;
       this.userForm = this.formBuilder.group({
-        id: this.user.id,
         firstName: new FormControl(this.user.firstName, [Validators.required, Validators.pattern(this.nameFormat)]),
         lastName: new FormControl(this.user.lastName, [Validators.required, Validators.pattern(this.nameFormat)]),
         email: new FormControl(this.user.email, [Validators.required, Validators.email]),
@@ -47,7 +48,13 @@ export class UserDetailsComponent implements OnInit {
 
   save(): void {
     if (this.userForm.valid) {
-      this.updateUser = this.userForm.value;
+      this.updateUser = {
+        id: this.user.id,
+        firstName: this.userForm.controls.firstName.value,
+        lastName: this.userForm.controls.lastName.value,
+        email: this.userForm.controls.email.value,
+        birthDate: moment(this.userForm.controls.birthDate.value).format('YYYY-MM-DD')
+      };
       const message = `Are you sure you want to change info in your account?`;
       const dialogRef = this.dialog.open(ConfirmActionDialogComponent, {
         data: message

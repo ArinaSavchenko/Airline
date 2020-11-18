@@ -1,6 +1,6 @@
 <div class="infoContainer">
   <h1 class="header">Registration</h1>
-  <form [formGroup]="userForm" (ngSubmit)="onFormSubmit()" class="infoArea">
+  <form [formGroup]="userForm" class="infoArea">
     <mat-form-field appearance="outline">
       <mat-label>Enter first name:</mat-label>
       <input matInput formControlName="firstName" placeholder="First name">
@@ -58,7 +58,7 @@
   </form>
   <p *ngIf="message" class="mat-error">{{message}}</p>
   <div class="buttonsContainer">
-      <button type="submit" mat-raised-button class="addButton">Sign up</button>
+      <button mat-raised-button class="addButton" (click)="register()">Sign up</button>
       <button mat-raised-button class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
   </div>
 </div>

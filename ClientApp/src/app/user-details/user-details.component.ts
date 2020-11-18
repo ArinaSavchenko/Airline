@@ -4,6 +4,8 @@ import { Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
+import * as moment from 'moment';
+
 import { UserService } from '../Services/user.service';
 import { User } from '../Models/User';
 import { ResponseModel } from '../Models/ResponseModel';
@@ -51,7 +53,7 @@ export class UserDetailsComponent implements OnInit {
         id: this.user.id,
         firstName: this.userForm.controls.firstName.value,
         lastName: this.userForm.controls.lastName.value,
-        birthDate: this.userForm.controls.birthDate.value,
+        birthDate: moment(this.userForm.controls.birthDate.value).format('YYYY-MM-DD'),
         email: this.userForm.controls.email.value
       };
 

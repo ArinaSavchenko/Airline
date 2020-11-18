@@ -19,7 +19,7 @@ export class CheckInComponent {
   }
 
   onCheckIn(): void {
-    this.bookedTicketService.getBookedTicket(this.bookedTicketId.value).subscribe(bookedTicket => this.checkIn(),
+    this.bookedTicketService.getBookedTicket(this.bookedTicketId.value).subscribe(bookedTicket => this.checkIn(bookedTicket),
       (error) => {
         if (error.status === 404) {
           this.message = 'There is no booked ticket with such id';
@@ -27,7 +27,12 @@ export class CheckInComponent {
         });
   }
 
-  checkIn(): void {
-    this.router.navigate([`/airline/seat-reservation/${this.bookedTicketId.value}`]);
+  checkIn(bookedTicket): void {
+    if (bookedTicket.seatReservation) {
+      this.router.navigate([`/airline/seat-reservation/${this.bookedTicketId.value}`]);
+    }
+    else {
+      this.message = 'Seat reservation in advance is not allowed for this type of ticket';
+    }
   }
 }

@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Airline_Web_API.Models
+namespace Airline_Web_API.ViewModels
 {
-    public class FlightSeatsReservation
+    public class ReservedSeatViewModel
     {
         public int Id { get; set; }
         public int BookedTicketId { get; set; }
         public int SeatId { get; set; }
-
-        public BookedTicket BookedTicket { get; set; }
-        public Seat Seat { get; set; }
     }
 }

@@ -52,7 +52,7 @@ export class FlightService {
     return this.http.post<number>(this.flightsUrl, flight, this.httpOptions);
   }
 
-  updateFlight(flight: Flight): Observable<ResponseModel> {
+  updateFlight(flight): Observable<ResponseModel> {
     const url = `${this.flightsUrl}/${flight.id}`;
     return this.http.put<ResponseModel>(url, flight, this.httpOptions).pipe(
       catchError(error => this.handleError(error))

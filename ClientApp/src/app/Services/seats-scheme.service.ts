@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Seat } from '../Models/Seat';
+import { ReservedSeat } from '../Models/ReservedSeat';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,15 @@ export class SeatsSchemeService {
   seatsGroupedBySectorName = {};
   seatsGroupedBySectorNumber = {};
   seatsGroupedByColumn = {};
-  theCabin = [];
+  theCabin = {};
 
-  drawScheme(seats: Seat[]): any {
+  drawScheme(seats: Seat[], reservedSeats: ReservedSeat[]): any {
+    seats.forEach(seat => {
+      if (reservedSeats.some(reservedSeat => reservedSeat.seatId === seat.id)) {
+        seat.isReserved = true;
+      }
+    });
+
     this.seatsGroupedBySectorName = this.groupBySectorName(seats);
     this.seatsGroupedBySectorNumber = this.groupBySectorNumber(this.seatsGroupedBySectorName);
     this.seatsGroupedByColumn = this.groupByColumn(this.seatsGroupedBySectorName);

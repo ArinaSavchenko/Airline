@@ -17,6 +17,6 @@ namespace Airline_Web_API.Models
 
         public Airplane Airplane { get; set; }
 
-        public ICollection<FlightSeatsReservation> FlightSeatsReservations { get; set; }
+        public ICollection<ReservedSeat> ReservedSeats { get; set; }
     }
 }

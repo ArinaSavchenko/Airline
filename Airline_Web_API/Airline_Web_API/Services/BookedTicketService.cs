@@ -24,8 +24,6 @@ namespace Airline_Web_API.Services
         public async Task<BookedTicketViewModel> GetBookedTicketByIdAsync(int id)
         {
             var bookedTicket = await _context.BookedTickets
-                .Include("Ticket.Flight.DepartureAirport")
-                .Include("Ticket.Flight.ArrivalAirport")
                 .Where(ticket => ticket.Id == id)
                 .Select(ticket => new BookedTicketViewModel
                 {
@@ -33,6 +31,8 @@ namespace Airline_Web_API.Services
                     DepartureCountry = ticket.Ticket.Flight.DepartureAirport.Country,
                     ArrivalCity = ticket.Ticket.Flight.ArrivalAirport.City,
                     ArrivalCountry = ticket.Ticket.Flight.ArrivalAirport.Country,
+                    SeatTypeName = ticket.Ticket.TicketType.SeatType,
+                    SeatReservation = ticket.Ticket.TicketType.SeatReservation,
                     Date = ticket.Ticket.Flight.DepartureDate,
                     PassengerFirstName = ticket.PassengerFirstName,
                     PassengerLastName = ticket.PassengerLastName,
@@ -66,7 +66,7 @@ namespace Airline_Web_API.Services
 
         public async Task<List<TicketWasBookedResponseModel>> AddBookedTicketAsync(NewBookedTicketModel[] models)
         {
-            var bookedTickets = _mapper.Map<List<BookedTicket>>(models);
+            var bookedTickets = _mapper.Map<IEnumerable<BookedTicket>>(models);
 
             _context.BookedTickets.AddRange(bookedTickets);
             await _context.SaveChangesAsync();

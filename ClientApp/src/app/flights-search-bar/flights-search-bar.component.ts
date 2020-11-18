@@ -6,7 +6,6 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 
 import { Airport } from '../Models/Airport';
-import { FlightForSearch } from '../Models/FlightForSearch';
 import { AirportService } from '../Services/airport.service';
 
 @Component({
@@ -94,6 +93,13 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked {
 
   OnTicketTypeChange(value): void {
     this.ticketType = value;
+    if (this.ticketType === 'OneWay') {
+      this.flightForm.get('dateBack').clearValidators();
+    }
+    if (this.ticketType === 'Return') {
+      this.flightForm.get('dateBack').setValidators([Validators.required]);
+    }
+    this.flightForm.get('dateBack').updateValueAndValidity();
   }
 
   sendSearchRequest(): void {
@@ -102,7 +108,7 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked {
         departureAirportId: this.flightForm.controls.departureAirportId.value.id,
         arrivalAirportId: this.flightForm.controls.arrivalAirportId.value.id,
         dateTo: this.flightForm.controls.dateTo.value,
-        dateBack: this.flightForm.controls.dateBack.value,
+        dateBack: this.ticketType === 'Return' ? this.flightForm.controls.dateBack.value : null,
         ticketType: this.ticketType,
         ticketsNumber: this.flightForm.controls.ticketsNumber.value
       }

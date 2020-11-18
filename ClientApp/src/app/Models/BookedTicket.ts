@@ -4,6 +4,8 @@ export interface BookedTicket{
   arrivalCity: string;
   arrivalCountry: string;
   date: Date;
+  seatTypeName: string;
+  seatReservation: boolean;
   passengerFirstName: string;
   passengerLastName: string;
   carryOnBagsNumber: number;

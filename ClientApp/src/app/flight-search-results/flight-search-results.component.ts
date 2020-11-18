@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { distinctUntilChanged, switchMap } from 'rxjs/operators';
 
+import * as moment from 'moment';
+
 import { Flight } from '../Models/Flight';
 import { Ticket } from '../Models/Ticket';
 import { FlightForSearch } from '../Models/FlightForSearch';
@@ -122,14 +124,14 @@ export class FlightSearchResultsComponent implements OnInit {
     this.flightForSearchTo.departureAirportId = +this.parseQueryParameter('departureAirportId');
     this.flightForSearchTo.arrivalAirportId = + this.parseQueryParameter('arrivalAirportId');
     this.flightForSearchTo.ticketsNumber = +this.parseQueryParameter('ticketsNumber');
-    this.flightForSearchTo.date = new Date(this.parseQueryParameter('dateTo')).toISOString();
+    this.flightForSearchTo.date = moment(new Date(this.parseQueryParameter('dateTo'))).format('YYYY-MM-DD');
   }
 
   createFlightBackAccordingToQuery(): void {
     this.flightForSearchBack.departureAirportId = +this.parseQueryParameter('arrivalAirportId');
     this.flightForSearchBack.arrivalAirportId = + this.parseQueryParameter('departureAirportId');
     this.flightForSearchBack.ticketsNumber = +this.parseQueryParameter('ticketsNumber');
-    this.flightForSearchBack.date = new Date(this.parseQueryParameter('dateBack')).toISOString();
+    this.flightForSearchBack.date = moment(new Date(this.parseQueryParameter('dateBack'))).format('YYYY-MM-DD');
   }
 
   bookTicket(): void {
