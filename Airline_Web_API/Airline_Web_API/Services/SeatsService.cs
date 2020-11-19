@@ -51,11 +51,33 @@ namespace Airline_Web_API.Services
             return results;
         }
 
-        public async Task AddSeatsAsync(SeatViewModel[] seatsModel)
+        public async Task<bool> AddSeatsAsync(SeatViewModel[] models)
         {
-            var seats = _mapper.Map<List<Seat>>(seatsModel);
+            var valuesChecked = CheckExistance(models);
+
+            if (!valuesChecked)
+            {
+                return false;
+            }
+
+            var seats = _mapper.Map<List<Seat>>(models);
             _context.Seats.AddRange(seats);
             await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public bool CheckExistance(SeatViewModel[] models)
+        {
+            var airplaneIds = models.Select(model => model.AirplaneId).GroupBy(airplaneId => airplaneId).Select(g => g.First());
+            var airplanes = _context.Airplanes.Where(airplane => airplaneIds.Contains(airplane.Id)).Count();
+
+            if (airplanes != airplaneIds.Count())
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

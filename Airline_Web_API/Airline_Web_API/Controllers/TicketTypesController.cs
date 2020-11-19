@@ -7,12 +7,12 @@ using Airline_Web_API.Services;
 using Airline_Web_API.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace Airline_Web_API.Controllers
 {
     [Route("api/ticket-types")]
     [ApiController]
+    [Authorize(Roles = "admin")]
     public class TicketTypesController : ControllerBase
     {
         private readonly TicketTypeService _ticketTypeService;
@@ -42,7 +42,6 @@ namespace Airline_Web_API.Controllers
             return Ok(ticketType);
         }
 
-        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] TicketTypeViewModel model)
         {
@@ -51,7 +50,6 @@ namespace Airline_Web_API.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult<Response<string>>> Put(int id, [FromBody] TicketTypeViewModel model)
         {
@@ -65,7 +63,6 @@ namespace Airline_Web_API.Controllers
             return Ok(updateResult);
         }
 
-        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Response<string>>> Delete(int id)
         {

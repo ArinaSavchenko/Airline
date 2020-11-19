@@ -1,0 +1,41 @@
+.mainContainer {
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 8em;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+div.header {
+    margin-top: 1em;
+    font-weight: bolder;
+    font-family: "Helvetica Neue", sans-serif;
+    color: dimgrey;
+    font-size: 30px;
+}
+
+div.forms {
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    padding: 2em;
+    margin-top: 3em;
+    border: darkgray solid 3px;
+    border-radius: 1em;
+}
+
+.mat-raised-button {
+    font-size: 30px;
+    height: 2.5em;
+    width: 6em;
+    margin: 1em auto;
+    background-color: #bcd30b;
+    color: #ffffff;
+    size: auto;
+}
+
+.mat-error {
+    text-align: center;
+}

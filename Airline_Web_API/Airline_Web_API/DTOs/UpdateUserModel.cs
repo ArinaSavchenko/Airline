@@ -7,14 +7,16 @@ namespace Airline_Web_API.DTOs
     {
         [Required]
         public int Id { get; set; }
-        [Required(ErrorMessage = "First name is required")]
+        [Required]
+        [RegularExpression(@"^[a-zA-Z]*$", ErrorMessage = "Invalid format for first name")]
         public string FirstName { get; set; }
-        [Required(ErrorMessage = "Last name is required")]
+        [Required]
+        [RegularExpression(@"^[a-zA-Z]*$", ErrorMessage = "Invalid format for last name")]
         public string LastName { get; set; }
-        [Required(ErrorMessage = "Date of birth is required")]
+        [Required]
         public DateTime BirthDate { get; set; }
-        [EmailAddress]
-        [Required(ErrorMessage = "Email is required")]
+        [Required]
+        [EmailAddress(ErrorMessage = "Invalid format for email")]
         public string Email { get; set; }
     }
 }

@@ -52,37 +52,24 @@ namespace Airline_Web_API.Services
                     .ThenInclude(ticket => ticket.TicketType)
                 .AsQueryable();
 
-            if (model.departureAirportId != null)
+            if (model.DepartureAirportId != null)
             {
-                flights = flights.Where(flight => flight.DepartureAirportId == model.departureAirportId);
+                flights = flights.Where(flight => flight.DepartureAirportId == model.DepartureAirportId);
             }
 
-            if (model.arrivalAirportId != null)
+            if (model.ArrivalAirportId != null)
             {
-                flights = flights.Where(flight => flight.ArrivalAirportId == model.arrivalAirportId);
+                flights = flights.Where(flight => flight.ArrivalAirportId == model.ArrivalAirportId);
             }
 
-            if (model.date != default(DateTime))
+            if (model.Date != default(DateTime))
             {
-                flights = flights.Where(flight => flight.DepartureDate.Date == model.date.Date);
-            }
-
-            if (model.ticketsNumber != null)
-            {
-                /*flights = flights.Where(flight => flight.Tickets.Count >= model.ticketsNumber);*/
+                flights = flights.Where(flight => flight.DepartureDate.Date == model.Date.Date);
             }
 
             if (!string.IsNullOrEmpty(model.Status))
             {
                 flights = flights.Where(flight => flight.Status == model.Status);
-            }
-
-            foreach (var flight in flights)
-            {
-                flight.Tickets.Select(ticket => {
-                    ticket.Flight = null;
-                    return ticket;
-                });
             }
 
             var flightsSearchResults = await flights
@@ -94,8 +81,15 @@ namespace Airline_Web_API.Services
             return results;
         }
 
-        public async Task<int> AddFlightAsync(NewFlightModel model)
+        public async Task<int?> AddFlightAsync(NewFlightModel model)
         {
+            bool valuesChecked = await CheckExistanceAsync(model.DepartureAirportId, model.ArrivalAirportId, model.AirplaneId);
+            
+            if (!valuesChecked)
+            {
+                return null;
+            }
+
             var flight = _mapper.Map<Flight>(model);
             _context.Flights.Add(flight);
             await _context.SaveChangesAsync();
@@ -113,6 +107,17 @@ namespace Airline_Web_API.Services
                 {
                     Success = false,
                     Message = "There is no such flight"
+                };
+            }
+
+            bool valuesChecked = await CheckExistanceAsync(model.DepartureAirport.Id, model.ArrivalAirport.Id, model.Airplane.Id);
+
+            if (!valuesChecked)
+            {
+                return new Response<string>
+                {
+                    Success = false,
+                    Message = "Values are invalid"
                 };
             }
 
@@ -147,6 +152,32 @@ namespace Airline_Web_API.Services
                 Success = true,
                 Message = "FLight was succesfully deleted"
             };
+        }
+
+        public async Task<bool> CheckExistanceAsync(int departureAirportId, int arrivalAirportId, int airplaneId)
+        {
+            var departureAirport = await _context.Airports.FindAsync(departureAirportId);
+
+            if (departureAirport == null)
+            {
+                return false;
+            }
+
+            var arrivalAirport = await _context.Airports.FindAsync(arrivalAirportId);
+
+            if (arrivalAirport == null)
+            {
+                return false;
+            }
+
+            var airplane = await _context.Airplanes.FindAsync(airplaneId);
+
+            if (airplane == null)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

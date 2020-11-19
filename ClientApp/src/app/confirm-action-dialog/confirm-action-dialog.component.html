@@ -1,8 +1,5 @@
-<h1 mat-dialog-title>
-  {{message}}
-</h1>
-
-<div mat-dialog-actions class="actionButtons">
-  <button mat-button (click)="onDismiss()">No</button>
-  <button mat-raised-button color="primary" (click)="onConfirm()">Yes</button>
+<h1 mat-dialog-title *ngIf="action">{{action}}</h1>
+<div mat-dialog-actions class="actionsButtons">
+  <button mat-button (click)="doAction()">Yes</button>
+  <button mat-button mat-dialog-close>Cancel</button>
 </div>

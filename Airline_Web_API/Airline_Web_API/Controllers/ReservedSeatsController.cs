@@ -39,6 +39,11 @@ namespace Airline_Web_API.Controllers
         {
             var response = await _reservedSeatService.ReserveSeatAsync(reservedSeat);
 
+            if (response == null)
+            {
+                return BadRequest();
+            }
+
             return Ok(response);
         }
     }

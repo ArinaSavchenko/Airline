@@ -1,0 +1,65 @@
+<div class="mainContainer">
+  <h1 class="header">Airplanes info</h1>
+  <mat-form-field appearance="outline">
+    <mat-label>Sector name:</mat-label>
+    <input type="text" class="form-control" matInput placeholder="Name"
+           required [(ngModel)]="sectorName" name="name">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Sector number:</mat-label>
+    <input type="number" class="form-control" matInput placeholder="Name"
+           required [(ngModel)]="sectorNumber" name="name">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Column name:</mat-label>
+    <input type="text" class="form-control" matInput placeholder="Name"
+           required [(ngModel)]="column" name="name">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Number of seats:</mat-label>
+    <input type="text" class="form-control" matInput placeholder="Name"
+           required [(ngModel)]="seats" name="name">
+  </mat-form-field>
+
+  <form>
+    <mat-form-field appearance="outline">
+      <mat-label>Seat type</mat-label>
+      <mat-select [(ngModel)]="selectedSeatType" name="food">
+        <mat-option *ngFor="let type of seatTypes | keyvalue" [value]="type.value">
+          {{type.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+  <button mat-raised-button (click)="this.onSubmit()" class="submitButton">Add</button>
+
+  <h3 *ngIf="this.theCabin.length > 0" class="schemeHeader">Airplane scheme</h3>
+
+
+  <div *ngIf="this.theCabin.length > 0" class="sector">
+    <div *ngFor="let sectorName of this.theCabin" class="innerSector">
+      <div *ngFor="let innerSector of sectorName" class="column">
+        <div *ngFor="let column of innerSector" class="seat">
+          <div *ngFor="let seat of column" class="seatAppearance">
+            {{seat.column + seat.number}}
+          </div>
+        </div>
+        <br/>
+        <br/>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="mat-error">{{message}}</div>
+
+  <button *ngIf="this.theCabin.length > 0" mat-raised-button (click)="this.add()" class="submitButton">Add airplane
+    seats scheme
+  </button>
+  <button mat-raised-button class="submitButton" routerLink="/admin/airplanes">Back to the airplanes</button>
+
+</div>

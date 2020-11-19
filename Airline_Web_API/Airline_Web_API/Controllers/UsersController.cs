@@ -11,6 +11,7 @@ namespace Airline_Web_API.Controllers
 {
     [ApiController]
     [Route("api/users")]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly UserService _userService;
@@ -22,7 +23,6 @@ namespace Airline_Web_API.Controllers
             _jwtService = jwtService;
         }
 
-        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetUser(int id)
         {
@@ -37,7 +37,6 @@ namespace Airline_Web_API.Controllers
         }
 
 
-        [Authorize]
         [HttpPut("update/{id}")]
         public async Task<ActionResult> Update(int id, [FromBody] UpdateUserModel model)
         {
@@ -51,7 +50,6 @@ namespace Airline_Web_API.Controllers
             return Ok(updateResult);
         }
 
-        [Authorize]
         [HttpPut("update-password/{id}")]
         public async Task<ActionResult> ChangePassword(int id, [FromBody] ChangePasswordModel model)
         {
@@ -101,7 +99,6 @@ namespace Airline_Web_API.Controllers
             return Ok(registrationResult);
         }
 
-        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(int id)
         {

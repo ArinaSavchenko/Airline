@@ -1,9 +1,4 @@
-.mat-raised-button {
-  font-size: 16px;
-  background-color: #bcd30b;
-  color: #ffffff;
-}
-
-.actionButtons {
+.actionsButtons {
+  display: flex;
   justify-content: center;
 }

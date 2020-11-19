@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Airline_Web_API.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Route("api/airplanes")]
     [ApiController]
     public class AirplanesController : ControllerBase
@@ -20,7 +21,6 @@ namespace Airline_Web_API.Controllers
             _airplaneService = airplaneService;
         }
 
-        [Authorize(Roles = "admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<AirplaneViewModel>> GetAirplaneById(int id)
         {
@@ -34,6 +34,7 @@ namespace Airline_Web_API.Controllers
             return Ok(results);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AirplaneViewModel>>> GetAirplanes([FromQuery] string name)
         {
@@ -42,7 +43,7 @@ namespace Airline_Web_API.Controllers
             return Ok(results);
         }
 
-        [Authorize(Roles = "admin")]
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<int>> PostAirplane([FromBody] AirplaneViewModel model)
         {
@@ -51,7 +52,6 @@ namespace Airline_Web_API.Controllers
             return Ok(newAirportId);
         }
 
-        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult<Response<string>>> UpdateAirport(int id, [FromBody] AirplaneViewModel model)
         {
@@ -65,7 +65,6 @@ namespace Airline_Web_API.Controllers
             return Ok(updateResult);
         }
 
-        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Response<string>>> DeleteAirplane(int id)
         {

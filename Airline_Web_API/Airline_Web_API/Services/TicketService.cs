@@ -47,12 +47,20 @@ namespace Airline_Web_API.Services
             return result;
         }
 
-        public async Task AddTicketAsync(NewTicketModel model)
+        public async Task<bool> AddTicketAsync(NewTicketModel model)
         {
-            var ticket = _mapper.Map<Ticket>(model);
+            bool valuesChecked = await CheckExistanceAsync(model.FlightId);
 
+            if (!valuesChecked)
+            {
+                return false;
+            }
+
+            var ticket = _mapper.Map<Ticket>(model);
             _context.Tickets.Add(ticket);
             await _context.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<Response<string>> UpdateTicketAsync(int id, TicketViewModel model)
@@ -65,6 +73,17 @@ namespace Airline_Web_API.Services
                 {
                     Success = false,
                     Message = "There is no such ticket"
+                };
+            }
+
+            bool valuesChecked = await CheckExistanceAsync(model.FlightId);
+
+            if (!valuesChecked)
+            {
+                return new Response<string>
+                {
+                    Success = false,
+                    Message = "Values are invalid"
                 };
             }
 
@@ -99,6 +118,18 @@ namespace Airline_Web_API.Services
                 Success = true,
                 Message = "Ticket was succesfully deleted"
             };
+        }
+
+        public async Task<bool> CheckExistanceAsync(int flightId)
+        {
+            var departureAirport = await _context.Flights.FindAsync(flightId);
+
+            if (departureAirport == null)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

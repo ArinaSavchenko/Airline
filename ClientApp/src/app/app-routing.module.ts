@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MainPageComponent } from './main-page/main-page.component';
-import { FlightSearchResultsComponent } from './flight-search-results/flight-search-results.component';
-import { RegistrationComponent } from './registration/registration.component';
-import { AccountComponent } from './account/account.component';
+import { MainPageComponent } from './main-page-view/main-page/main-page.component';
+import { FlightSearchResultsComponent } from './flight-search-and-select/flight-search-results/flight-search-results.component';
+import { RegistrationComponent } from './user/registration/registration.component';
+import { AccountComponent } from './user/account/account.component';
 import { AuthGuard } from './AuthGuard';
-import { UserDetailsComponent } from './user-details/user-details.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
-import { BookTicketsComponent } from './book-tickets/book-tickets.component';
-import { BookingResultComponent } from './booking-result/booking-result.component';
-import { BookingsHistoryComponent } from './bookings-history/bookings-history.component';
-import { BookedTicketDetailsComponent } from './booked-ticket-details/booked-ticket-details.component';
-import { SeatReservationComponent } from './seat-reservation/seat-reservation.component';
+import { UserDetailsComponent } from './user/user-details/user-details.component';
+import { ChangePasswordComponent } from './user/change-password/change-password.component';
+import { BookTicketsComponent } from './tickets-booking/book-tickets/book-tickets.component';
+import { BookingResultComponent } from './tickets-booking/booking-result/booking-result.component';
+import { BookingsHistoryComponent } from './user/booking-history/bookings-history/bookings-history.component';
+import { BookedTicketDetailsComponent } from './user/booking-history/booked-ticket-details/booked-ticket-details.component';
+import { SeatReservationComponent } from './seat-reserve/seat-reservation/seat-reservation.component';
 
 const routes: Routes = [
   {path: 'airline', component: MainPageComponent},

@@ -50,7 +50,12 @@ namespace Airline_Web_API.Controllers
         [HttpPost]
         public async Task<ActionResult> PostSeats([FromBody] SeatViewModel[] seats)
         {
-            await _seatsService.AddSeatsAsync(seats);
+            var result = await _seatsService.AddSeatsAsync(seats);
+
+            if (!result)
+            {
+                return BadRequest();
+            }
 
             return Ok();
         }

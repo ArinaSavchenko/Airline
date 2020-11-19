@@ -56,8 +56,9 @@ namespace Airline_Web_API.Services
             return results;
         }
 
-        public async Task AddAirportAsync(Airport airport)
+        public async Task AddAirportAsync(AirportViewModel model)
         {
+            var airport = _mapper.Map<Airport>(model);
             _context.Airports.Add(airport);
             await _context.SaveChangesAsync();
         }

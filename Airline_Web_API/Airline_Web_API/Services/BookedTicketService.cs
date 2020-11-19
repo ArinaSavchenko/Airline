@@ -66,8 +66,14 @@ namespace Airline_Web_API.Services
 
         public async Task<List<TicketWasBookedResponseModel>> AddBookedTicketAsync(NewBookedTicketModel[] models)
         {
-            var bookedTickets = _mapper.Map<IEnumerable<BookedTicket>>(models);
+            var valuesChecked = CheckExistance(models);
 
+            if (!valuesChecked)
+            {
+                return null;
+            }
+
+            var bookedTickets = _mapper.Map<IEnumerable<BookedTicket>>(models);
             _context.BookedTickets.AddRange(bookedTickets);
             await _context.SaveChangesAsync();
 
@@ -83,6 +89,22 @@ namespace Airline_Web_API.Services
             }
 
             return reponse;
+        }
+
+        public bool CheckExistance(NewBookedTicketModel[] models)
+        {
+            var userIds = models.Select(model => model.UserId).GroupBy(userId => userId).Select(g => g.First());
+            var users = _context.Users.Where(user => userIds.Contains(user.Id)).Count();
+
+            var ticketIds = models.Select(model => model.TicketId).GroupBy(ticketId => ticketId).Select(g => g.First());
+            var tickets = _context.Tickets.Where(ticket => ticketIds.Contains(ticket.Id)).Count();
+
+            if (users != userIds.Count() || tickets != ticketIds.Count())
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -1,0 +1,111 @@
+<div class="infoContainer">
+  <h1 class="header">Add new ticket type</h1>
+  <form [formGroup]="ticketTypeForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Ticket type name:</mat-label>
+      <input type="text" matInput formControlName="name" placeholder="Name">
+      <mat-error>
+        Name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Enter carry on bag number:</mat-label>
+      <input type="number" matInput formControlName="carryOnBagsNumber">
+      <mat-error>
+        Carry on bags number is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Enter carry on bag max weight:</mat-label>
+      <input type="number" matInput formControlName="carryOnBagMaxWeight">
+      <mat-error>
+        Carry on bags weight is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Enter baggage number:</mat-label>
+      <input type="number" matInput formControlName="baggageNumber">
+      <mat-error>
+        Baggage number is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Enter baggage max weight:</mat-label>
+      <input type="number" matInput formControlName="baggageMaxWeight">
+      <mat-error>
+        Baggage max weight is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Price per extra carry on bag:</mat-label>
+      <input type="number" matInput formControlName="pricePerExtraCarryOnBag">
+      <mat-error>
+        Price per extra carry on bag is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Price per extra carry on bag weight:</mat-label>
+      <input type="number" matInput formControlName="pricePerExtraCarryOnBagKg">
+      <mat-error>
+        Price per extra carry on bag weight is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Price per extra baggage:</mat-label>
+      <input type="number" matInput formControlName="pricePerExtraBaggage">
+      <mat-error>
+        Price per extra baggage is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Price per extra baggage weight:</mat-label>
+      <input type="number" matInput formControlName="pricePerExtraBaggageKg">
+      <mat-error>
+        Price per extra carry on bag weight is required
+      </mat-error>
+    </mat-form-field>
+
+    <div class="checkBox">
+      <div class="checkBoxSection">
+        <mat-checkbox formControlName="seatReservation">Advanced reservation</mat-checkbox>
+      </div>
+      <div class="checkBoxSection">
+        <mat-checkbox formControlName="changes">Changes</mat-checkbox>
+      </div>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Refund</mat-label>
+      <mat-select formControlName="refund">
+        <mat-option *ngFor="let refund of refundTypes | keyvalue" [value]="refund.value">
+          {{refund.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Type of seat</mat-label>
+      <mat-select formControlName="seatType">
+        <mat-option *ngFor="let type of seatTypes | keyvalue" [value]="type.value">
+          {{type.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+  <div class="mat-error">{{message}}</div>
+
+  <button type="submit" mat-raised-button class="addButton" [disabled]="!ticketTypeForm.valid"
+          (click)="addTicketType()">Add
+  </button>
+  <button mat-raised-button class="goBackButton" routerLink="/admin/menu">Back to the menu</button>
+</div>
+
+

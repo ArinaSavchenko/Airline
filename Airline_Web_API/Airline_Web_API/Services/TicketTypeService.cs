@@ -42,7 +42,6 @@ namespace Airline_Web_API.Services
         public async Task AddTicketTypeAsync(TicketTypeViewModel model)
         {
             var ticketType = _mapper.Map<TicketType>(model);
-
             _context.TicketTypes.Add(ticketType);
             await _context.SaveChangesAsync();
         }

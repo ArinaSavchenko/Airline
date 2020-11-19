@@ -13,6 +13,7 @@ namespace Airline_Web_API.Controllers
 {
     [Route("api/booked-tickets")]
     [ApiController]
+    [Authorize]
     public class BookedTicketsController : ControllerBase
     {
         private readonly BookedTicketService _bookedTicketService;
@@ -35,7 +36,6 @@ namespace Airline_Web_API.Controllers
             return Ok(bookedTicket);
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BookedTicketHistoryModel>>> GetBookedTicketsByUserId([FromQuery] int userId)
         {
@@ -52,7 +52,7 @@ namespace Airline_Web_API.Controllers
 
             if (response == null)
             {
-                return NoContent();
+                return BadRequest();
             }
 
             return Ok(response);

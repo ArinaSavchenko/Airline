@@ -12,6 +12,7 @@ namespace Airline_Web_API.Controllers
 {
     [Route("api/airports")]
     [ApiController]
+    [Authorize(Roles = "admin")]
     public class AirportsController : ControllerBase
     {
         private readonly AirportService _airportService;
@@ -20,7 +21,6 @@ namespace Airline_Web_API.Controllers
             _airportService = airportService;
         }
         
-        [Authorize(Roles = "admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Airport>> GetAirportById(int id)
         {
@@ -34,6 +34,7 @@ namespace Airline_Web_API.Controllers
             return Ok(results);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Airport>>> GetAirports([FromQuery] string value, string status)
         {
@@ -42,16 +43,14 @@ namespace Airline_Web_API.Controllers
             return Ok(results);
         }
 
-        [Authorize(Roles ="admin")]
         [HttpPost]
-        public async Task<ActionResult> PostAirport([FromBody] Airport airport)
+        public async Task<ActionResult> PostAirport([FromBody] AirportViewModel model)
         {
-            await _airportService.AddAirportAsync(airport);
+            await _airportService.AddAirportAsync(model);
 
             return Ok();
         }
 
-        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateAirport(int id, [FromBody] AirportViewModel model)
         {
@@ -65,7 +64,6 @@ namespace Airline_Web_API.Controllers
             return Ok(updateResult);
         }
 
-        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAirport(int id)
         {

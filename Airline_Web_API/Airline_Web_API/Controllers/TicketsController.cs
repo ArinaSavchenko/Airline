@@ -15,6 +15,7 @@ namespace Airline_Web_API.Controllers
 {
     [Route("api/tickets")]
     [ApiController]
+    [Authorize(Roles = "admin")]
     public class TicketsController : ControllerBase
     {
         private readonly TicketService _ticketService;
@@ -24,6 +25,7 @@ namespace Airline_Web_API.Controllers
             _ticketService = ticketService;
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<TicketViewModel>> GetTicket(int id)
         {
@@ -37,6 +39,7 @@ namespace Airline_Web_API.Controllers
             return Ok(ticket);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<Ticket[]>> GetTickets([FromQuery] int flightId)
         {
@@ -50,16 +53,19 @@ namespace Airline_Web_API.Controllers
             return Ok(tickets);
         }
 
-        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] NewTicketModel model)
         {
-            await _ticketService.AddTicketAsync(model);
+            var addedSuccessfully = await _ticketService.AddTicketAsync(model);
+
+            if (!addedSuccessfully)
+            {
+                return BadRequest();
+            }
 
             return Ok();
         }
 
-        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult<Response<string>>> Put(int id, [FromBody] TicketViewModel model)
         {
@@ -73,7 +79,6 @@ namespace Airline_Web_API.Controllers
             return Ok(updateResult);
         }
 
-        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Response<string>>> Delete(int id)
         {

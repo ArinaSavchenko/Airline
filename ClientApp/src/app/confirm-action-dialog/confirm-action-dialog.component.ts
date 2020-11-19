@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
@@ -8,18 +8,20 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 export class ConfirmActionDialogComponent {
 
-  message: string;
+  event: boolean;
+  action: any;
 
-  constructor(private dialogRef: MatDialogRef<ConfirmActionDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: string) {
-    this.message = data;
+  constructor(
+    public dialogRef: MatDialogRef<string>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: string) {
+    this.action = data;
   }
 
-  onConfirm(): void {
-    this.dialogRef.close(true);
+  doAction(): any {
+    this.dialogRef.close({event: true});
   }
 
-  onDismiss(): void {
-    this.dialogRef.close(false);
+  closeDialog(): any {
+    this.dialogRef.close({event: false});
   }
 }

@@ -5,11 +5,11 @@ namespace Airline_Web_API.DTOs
 {
     public class AuthenticateModel
     {
-        [Required(ErrorMessage = "Email is required")]
+        [Required]
         [EmailAddress(ErrorMessage = "Email is not valid")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Password is required")]
+        [Required]
         public string Password { get; set; }
     }
 }

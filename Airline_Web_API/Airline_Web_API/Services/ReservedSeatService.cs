@@ -38,6 +38,13 @@ namespace Airline_Web_API.Services
 
         public async Task<Response<string>> ReserveSeatAsync(ReservedSeat reservedSeat)
         {
+            var valuesChecked = await CheckExistanceAsync(reservedSeat);
+
+            if (!valuesChecked)
+            {
+                return null;
+            }
+
             _context.ReservedSeats.Add(reservedSeat);
             await _context.SaveChangesAsync();
 
@@ -46,6 +53,19 @@ namespace Airline_Web_API.Services
                 Success = true,
                 Message = "Seat was successfully reserved"
             };
+        }
+
+        public async Task<bool> CheckExistanceAsync(ReservedSeat reservedSeat)
+        {
+            var bookedTicket = await _context.BookedTickets.FindAsync(reservedSeat.BookedTicketId);
+            var seat = await _context.Seats.FindAsync(reservedSeat.SeatId);
+
+            if (bookedTicket == null || seat == null)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

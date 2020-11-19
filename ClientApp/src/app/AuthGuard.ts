@@ -4,8 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
 
-import { UserService } from './Services/user.service';
-import { LogInComponent } from './log-in/log-in.component';
+import { UserService } from './user/user.service';
+import { LogInComponent } from './user/log-in/log-in.component';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

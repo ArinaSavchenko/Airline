@@ -17,6 +17,7 @@ namespace Airline_Web_API.Controllers
 {
     [Route("api/flights")]
     [ApiController]
+    [Authorize(Roles = "admin")]
     public class FlightsController : ControllerBase
     {
         private readonly FlightService _flightService;
@@ -26,6 +27,8 @@ namespace Airline_Web_API.Controllers
             _flightService = flightService;
         }
 
+
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FlightViewModel>>> GetFlights([FromQuery] FlightForSearchModel model)
         {
@@ -34,6 +37,7 @@ namespace Airline_Web_API.Controllers
             return Ok(results);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<FlightViewModel>> GetFlight(int id)
         {
@@ -47,16 +51,19 @@ namespace Airline_Web_API.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<ActionResult> PostFlight([FromBody] NewFlightModel model)
         {
             var flightId = await _flightService.AddFlightAsync(model);
 
+            if (flightId == null)
+            {
+                return BadRequest();
+            }
+
             return Ok(flightId);
         }
 
-        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<ActionResult<Response<string>>> UpdateFlight(int id, [FromBody] FlightViewModel model)
         {
@@ -70,7 +77,6 @@ namespace Airline_Web_API.Controllers
             return Ok(updateResult);
         }
 
-        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Response<string>>> DeleteFlight(int id)
         {

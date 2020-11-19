@@ -1,0 +1,15 @@
+<div id="topBar">
+
+  <a routerLink="/airline" title="Go to main page">
+    <img id="logo" src="../../../assets/S7_new_logo.svg.jpg" alt="Logo" width="150" >
+  </a>
+
+  <div id="accountButtons">
+    <a routerLink="airline/account" title="Go to your account">
+     <i class="material-icons md-48 orange">account_circle</i>
+    </a>
+    <a id="log-in" mat-flat-button (click)="openLogInForm()">Log in</a>
+    <a id="sign-up" mat-flat-button routerLink="/airline/registration">Sign up</a>
+  </div>
+</div>
+
