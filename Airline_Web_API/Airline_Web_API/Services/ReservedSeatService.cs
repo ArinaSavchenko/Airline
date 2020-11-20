@@ -38,7 +38,7 @@ namespace Airline_Web_API.Services
 
         public async Task<Response<string>> ReserveSeatAsync(ReservedSeat reservedSeat)
         {
-            var valuesChecked = await CheckExistanceAsync(reservedSeat);
+            var valuesChecked = await CheckValuesAsync(reservedSeat);
 
             if (!valuesChecked)
             {
@@ -55,12 +55,14 @@ namespace Airline_Web_API.Services
             };
         }
 
-        public async Task<bool> CheckExistanceAsync(ReservedSeat reservedSeat)
+        public async Task<bool> CheckValuesAsync(ReservedSeat reservedSeat)
         {
-            var bookedTicket = await _context.BookedTickets.FindAsync(reservedSeat.BookedTicketId);
+            var bookedTicket = await _context.BookedTickets
+                .Include(bookedTicket => bookedTicket.Ticket.TicketType)
+                .FirstOrDefaultAsync(bookedTicket => bookedTicket.Id == reservedSeat.BookedTicketId);
             var seat = await _context.Seats.FindAsync(reservedSeat.SeatId);
 
-            if (bookedTicket == null || seat == null)
+            if (bookedTicket == null || seat == null || bookedTicket.Ticket.TicketType.SeatType != seat.Type)
             {
                 return false;
             }

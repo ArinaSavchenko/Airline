@@ -64,7 +64,7 @@ namespace Airline_Web_API.Services
             return bookedTickets;
         }
 
-        public async Task<List<TicketWasBookedResponseModel>> AddBookedTicketAsync(NewBookedTicketModel[] models)
+        public async Task<List<TicketWasBookedResponseModel>> AddBookedTicketAsync(IEnumerable<NewBookedTicketModel> models)
         {
             var valuesChecked = CheckExistance(models);
 
@@ -73,9 +73,16 @@ namespace Airline_Web_API.Services
                 return null;
             }
 
+            foreach(var model in models)
+            {
+                model.TotalPrice = await CountTotalPriceAsync(model);
+            }
+
             var bookedTickets = _mapper.Map<IEnumerable<BookedTicket>>(models);
             _context.BookedTickets.AddRange(bookedTickets);
             await _context.SaveChangesAsync();
+
+            await BuyTicketsAsync(models);
 
             List<TicketWasBookedResponseModel> reponse = new List<TicketWasBookedResponseModel>();
 
@@ -91,7 +98,7 @@ namespace Airline_Web_API.Services
             return reponse;
         }
 
-        public bool CheckExistance(NewBookedTicketModel[] models)
+        public bool CheckExistance(IEnumerable<NewBookedTicketModel> models)
         {
             var userIds = models.Select(model => model.UserId).GroupBy(userId => userId).Select(g => g.First());
             var users = _context.Users.Where(user => userIds.Contains(user.Id)).Count();
@@ -105,6 +112,40 @@ namespace Airline_Web_API.Services
             }
 
             return true;
+        }
+
+        public async Task BuyTicketsAsync(IEnumerable<NewBookedTicketModel> models)
+        {
+            var ticketIds = models.Select(model => model.TicketId).GroupBy(ticketId => ticketId).Select(group => group.First());
+
+            var ticketsNumber = models.Select(model => model.TicketId).GroupBy(ticketId => ticketId).Select(group => group.Count()).First();
+
+            await _context.Tickets
+                .Where(ticket => ticketIds.Contains(ticket.Id))
+                .ForEachAsync(ticket => {
+                    ticket.TicketsLeftNumber -= ticketsNumber;
+                });
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<decimal> CountTotalPriceAsync(NewBookedTicketModel model)
+        {
+            var ticket = await _context.Tickets.Include(ticket => ticket.TicketType).FirstOrDefaultAsync(ticket => ticket.Id == model.TicketId);
+
+            decimal totalPrice = ticket.Price;
+
+            if (model.CarryOnBagsNumber > ticket.TicketType.CarryOnBagsNumber)
+            {
+                totalPrice += (model.CarryOnBagsNumber - ticket.TicketType.CarryOnBagsNumber) * ticket.TicketType.PricePerExtraCarryOnBag;
+            }
+
+            if (model.BaggageNumber > ticket.TicketType.BaggageNumber)
+            {
+                totalPrice += (model.BaggageNumber - ticket.TicketType.BaggageNumber) * ticket.TicketType.PricePerExtraBaggage;
+            }
+
+            return totalPrice;
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Airline_Web_API.Controllers
 
         [Authorize(Roles = "user")]
         [HttpPost]
-        public async Task<ActionResult<IEnumerable<TicketWasBookedResponseModel>>> Post([FromBody] NewBookedTicketModel[] models)
+        public async Task<ActionResult<IEnumerable<TicketWasBookedResponseModel>>> Post([FromBody]IEnumerable<NewBookedTicketModel> models)
         {
             var response = await _bookedTicketService.AddBookedTicketAsync(models);
 
