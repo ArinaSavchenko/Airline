@@ -15,6 +15,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using Airline_Web_API.Hubs;
 
 namespace Airline_Web_API
 {
@@ -33,6 +34,8 @@ namespace Airline_Web_API
                => options.UseSqlServer(Configuration.GetConnectionString("AirlineDatabase")));
 
             services.AddControllers();
+
+            services.AddSignalR();
 
             services.AddTransient<AirlineContext>();
 
@@ -109,6 +112,7 @@ namespace Airline_Web_API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<SeatsLockHub>("/seatslock");
             });
         }
     }

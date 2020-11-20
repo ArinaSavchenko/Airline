@@ -1,4 +1,5 @@
 export interface BookedTicket{
+  flightId: number;
   departureCity: string;
   departureCountry: string;
   arrivalCity: string;

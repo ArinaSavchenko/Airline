@@ -9,6 +9,7 @@ import { BookedTicketsService } from '../../tickets-booking/bookedTickets.servic
 import { ReservedSeatsService } from '../reserved-seats.service';
 import { SeatService } from '../seat.service';
 import { SeatsSchemeService } from '../seats-scheme.service';
+import { SignalRService } from '../../SignalR.service';
 
 @Component({
   selector: 'app-seat-reservation',
@@ -19,6 +20,7 @@ export class SeatReservationComponent implements OnInit {
 
   bookedTicketId: number;
   bookedTicketSeatType: string;
+  flightId: number;
   seatsSearchIsFinished = false;
   reservedSeatsSearchIsFinished = false;
   bookedTicketSearchIsFinished = false;
@@ -35,13 +37,16 @@ export class SeatReservationComponent implements OnInit {
               private seatSchemeService: SeatsSchemeService,
               private reservedSeatsService: ReservedSeatsService,
               public snackbar: MatSnackBar,
-              private router: Router) {
+              private router: Router,
+              private signalRService: SignalRService) {
   }
 
   ngOnInit(): void {
     this.bookedTicketId = +this.route.snapshot.paramMap.get('id');
     this.bookedTicketService.getBookedTicket(this.bookedTicketId).subscribe(bookedTicket => {
       this.bookedTicketSeatType = bookedTicket.seatTypeName;
+      this.flightId = bookedTicket.flightId;
+      this.signalRService.start(this.flightId);
       this.bookedTicketSearchIsFinished = true;
     });
 
@@ -69,7 +74,15 @@ export class SeatReservationComponent implements OnInit {
 
   seatWasChosen(seat: Seat): void {
     if (seat.type === this.bookedTicketSeatType && !seat.isReserved) {
+      const selectedSeat = {
+        bookedTicketId: this.bookedTicketId,
+        seatId: this.selectedSeat.id
+      };
+
+      this.signalRService.selectSeat(selectedSeat);
+
       this.selectedSeat = seat;
+
       this.message = `You've selected ${this.selectedSeat.column}${this.selectedSeat.number} click the button to reserve this seat`;
     } else if (seat.isReserved) {
       this.openSnackbar(`You cannot select this seat because it is already reserved`, 'Close', '');

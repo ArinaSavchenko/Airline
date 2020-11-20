@@ -27,6 +27,7 @@ namespace Airline_Web_API.Services
                 .Where(ticket => ticket.Id == id)
                 .Select(ticket => new BookedTicketViewModel
                 {
+                    FlightId = ticket.Ticket.FlightId,
                     DepartureCity = ticket.Ticket.Flight.DepartureAirport.City,
                     DepartureCountry = ticket.Ticket.Flight.DepartureAirport.Country,
                     ArrivalCity = ticket.Ticket.Flight.ArrivalAirport.City,

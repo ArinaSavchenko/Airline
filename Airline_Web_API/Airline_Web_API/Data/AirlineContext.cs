@@ -14,6 +14,7 @@ namespace Airline_Web_API.Models
         public DbSet<Airplane> Airplanes { get; set; }
         public DbSet<BookedTicket> BookedTickets { get; set; }
         public DbSet<ReservedSeat> ReservedSeats { get; set; }
+        public DbSet<SelectedSeat> SelectedSeats { get; set; }
 
         public AirlineContext(DbContextOptions<AirlineContext> options):
             base(options)
@@ -70,6 +71,15 @@ namespace Airline_Web_API.Models
             modelBuilder.Entity<ReservedSeat>()
                 .HasOne<BookedTicket>(fsr => fsr.BookedTicket)
                 .WithOne(bt => bt.ReservedSeat);
+
+            modelBuilder.Entity<SelectedSeat>()
+                .HasOne<Seat>(fsr => fsr.Seat)
+                .WithMany(s => s.SelectedSeats)
+                .HasForeignKey(fsr => fsr.SeatId);
+
+            modelBuilder.Entity<SelectedSeat>()
+                .HasOne<BookedTicket>(fsr => fsr.BookedTicket)
+                .WithOne(bt => bt.SelectedSeat);
         }
     }
 }

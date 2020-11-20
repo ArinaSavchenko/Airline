@@ -7,6 +7,7 @@ namespace Airline_Web_API.ViewModels
 {
     public class BookedTicketViewModel
     {
+        public int FlightId { get; set; }
         public string DepartureCity { get; set; }
         public string DepartureCountry { get; set; }
         public string ArrivalCity { get; set; }

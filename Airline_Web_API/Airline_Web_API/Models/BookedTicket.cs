@@ -23,5 +23,6 @@ namespace Airline_Web_API.Models
         public User User { get; set; }
         public Ticket Ticket { get; set; }
         public ReservedSeat ReservedSeat { get; set; }
+        public SelectedSeat SelectedSeat { get; set; }
     }
 }

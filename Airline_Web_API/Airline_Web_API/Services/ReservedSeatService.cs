@@ -60,6 +60,7 @@ namespace Airline_Web_API.Services
             var bookedTicket = await _context.BookedTickets
                 .Include(bookedTicket => bookedTicket.Ticket.TicketType)
                 .FirstOrDefaultAsync(bookedTicket => bookedTicket.Id == reservedSeat.BookedTicketId);
+
             var seat = await _context.Seats.FindAsync(reservedSeat.SeatId);
 
             if (bookedTicket == null || seat == null || bookedTicket.Ticket.TicketType.SeatType != seat.Type)
