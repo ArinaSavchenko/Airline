@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+import * as moment from 'moment';
 
 import { ReservedSeat } from '../../Models/ReservedSeat';
 import { Seat } from '../../Models/Seat';
@@ -10,13 +12,14 @@ import { ReservedSeatsService } from '../reserved-seats.service';
 import { SeatService } from '../seat.service';
 import { SeatsSchemeService } from '../seats-scheme.service';
 import { SignalRService } from '../../SignalR.service';
+import { SeatToBeSelectedModel } from '../../Models/SeatToBeSelectedModel';
 
 @Component({
   selector: 'app-seat-reservation',
   templateUrl: './seat-reservation.component.html',
   styleUrls: ['./seat-reservation.component.css']
 })
-export class SeatReservationComponent implements OnInit {
+export class SeatReservationComponent implements OnInit, OnDestroy {
 
   bookedTicketId: number;
   bookedTicketSeatType: string;
@@ -43,6 +46,7 @@ export class SeatReservationComponent implements OnInit {
 
   ngOnInit(): void {
     this.bookedTicketId = +this.route.snapshot.paramMap.get('id');
+
     this.bookedTicketService.getBookedTicket(this.bookedTicketId).subscribe(bookedTicket => {
       this.bookedTicketSeatType = bookedTicket.seatTypeName;
       this.flightId = bookedTicket.flightId;
@@ -61,22 +65,32 @@ export class SeatReservationComponent implements OnInit {
     this.reservedSeatsService.getReservedSeats(this.bookedTicketId).subscribe(reservedSeats => {
       this.reservedSeats = reservedSeats;
       this.reservedSeatsSearchIsFinished = true;
+      this.isSeatWasReserved();
       this.onSchemeDraw();
+    });
+
+    this.signalRService.retrieveMappedObject().subscribe(reservedSeats => {
+      this.reservedSeats = this.selectedSeat ? reservedSeats.filter(seat => seat.seatId !== this.selectedSeat.id) : reservedSeats;
+      this.seatSchemeService.drawScheme(this.seats, this.reservedSeats);
     });
   }
 
   onSchemeDraw(): void {
     if (this.seatsSearchIsFinished && this.reservedSeatsSearchIsFinished) {
-      this.isSeatWasReserved();
       this.airplaneScheme = this.seatSchemeService.drawScheme(this.seats, this.reservedSeats);
     }
   }
 
   seatWasChosen(seat: Seat): void {
+    if (this.selectedSeat) {
+      this.signalRService.unselectSeat(this.bookedTicketId, this.selectedSeat.id);
+    }
     if (seat.type === this.bookedTicketSeatType && !seat.isReserved) {
-      const selectedSeat = {
+      const selectedSeat: SeatToBeSelectedModel = {
+        flightId: this.flightId,
         bookedTicketId: this.bookedTicketId,
-        seatId: this.selectedSeat.id
+        seatId: seat.id,
+        selectionTime: moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.sssZ')
       };
 
       this.signalRService.selectSeat(selectedSeat);
@@ -128,5 +142,12 @@ export class SeatReservationComponent implements OnInit {
           this.goBack();
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    if (this.selectedSeat) {
+      this.signalRService.unselectSeat(this.bookedTicketId, this.selectedSeat.id);
+    }
+    this.signalRService.destroy();
   }
 }

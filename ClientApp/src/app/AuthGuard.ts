@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
   canActivate(): boolean {
     const token = localStorage.getItem('token');
 
-    if (this.userService.isLoggedIn && !this.jwtHelper.isTokenExpired(token) && this.userService.getUserRole() === 'user') {
+    if (this.userService.isLoggedIn) {
       return true;
     }
 

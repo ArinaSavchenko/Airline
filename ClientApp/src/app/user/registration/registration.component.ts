@@ -15,7 +15,7 @@ import { environment } from '../../../environments/environment';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent{
+export class RegistrationComponent {
 
   hide = true;
   confirmHide = true;
@@ -28,13 +28,13 @@ export class RegistrationComponent{
               private formBuilder: FormBuilder,
               private router: Router) {
     this.userForm = this.formBuilder.group({
-        firstName: new FormControl(null, [Validators.required, Validators.pattern(this.nameFormat)]),
-        lastName: new FormControl(null, [Validators.required, Validators.pattern(this.nameFormat)]),
-        email: new FormControl(null, [Validators.required, Validators.email]),
-        password: new FormControl(null, Validators.required),
-        confirmPassword: new FormControl(null, Validators.required),
-        birthDate: new FormControl(null, Validators.required)
-      });
+      firstName: new FormControl(null, [Validators.required, Validators.pattern(this.nameFormat)]),
+      lastName: new FormControl(null, [Validators.required, Validators.pattern(this.nameFormat)]),
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, Validators.required),
+      confirmPassword: new FormControl(null, Validators.required),
+      birthDate: new FormControl(null, Validators.required)
+    });
     this.userForm.setValidators(PasswordsMatchValidator('password', 'confirmPassword'));
   }
 
@@ -55,8 +55,7 @@ export class RegistrationComponent{
   checkResult(response: ResponseModel): void {
     if (!response.success) {
       this.message = response.message;
-    }
-    else {
+    } else {
       this.goToAccount();
     }
   }

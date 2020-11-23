@@ -4,6 +4,8 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, of} from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 import { environment } from '../../environments/environment';
 
 import { RegisterModel } from '../Models/RegisterModel';
@@ -23,7 +25,8 @@ export class UserService {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private jwtHelper: JwtHelperService) {
   }
 
   registerUser(model: RegisterModel): Observable<ResponseModel> {
@@ -58,7 +61,12 @@ export class UserService {
   }
 
   get isLoggedIn(): boolean {
-    return localStorage.getItem('token') !== null;
+    const token = localStorage.getItem('token');
+    if (token !== null && !this.jwtHelper.isTokenExpired(token) && this.getUserRole() === 'user')
+      return true;
+    else {
+      return false;
+    }
   }
 
   logOut(): void {

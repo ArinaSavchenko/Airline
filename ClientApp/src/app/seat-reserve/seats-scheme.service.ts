@@ -19,6 +19,9 @@ export class SeatsSchemeService {
       if (reservedSeats.some(reservedSeat => reservedSeat.seatId === seat.id)) {
         seat.isReserved = true;
       }
+      else {
+        seat.isReserved = false;
+      }
     });
 
     this.seatsGroupedBySectorName = this.groupBySectorName(seats);

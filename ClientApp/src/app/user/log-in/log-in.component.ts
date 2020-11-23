@@ -20,32 +20,33 @@ export class LogInComponent {
   hide = true;
   message: string;
 
- constructor(
-   public dialogRef: MatDialogRef<LogInComponent>,
-   public userService: UserService,
-   private router: Router) {}
+  constructor(
+    public dialogRef: MatDialogRef<LogInComponent>,
+    public userService: UserService,
+    private router: Router) {
+  }
+
 
   logIn(): void {
-   this.userService.logIn(this.userInfo.value).subscribe(response => this.checkResult(response));
+    this.userService.logIn(this.userInfo.value).subscribe(response => this.checkResult(response));
   }
 
   logOut(): void {
-   this.userService.logOut();
-   this.closeDialog();
-   this.router.navigate(['']);
+    this.userService.logOut();
+    this.closeDialog();
+    this.router.navigate(['']);
   }
 
   checkResult(response: ResponseModel): void {
-   if (!response.success){
-     this.message = response.message;
-   }
-   else{
-     localStorage.setItem('token', response.data);
-     this.closeDialog();
-   }
+    if (!response.success) {
+      this.message = response.message;
+    } else {
+      localStorage.setItem('token', response.data);
+      this.closeDialog();
+    }
   }
 
   closeDialog(): void {
-   this.dialogRef.close();
+    this.dialogRef.close();
   }
 }

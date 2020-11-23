@@ -38,6 +38,10 @@ namespace Airline_Web_API
             CreateMap<BookedTicket, BookedTicketViewModel>();
             CreateMap<BookedTicketViewModel, BookedTicket>();
             CreateMap<ReservedSeat, ReservedSeatViewModel>();
+            CreateMap<SeatToBeSelected, SelectedSeat>()
+                .ForMember(seat => 
+                    seat.SelectionExpirationTime, 
+                    opt => opt.MapFrom(model => model.SelectionTime.AddMinutes(15)));
         }
     }
 }

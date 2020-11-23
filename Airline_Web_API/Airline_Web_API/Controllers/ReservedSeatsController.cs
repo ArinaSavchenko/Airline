@@ -15,10 +15,12 @@ namespace Airline_Web_API.Controllers
     public class ReservedSeatsController : ControllerBase
     {
         private readonly ReservedSeatService _reservedSeatService;
+        private readonly SelectedSeatService _selectedSeatService;
 
-        public ReservedSeatsController(ReservedSeatService reservedSeatService)
+        public ReservedSeatsController(ReservedSeatService reservedSeatService, SelectedSeatService selectedSeatService)
         {
             _reservedSeatService = reservedSeatService;
+            _selectedSeatService = selectedSeatService;
         }
 
         [HttpGet]
@@ -43,6 +45,8 @@ namespace Airline_Web_API.Controllers
             {
                 return BadRequest();
             }
+
+            await _selectedSeatService.DeleteSelectedSeatAsync(reservedSeat.BookedTicketId, reservedSeat.SeatId);
 
             return Ok(response);
         }

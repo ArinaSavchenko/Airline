@@ -13,7 +13,6 @@ namespace Airline_Web_API.Controllers
 {
     [Route("api/booked-tickets")]
     [ApiController]
-    [Authorize]
     public class BookedTicketsController : ControllerBase
     {
         private readonly BookedTicketService _bookedTicketService;

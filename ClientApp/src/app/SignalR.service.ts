@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import * as signalR from '@microsoft/signalr';
 
@@ -7,23 +7,28 @@ import { Observable, Subject } from 'rxjs';
 
 import { ReservedSeat } from './Models/ReservedSeat';
 import { environment } from '../environments/environment';
+import { SeatToBeSelectedModel } from './Models/SeatToBeSelectedModel';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SignalRService implements OnDestroy {
+export class SignalRService {
 
   url = environment.baseUrl;
   flightId: number;
 
+  httpOptions = {
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
+  };
+
   private sharedObj = new Subject<ReservedSeat[]>();
 
   private connection: any = new signalR.HubConnectionBuilder()
-    .withUrl(this.url + '/seatslock')
+    .withUrl('https://localhost:44392/seatslock')
     .configureLogging(signalR.LogLevel.Information)
     .build();
 
-  readonly POST_URL = this.url + '/api/selected-seats';
+  readonly POST_URL = this.url + '/selected-seats';
 
   constructor(private http: HttpClient) {
     this.connection.on('ReceiveLockedSeats', (seats) => {
@@ -34,10 +39,11 @@ export class SignalRService implements OnDestroy {
   public async start(flightId: number) {
     try {
       this.flightId = flightId;
-      await this.connection.invoke('AddToGroup', flightId);
       await this.connection.start();
-      console.log('connected');
+      this.connection.invoke('AddToGroup', flightId);
+      console.log(this.connection.state);
     } catch (err) {
+      console.log('ERROR');
       console.log(err);
       setTimeout(() => this.start(flightId), 5000);
     }
@@ -47,20 +53,21 @@ export class SignalRService implements OnDestroy {
     this.sharedObj.next(seats);
   }
 
-  public selectSeat(seat: ReservedSeat): void {
-    this.http.post(this.POST_URL, seat).subscribe();
+  public selectSeat(seat: SeatToBeSelectedModel): void {
+    this.http.post(this.POST_URL, seat, this.httpOptions).subscribe();
   }
 
   public retrieveMappedObject(): Observable<ReservedSeat[]> {
     return this.sharedObj.asObservable();
   }
 
-  public unselectSeat(flightId: number, seatId: number): void {
-    const url = `${this.url}?flightId=${flightId}&seatId=${seatId}`;
+  public unselectSeat(bookedTicketId: number, seatId: number): void {
+    const url = `${this.url}/selected-seats?bookedTicketId=${bookedTicketId}&seatId=${seatId}`;
     this.http.delete(url).subscribe();
   }
 
-  ngOnDestroy(): void {
+  destroy() {
     this.connection.invoke('LeaveGroup', this.flightId);
+    this.connection.onclose();
   }
 }

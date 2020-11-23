@@ -30,10 +30,21 @@ namespace Airline_Web_API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.WithOrigins("http://localhost:4200")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
             services.AddDbContext<AirlineContext>(options
                => options.UseSqlServer(Configuration.GetConnectionString("AirlineDatabase")));
 
             services.AddControllers();
+
+            services.AddHostedService<TimeHostedService>();
 
             services.AddSignalR();
 
@@ -49,6 +60,7 @@ namespace Airline_Web_API
             services.AddTransient<TicketTypeService>();
             services.AddTransient<BookedTicketService>();
             services.AddTransient<ReservedSeatService>();
+            services.AddTransient<SelectedSeatService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -103,11 +115,11 @@ namespace Airline_Web_API
 
             app.UseRouting();
 
+            app.UseCors("CorsPolicy");
+
             app.UseAuthentication();
 
             app.UseAuthorization();
-
-            app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseEndpoints(endpoints =>
             {
