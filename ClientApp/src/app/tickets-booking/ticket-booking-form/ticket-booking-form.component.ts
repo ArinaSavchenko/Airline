@@ -1,11 +1,10 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Ticket } from '../../Models/Ticket';
+import { NewBookedTicket } from '../../Models/NewBookedTIcket';
 import { TicketsService } from '../tickets.service';
 import { UserService } from '../../user/user.service';
-import { NewBookedTicket } from '../../Models/NewBookedTIcket';
-import { tokenReference } from '@angular/compiler';
 
 @Component({
   selector: 'app-ticket-booking-form',
@@ -23,6 +22,8 @@ export class TicketBookingFormComponent implements OnInit {
   nameFormat = '[a-zA-Z\s]+$';
   totalTicketPrice: number;
   saved = false;
+  passportFormat = '^[A-Z0-9]+$';
+  luggageNumberFormat = '^[0-9]+$';
 
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
@@ -39,9 +40,11 @@ export class TicketBookingFormComponent implements OnInit {
         userId: this.userId,
         passengerFirstName: new FormControl(null, [Validators.required, Validators.pattern(this.nameFormat)]),
         passengerLastName: new FormControl(null, [Validators.required, Validators.pattern(this.nameFormat)]),
-        passport: new FormControl(null, Validators.required),
-        carryOnBagsNumber: new FormControl(0, [Validators.required, Validators.min(0)]),
-        baggageNumber: new FormControl(0, [Validators.required, Validators.min(0)]),
+        passport: new FormControl(null, [Validators.required, Validators.pattern(this.passportFormat)]),
+        carryOnBagsNumber: new FormControl(0, [Validators.required, Validators.min(0),
+          Validators.pattern(this.luggageNumberFormat)]),
+        baggageNumber: new FormControl(0, [Validators.required, Validators.min(0),
+          Validators.pattern(this.luggageNumberFormat)]),
         totalPrice: this.totalTicketPrice,
         status: 'Active'
       });
@@ -58,14 +61,14 @@ export class TicketBookingFormComponent implements OnInit {
 
     if (this.bookedTicketForm.controls.baggageNumber.value > this.ticket.ticketType.baggageNumber) {
       this.totalTicketPrice += (this.bookedTicketForm.controls.baggageNumber.value - this.ticket.ticketType.baggageNumber)
-      * this.ticket.ticketType.pricePerExtraBaggage;
+        * this.ticket.ticketType.pricePerExtraBaggage;
     }
 
     this.bookedTicketForm.controls.totalPrice.setValue(this.totalTicketPrice);
   }
 
   onSaveTicket(): void {
-    if (this.bookedTicketForm.valid){
+    if (this.bookedTicketForm.valid) {
       this.saveTicket.emit(this.bookedTicketForm.value);
       this.saved = true;
     }

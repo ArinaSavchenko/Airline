@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 
-import { UserService } from '../user.service';
 import { User } from '../../Models/User';
 import { PasswordChangeModel } from '../../Models/PasswordChangeModel';
 import { ResponseModel } from '../../Models/ResponseModel';
+import { UserService } from '../user.service';
 import { PasswordsMatchValidator } from '../../Validators/PasswordsMatchValidator';
 
 @Component({
@@ -49,8 +49,7 @@ export class ChangePasswordComponent implements OnInit {
   checkResult(response: ResponseModel): void {
     if (!response.success) {
       this.message = response.message;
-    }
-    else {
+    } else {
       this.userService.logOut();
       this.router.navigate(['/airline/account']);
     }

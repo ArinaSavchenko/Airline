@@ -1,4 +1,4 @@
-export interface NewBookedTicket{
+export interface NewBookedTicket {
   ticketId: number;
   userId: number;
   passport: string;

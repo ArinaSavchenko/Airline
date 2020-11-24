@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using AutoMapper;
-using Airline_Web_API.Models;
 using Airline_Web_API.ViewModels;
 using Airline_Web_API.Services;
-using Microsoft.AspNetCore.Authorization;
 using Airline_Web_API.Helpers;
 using Airline_Web_API.DTOs;
 
@@ -26,7 +20,6 @@ namespace Airline_Web_API.Controllers
         {
             _flightService = flightService;
         }
-
 
         [AllowAnonymous]
         [HttpGet]

@@ -1,4 +1,6 @@
 using System;
+using System.Text;
+using System.Security.Claims;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -7,15 +9,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Airline_Web_API.Models;
-using Airline_Web_API.Services;
-using AutoMapper;
-using Airline_Web_API.Helpers;
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
+using Airline_Web_API.Models;
+using Airline_Web_API.Services;
 using Airline_Web_API.Hubs;
+using Airline_Web_API.Helpers;
+using AutoMapper;
 
 namespace Airline_Web_API
 {

@@ -7,6 +7,8 @@ import { Observable, Subject } from 'rxjs';
 
 import { Airport } from '../../Models/Airport';
 import { AirportService } from '../airport.service';
+import { PasswordsMatchValidator } from '../../Validators/PasswordsMatchValidator';
+import { TypeMatchValidator } from '../../Validators/TypeMatchValidator';
 
 @Component({
   selector: 'app-flights-search-bar',
@@ -27,6 +29,7 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked {
   dateInterval = 180;
   minDate = this.today;
   maxDate = new Date();
+  ticketsNumberFormat = '^[0-9]+$';
 
   constructor(private airportService: AirportService,
               private changes: ChangeDetectorRef,
@@ -36,13 +39,16 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     this.flightForm = this.formBuilder.group({
-      departureAirportId: new FormControl(null, Validators.required),
-      arrivalAirportId: new FormControl(null, Validators.required),
+      departureAirport: new FormControl(null, Validators.required),
+      arrivalAirport: new FormControl(null, Validators.required),
       ticketType: new FormControl(this.ticketType),
       dateTo: new FormControl(null, Validators.required),
       dateBack: new FormControl(null),
-      ticketsNumber: new FormControl(1, Validators.min(1))
+      ticketsNumber: new FormControl(1, [Validators.required, Validators.min(1),
+            Validators.pattern(this.ticketsNumberFormat)])
     });
+
+    this.flightForm.setValidators(TypeMatchValidator('departureAirport', 'Airport'));
 
     this.maxDate.setDate(this.today.getDate() + this.dateInterval);
 
@@ -54,11 +60,11 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked {
 
     this.airports$.subscribe(airports => {
       this.airports = airports;
-      if (this.flightForm.controls.departureAirportId.value) {
-        this.airports = this.airports.filter(airport => airport.id !== this.flightForm.controls.departureAirportId.value.id);
+      if (this.flightForm.controls.departureAirport.value) {
+        this.airports = this.airports.filter(airport => airport.id !== this.flightForm.controls.departureAirport.value.id);
       }
-      if (this.flightForm.controls.arrivalAirportId.value) {
-        this.airports = this.airports.filter(airport => airport.id !== this.flightForm.controls.arrivalAirportId.value.id);
+      if (this.flightForm.controls.arrivalAirport.value) {
+        this.airports = this.airports.filter(airport => airport.id !== this.flightForm.controls.arrivalAirport.value.id);
       }
     });
   }
@@ -105,8 +111,8 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked {
   sendSearchRequest(): void {
     this.router.navigate(['/search'], {
       queryParams: {
-        departureAirportId: this.flightForm.controls.departureAirportId.value.id,
-        arrivalAirportId: this.flightForm.controls.arrivalAirportId.value.id,
+        departureAirportId: this.flightForm.controls.departureAirport.value.id,
+        arrivalAirportId: this.flightForm.controls.arrivalAirport.value.id,
         dateTo: this.flightForm.controls.dateTo.value,
         dateBack: this.ticketType === 'Return' ? this.flightForm.controls.dateBack.value : null,
         ticketType: this.ticketType,

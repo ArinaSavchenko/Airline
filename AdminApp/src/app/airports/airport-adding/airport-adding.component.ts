@@ -15,6 +15,7 @@ export class AirportAddingComponent {
 
   airportStatuses = AirportStatuses;
   airportForm: FormGroup;
+  airportNameFormat = '^[a-zA-Z0-9]+$';
   nameFormat = '[a-zA-Z\s]+$';
   message: string;
 
@@ -22,10 +23,10 @@ export class AirportAddingComponent {
               private airportService: AirportService,
               private location: Location) {
     this.airportForm = this.formBuilder.group({
-      name: new FormControl(null, [Validators.required]),
+      name: new FormControl(null, [Validators.required, Validators.pattern(this.airportNameFormat)]),
       city: new FormControl(null, [Validators.required, Validators.pattern(this.nameFormat)]),
       country: new FormControl(null, [Validators.required, Validators.pattern(this.nameFormat)]),
-      status: new FormControl(null, [Validators.required])
+      status: new FormControl(null, Validators.required)
     });
   }
 

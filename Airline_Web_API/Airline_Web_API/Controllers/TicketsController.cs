@@ -1,10 +1,6 @@
-﻿using System;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using Airline_Web_API.Models;
 using Airline_Web_API.ViewModels;
-using AutoMapper;
 using System.Threading.Tasks;
 using Airline_Web_API.Services;
 using Microsoft.AspNetCore.Authorization;

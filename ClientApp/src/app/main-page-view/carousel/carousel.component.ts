@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { trigger, transition, style, animate } from '@angular/animations';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 
 @Component({
@@ -22,10 +22,10 @@ import { trigger, transition, style, animate } from '@angular/animations';
 export class CarouselComponent implements OnInit, OnDestroy {
 
   public images = [
-    { src: 'assets/1.png' },
-    { src: 'assets/2.png' },
-    { src: 'assets/4.png' },
-    { src: 'assets/3.png' }
+    {src: 'assets/1.png'},
+    {src: 'assets/2.png'},
+    {src: 'assets/4.png'},
+    {src: 'assets/3.png'}
   ];
 
   currentSlide = 0;

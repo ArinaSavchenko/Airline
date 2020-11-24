@@ -1,4 +1,4 @@
-export interface BookedTicket{
+export interface BookedTicket {
   flightId: number;
   departureCity: string;
   departureCountry: string;

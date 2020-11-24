@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -48,12 +48,12 @@ export class FlightAddingComponent implements OnInit {
     private airplaneService: AirplaneService,
     private formBuilder: FormBuilder) {
     this.flightForm = this.formBuilder.group({
-      departureAirport: new FormControl(null),
-      arrivalAirport: new FormControl(null),
-      departureDate: new FormControl(null),
-      arrivalDate: new FormControl(null),
-      airplane: new FormControl(null),
-      status: new FormControl(null)
+      departureAirport: new FormControl(null, Validators.required),
+      arrivalAirport: new FormControl(null, Validators.required),
+      departureDate: new FormControl(null, Validators.required),
+      arrivalDate: new FormControl(null, Validators.required),
+      airplane: new FormControl(null, Validators.required),
+      status: new FormControl(null, Validators.required)
     });
   }
 

@@ -27,6 +27,8 @@ export class AirplaneDetailsComponent implements OnInit {
   theCabin = [];
   airplaneForm: FormGroup;
   airplaneStatuses = AirplaneStatuses;
+  nameFormat = '^[a-zA-Z0-9]+$';
+  seatsNumberFormat = '^[0-9]+$';
 
   constructor(private route: ActivatedRoute,
               private airplaneService: AirplaneService,
@@ -51,9 +53,9 @@ export class AirplaneDetailsComponent implements OnInit {
         });
         this.airplaneForm = this.formBuilder.group({
           id: this.airplane.id,
-          name: new FormControl(airplane.name, Validators.required),
-          seatsNumber: new FormControl(airplane.seatsNumber, Validators.required),
-          maxWeight: new FormControl(airplane.maxWeight, Validators.required),
+          name: new FormControl(airplane.name, [Validators.required, Validators.pattern(this.nameFormat)]),
+          seatsNumber: new FormControl(airplane.seatsNumber, [Validators.required, Validators.pattern(this.seatsNumberFormat)]),
+          maxWeight: new FormControl(airplane.maxWeight, [Validators.required, Validators.min(400)]),
           status: new FormControl(airplane.status, Validators.required)
         });
       });

@@ -2,25 +2,25 @@
   <h1 class="header">Airplanes info</h1>
   <mat-form-field appearance="outline">
     <mat-label>Sector name:</mat-label>
-    <input type="text" class="form-control" matInput placeholder="Name"
+    <input type="text" class="form-control" matInput placeholder="Name" pattern="^[A-Z]+$"
            required [(ngModel)]="sectorName" name="name">
   </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>Sector number:</mat-label>
-    <input type="number" class="form-control" matInput placeholder="Name"
+    <input type="number" class="form-control" matInput placeholder="Name" min="1" pattern="^[A-Z]+$"
            required [(ngModel)]="sectorNumber" name="name">
   </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>Column name:</mat-label>
-    <input type="text" class="form-control" matInput placeholder="Name"
+    <input type="text" class="form-control" matInput placeholder="Name" pattern="^[A-Z]+$"
            required [(ngModel)]="column" name="name">
   </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>Number of seats:</mat-label>
-    <input type="text" class="form-control" matInput placeholder="Name"
+    <input type="text" class="form-control" matInput placeholder="Name" min="1" pattern="^[0-9]+$"
            required [(ngModel)]="seats" name="name">
   </mat-form-field>
 

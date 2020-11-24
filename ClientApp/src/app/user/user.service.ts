@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of} from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -62,9 +62,9 @@ export class UserService {
 
   get isLoggedIn(): boolean {
     const token = localStorage.getItem('token');
-    if (token !== null && !this.jwtHelper.isTokenExpired(token) && this.getUserRole() === 'user')
+    if (token !== null && !this.jwtHelper.isTokenExpired(token) && this.getUserRole() === 'user') {
       return true;
-    else {
+    } else {
       return false;
     }
   }

@@ -1,4 +1,4 @@
-export interface BookedTicketHistoryModel{
+export interface BookedTicketHistoryModel {
   bookedTicketId: number;
   departureCity: string;
   departureCountry: string;

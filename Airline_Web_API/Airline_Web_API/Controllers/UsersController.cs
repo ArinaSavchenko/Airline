@@ -36,7 +36,6 @@ namespace Airline_Web_API.Controllers
             return Ok(user);
         }
 
-
         [HttpPut("update/{id}")]
         public async Task<ActionResult> Update(int id, [FromBody] UpdateUserModel model)
         {

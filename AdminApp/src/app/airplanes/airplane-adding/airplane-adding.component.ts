@@ -15,7 +15,8 @@ export class AirplaneAddingComponent {
 
   airplaneStatuses = AirplaneStatuses;
   airplaneForm: FormGroup;
-  nameFormat = '[a-zA-Z\s]+$';
+  nameFormat = '^[a-zA-Z0-9]+$';
+  seatsNumberFormat = '^[0-9]+$';
 
   constructor(private formBuilder: FormBuilder,
               private airplaneService: AirplaneService,
@@ -23,8 +24,8 @@ export class AirplaneAddingComponent {
               private router: Router
   ) {
     this.airplaneForm = this.formBuilder.group({
-      name: new FormControl(null, [Validators.required]),
-      seatsNumber: new FormControl(null, [Validators.required, Validators.min(1)]),
+      name: new FormControl(null, [Validators.required, Validators.pattern(this.nameFormat)]),
+      seatsNumber: new FormControl(null, [Validators.required, Validators.min(1), Validators.pattern(this.seatsNumberFormat)]),
       maxWeight: new FormControl(null, [Validators.required, Validators.min(400)]),
       status: new FormControl(null, Validators.required)
     });

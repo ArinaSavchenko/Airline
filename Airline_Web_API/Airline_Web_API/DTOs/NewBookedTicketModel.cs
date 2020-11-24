@@ -19,10 +19,10 @@ namespace Airline_Web_API.DTOs
         [RegularExpression(@"^[a-zA-Z]*$", ErrorMessage = "Invalid format for last name")]
         public string PassengerLastName { get; set; }
         [Required]
-        [Range(0, 100)]
+        [Range(0, Int32.MaxValue)]
         public int CarryOnBagsNumber { get; set; }
         [Required]
-        [Range(0, 100)]
+        [Range(0, Int32.MaxValue)]
         public int BaggageNumber { get; set; }
         [Required]
         [Range(0, (double)decimal.MaxValue)]

@@ -5,9 +5,9 @@ import * as signalR from '@microsoft/signalr';
 
 import { Observable, Subject } from 'rxjs';
 
-import { ReservedSeat } from './Models/ReservedSeat';
-import { environment } from '../environments/environment';
-import { SeatToBeSelectedModel } from './Models/SeatToBeSelectedModel';
+import { ReservedSeat } from '../../Models/ReservedSeat';
+import { SeatToBeSelectedModel } from '../../Models/SeatToBeSelectedModel';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -39,8 +39,10 @@ export class SignalRService {
   public async start(flightId: number) {
     try {
       this.flightId = flightId;
-      await this.connection.start();
-      this.connection.invoke('AddToGroup', flightId);
+      if (this.connection.state === 'Disconnected') {
+        await this.connection.start();
+        this.connection.invoke('AddToGroup', flightId);
+      }
       console.log(this.connection.state);
     } catch (err) {
       console.log('ERROR');

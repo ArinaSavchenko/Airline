@@ -11,7 +11,8 @@
   <mat-selection-list #bookedTickets [multiple]="false">
     <mat-list-option *ngFor="let bookedTicket of bookedTickets$ | async" [value]="bookedTicket"
                      routerLink="/airline/account/bookings-history/{{bookedTicket.bookedTicketId}}">
-      {{bookedTicket.departureCity}}, {{bookedTicket.departureCountry}} - {{bookedTicket.arrivalCity}}, {{bookedTicket.arrivalCountry}}
+      {{bookedTicket.departureCity}}, {{bookedTicket.departureCountry}} - {{bookedTicket.arrivalCity}}
+      , {{bookedTicket.arrivalCountry}}
       ----- {{bookedTicket.date | date}}
     </mat-list-option>
   </mat-selection-list>

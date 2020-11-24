@@ -5,7 +5,7 @@
         <input #departureAirportIdInput
                placeholder="From:"
                matInput
-               formControlName="departureAirportId"
+               formControlName="departureAirport"
                [matAutocomplete]="auto"
                (click)="search('')"
                (input)="search(departureAirportIdInput.value)">
@@ -25,7 +25,7 @@
         <input #arrivalAirportIdInput
                placeholder="To:"
                matInput
-               formControlName="arrivalAirportId"
+               formControlName="arrivalAirport"
                [matAutocomplete]="auto2"
                (click)="search('')"
                (input)="search(arrivalAirportIdInput.value)"
@@ -78,7 +78,9 @@
     </div>
 
     <div class="submitButton">
-      <button type="submit" mat-flat-button [disabled]="!flightForm.valid" id="search" (click)="sendSearchRequest()" routerLink="/search">Search</button>
+      <button type="submit" mat-flat-button [disabled]="!flightForm.valid" id="search" (click)="sendSearchRequest()"
+              routerLink="/search">Search
+      </button>
     </div>
   </form>
 </div>

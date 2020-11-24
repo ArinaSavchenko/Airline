@@ -5,9 +5,9 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 
 import { RegisterModel } from '../../Models/RegisterModel';
+import { ResponseModel } from '../../Models/ResponseModel';
 import { UserService } from '../user.service';
 import { PasswordsMatchValidator } from '../../Validators/PasswordsMatchValidator';
-import { ResponseModel } from '../../Models/ResponseModel';
 import { environment } from '../../../environments/environment';
 
 @Component({

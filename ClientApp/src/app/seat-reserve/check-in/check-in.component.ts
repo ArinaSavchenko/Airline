@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -11,8 +11,10 @@ import { BookedTicketsService } from '../../tickets-booking/bookedTickets.servic
 })
 export class CheckInComponent {
 
-  bookedTicketId = new FormControl(null, [Validators.required, Validators.min(1)]);
   message: string;
+  ticketIdFormat = '^[0-9]+$';
+  bookedTicketId = new FormControl(null, [Validators.required, Validators.min(1),
+    Validators.pattern(this.ticketIdFormat)]);
 
   constructor(private bookedTicketService: BookedTicketsService,
               private router: Router) {
@@ -24,14 +26,13 @@ export class CheckInComponent {
         if (error.status === 404) {
           this.message = 'There is no booked ticket with such id';
         }
-        });
+      });
   }
 
   checkIn(bookedTicket): void {
     if (bookedTicket.seatReservation) {
       this.router.navigate([`/airline/seat-reservation/${this.bookedTicketId.value}`]);
-    }
-    else {
+    } else {
       this.message = 'Seat reservation in advance is not allowed for this type of ticket';
     }
   }

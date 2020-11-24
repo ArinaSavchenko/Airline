@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
-import { UserService } from '../user.service';
 import { User } from '../../Models/User';
+import { ResponseModel } from '../../Models/ResponseModel';
 import { ConfirmActionDialogComponent } from '../../confirm-action-dialog/confirm-action-dialog.component';
-import {ResponseModel} from '../../Models/ResponseModel';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-account',
@@ -45,7 +45,7 @@ export class AccountComponent implements OnInit {
   }
 
   checkResult(response: ResponseModel): void {
-    if (response.success === true){
+    if (response.success === true) {
       this.userService.logOut();
       this.goToTheMainPage();
     }

@@ -3,8 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
-import { UserService } from '../user.service';
 import { ResponseModel } from '../../Models/ResponseModel';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-log-in',
@@ -15,7 +15,7 @@ export class LogInComponent {
 
   userInfo = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
-    password: new FormControl(null, [Validators.required, Validators.minLength(1)])
+    password: new FormControl(null, [Validators.required])
   });
   hide = true;
   message: string;

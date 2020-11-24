@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+
 import { Observable, of } from 'rxjs';
 
 import { Flight } from '../Models/Flight';
@@ -25,7 +26,7 @@ export class FlightService {
     return this.http.get<Flight[]>(this.flightsUrl);
   }
 
-  getFlight(id: number): Observable<Flight>{
+  getFlight(id: number): Observable<Flight> {
     const url = `${this.flightsUrl}/${id}`;
     return this.http.get<Flight>(url);
   }

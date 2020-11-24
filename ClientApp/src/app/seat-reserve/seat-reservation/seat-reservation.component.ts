@@ -7,12 +7,12 @@ import * as moment from 'moment';
 
 import { ReservedSeat } from '../../Models/ReservedSeat';
 import { Seat } from '../../Models/Seat';
+import { SeatToBeSelectedModel } from '../../Models/SeatToBeSelectedModel';
 import { BookedTicketsService } from '../../tickets-booking/bookedTickets.service';
 import { ReservedSeatsService } from '../reserved-seats.service';
 import { SeatService } from '../seat.service';
 import { SeatsSchemeService } from '../seats-scheme.service';
-import { SignalRService } from '../../SignalR.service';
-import { SeatToBeSelectedModel } from '../../Models/SeatToBeSelectedModel';
+import { SignalRService } from './SignalR.service';
 
 @Component({
   selector: 'app-seat-reservation',
@@ -52,7 +52,10 @@ export class SeatReservationComponent implements OnInit, OnDestroy {
       this.flightId = bookedTicket.flightId;
       this.signalRService.start(this.flightId);
       this.bookedTicketSearchIsFinished = true;
-    });
+    },
+      error => {
+      this.message = 'There is now ticket with such id';
+      });
 
     this.seatService.getAirplaneScheme(this.bookedTicketId).subscribe(seats => {
         this.seats = seats;
@@ -67,7 +70,8 @@ export class SeatReservationComponent implements OnInit, OnDestroy {
       this.reservedSeatsSearchIsFinished = true;
       this.isSeatWasReserved();
       this.onSchemeDraw();
-    });
+    },
+      error => {});
 
     this.signalRService.retrieveMappedObject().subscribe(reservedSeats => {
       this.reservedSeats = this.selectedSeat ? reservedSeats.filter(seat => seat.seatId !== this.selectedSeat.id) : reservedSeats;

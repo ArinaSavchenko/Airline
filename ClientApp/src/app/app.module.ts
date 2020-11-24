@@ -1,15 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatOptionModule } from '@angular/material/core';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule} from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
@@ -73,39 +72,40 @@ export function tokenGetter(): any {
     CheckInComponent,
     SeatReservationComponent
   ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        AppRoutingModule,
-        MatButtonModule,
-        BrowserAnimationsModule,
-        MatTabsModule,
-        ReactiveFormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatOptionModule,
-        MatAutocompleteModule,
-        MatRadioModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatSelectModule,
-        HttpClientModule,
-        MatExpansionModule,
-        MatDialogModule,
-        MatIconModule,
-        JwtModule.forRoot({
-          config: {
-            tokenGetter: tokenGetter,
-            whitelistedDomains: ['localhost:44392'],
-            blacklistedRoutes: []
-          }
-        }),
-      MatListModule,
-      MatCheckboxModule,
-      MatSnackBarModule
-    ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    MatButtonModule,
+    BrowserAnimationsModule,
+    MatTabsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatOptionModule,
+    MatAutocompleteModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    HttpClientModule,
+    MatExpansionModule,
+    MatDialogModule,
+    MatIconModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:44392'],
+        blacklistedRoutes: []
+      }
+    }),
+    MatListModule,
+    MatCheckboxModule,
+    MatSnackBarModule
+  ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 
-export class AppModule { }
+export class AppModule {
+}

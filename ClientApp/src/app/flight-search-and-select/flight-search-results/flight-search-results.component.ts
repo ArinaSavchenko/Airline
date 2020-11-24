@@ -122,14 +122,14 @@ export class FlightSearchResultsComponent implements OnInit {
 
   createFlightToAccordingToQuery(): void {
     this.flightForSearchTo.departureAirportId = +this.parseQueryParameter('departureAirportId');
-    this.flightForSearchTo.arrivalAirportId = + this.parseQueryParameter('arrivalAirportId');
+    this.flightForSearchTo.arrivalAirportId = +this.parseQueryParameter('arrivalAirportId');
     this.flightForSearchTo.ticketsNumber = +this.parseQueryParameter('ticketsNumber');
     this.flightForSearchTo.date = moment(new Date(this.parseQueryParameter('dateTo'))).format('YYYY-MM-DD');
   }
 
   createFlightBackAccordingToQuery(): void {
     this.flightForSearchBack.departureAirportId = +this.parseQueryParameter('arrivalAirportId');
-    this.flightForSearchBack.arrivalAirportId = + this.parseQueryParameter('departureAirportId');
+    this.flightForSearchBack.arrivalAirportId = +this.parseQueryParameter('departureAirportId');
     this.flightForSearchBack.ticketsNumber = +this.parseQueryParameter('ticketsNumber');
     this.flightForSearchBack.date = moment(new Date(this.parseQueryParameter('dateBack'))).format('YYYY-MM-DD');
   }

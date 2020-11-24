@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
-import { BookedTicketsService } from '../../../tickets-booking/bookedTickets.service';
-import { BookedTicket } from '../../../Models/BookedTicket';
 import { ActivatedRoute } from '@angular/router';
+
+import { BookedTicket } from '../../../Models/BookedTicket';
+import { BookedTicketsService } from '../../../tickets-booking/bookedTickets.service';
 
 @Component({
   selector: 'app-booked-ticket-details',

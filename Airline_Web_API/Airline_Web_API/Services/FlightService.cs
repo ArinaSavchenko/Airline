@@ -5,11 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Airline_Web_API.ViewModels;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Airline_Web_API.Helpers;
 using Airline_Web_API.DTOs;
-using IdentityServer4.Extensions;
 
 namespace Airline_Web_API.Services
 {

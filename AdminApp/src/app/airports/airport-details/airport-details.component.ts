@@ -22,6 +22,8 @@ export class AirportDetailsComponent implements OnInit {
   airport: Airport;
   message: string;
   airportForm: FormGroup;
+  airportNameFormat = '^[a-zA-Z0-9]+$';
+  nameFormat = '[a-zA-Z\s]+$';
 
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
 
@@ -44,9 +46,9 @@ export class AirportDetailsComponent implements OnInit {
         this.airport = airport;
         this.airportForm = this.formBuilder.group({
           id: this.airport.id,
-          name: new FormControl(airport.name, Validators.required),
-          city: new FormControl(airport.city, Validators.required),
-          country: new FormControl(airport.country, Validators.required),
+          name: new FormControl(airport.name, [Validators.required, Validators.pattern(this.airportNameFormat)]),
+          city: new FormControl(airport.city, [Validators.required, Validators.pattern(this.nameFormat)]),
+          country: new FormControl(airport.country, [Validators.required, Validators.pattern(this.nameFormat)]),
           status: new FormControl(airport.status, Validators.required)
         });
       });

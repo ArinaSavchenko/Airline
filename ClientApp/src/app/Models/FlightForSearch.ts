@@ -1,4 +1,4 @@
-export interface FlightForSearch{
+export interface FlightForSearch {
   departureAirportId?: number;
   arrivalAirportId?: number;
   date?: any;

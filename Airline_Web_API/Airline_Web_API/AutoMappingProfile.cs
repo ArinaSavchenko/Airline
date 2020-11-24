@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Airline_Web_API.Models;
+﻿using Airline_Web_API.Models;
 using Airline_Web_API.ViewModels;
 using Airline_Web_API.DTOs;
 using AutoMapper;

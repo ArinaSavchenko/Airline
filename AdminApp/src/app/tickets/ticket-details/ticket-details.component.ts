@@ -43,8 +43,8 @@ export class TicketDetailsComponent implements OnInit {
         id: this.ticket.id,
         flightId: this.ticket.flightId,
         ticketType: new FormControl(this.ticket.ticketType, Validators.required),
-        price: new FormControl(this.ticket.price, Validators.required),
-        ticketsLeftNumber: new FormControl(this.ticket.ticketsLeftNumber, Validators.required),
+        price: new FormControl(this.ticket.price, [Validators.required, Validators.min(0)]),
+        ticketsLeftNumber: new FormControl(this.ticket.ticketsLeftNumber, [Validators.required, Validators.min(0)]),
         status: new FormControl(this.ticket.status, Validators.required)
       });
       this.types$ = this.ticketTypeService.getTicketTypes();

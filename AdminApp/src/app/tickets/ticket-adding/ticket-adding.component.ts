@@ -3,8 +3,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { Observable } from 'rxjs';
-
 import { TicketType } from '../../Models/TicketType';
 import { TicketService } from '../ticket.service';
 import { TicketTypeService } from '../ticket-types/ticket-type.service';
@@ -34,8 +32,8 @@ export class TicketAddingComponent implements OnInit {
     this.ticketForm = this.formBuilder.group({
       flightId: this.flightId,
       ticketTypeId: new FormControl(null, Validators.required),
-      price: new FormControl(null, Validators.required),
-      ticketsLeftNumber: new FormControl(null, Validators.required),
+      price: new FormControl(null, [Validators.required, Validators.min(0)]),
+      ticketsLeftNumber: new FormControl(null, [Validators.required, Validators.min(0)]),
       status: new FormControl(null, Validators.required)
     });
     this.ticketTypeService.getTicketTypes().subscribe(ticketTypes => {

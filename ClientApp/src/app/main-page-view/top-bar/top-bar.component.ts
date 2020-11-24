@@ -8,9 +8,10 @@ import { LogInComponent } from '../../user/log-in/log-in.component';
   templateUrl: './top-bar.component.html',
   styleUrls: ['./top-bar.component.css']
 })
-export class TopBarComponent{
+export class TopBarComponent {
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) {
+  }
 
   openLogInForm(): void {
     this.dialog.open(LogInComponent, {

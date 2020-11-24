@@ -5,11 +5,11 @@ namespace Airline_Web_API.DTOs
 {
     public class NewFlightModel
     {
-        [Required]
+        [Required(ErrorMessage = "Departure airport is required")]
         public int DepartureAirportId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Arrival airport is required")]
         public int ArrivalAirportId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Arrival is required")]
         public int AirplaneId { get; set; }
         [Required]
         public DateTime DepartureDate { get; set; }

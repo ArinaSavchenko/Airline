@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { BookedTicketHistoryModel } from '../../../Models/BookedTicketHistoryModel';
 import { UserService } from '../../user.service';
 import { BookedTicketsService } from '../../../tickets-booking/bookedTickets.service';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-bookings-history',

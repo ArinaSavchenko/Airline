@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { Airport } from '../Models/Airport';
 import { environment } from '../../environments/environment';
@@ -10,25 +10,26 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 
-export class AirportService{
+export class AirportService {
 
-  private airportsUrl = environment.baseUrl + '/airports';  // URL to web api
+  private airportsUrl = environment.baseUrl + '/airports';
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json'})
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  getAirports(): Observable<Airport[]>{
+  getAirports(): Observable<Airport[]> {
     return this.http.get<Airport[]>(`${this.airportsUrl}/?status=Active`);
   }
 
-  searchAirports(term: string): Observable<Airport[]>{
-    if (!term.trim()){
+  searchAirports(term: string): Observable<Airport[]> {
+    if (!term.trim()) {
       return this.getAirports();
     }
 
-    return  this.http.get<Airport[]>(`${this.airportsUrl}/?value=${term}&status=Active`);
+    return this.http.get<Airport[]>(`${this.airportsUrl}/?value=${term}&status=Active`);
   }
 }

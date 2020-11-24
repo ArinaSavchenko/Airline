@@ -28,7 +28,7 @@
     <button mat-raised-button class="logInButton" [disabled]="!userInfo.valid" (click)="logIn()">Log in</button>
   </mat-dialog-actions>
 
-    <p *ngIf="message" id="error_message" class="mat-error">{{this.message}}</p>
+  <p *ngIf="message" id="error_message" class="mat-error">{{this.message}}</p>
   <p class="message">No account yet?</p>
   <a routerLink="/airline/registration" class="signUpLink" (click)="closeDialog()">Sign up</a>
 </div>

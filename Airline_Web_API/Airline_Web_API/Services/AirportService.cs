@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +6,6 @@ using AutoMapper;
 using Airline_Web_API.ViewModels;
 using Airline_Web_API.Models;
 using Airline_Web_API.Helpers;
-using IdentityServer4.Extensions;
 
 namespace Airline_Web_API.Services
 {

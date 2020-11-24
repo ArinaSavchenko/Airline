@@ -1,7 +1,4 @@
-﻿using Airline_Web_API.Models;
-using AutoMapper;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +6,8 @@ using Microsoft.AspNetCore.SignalR;
 using Airline_Web_API.Hubs;
 using Airline_Web_API.DTOs;
 using Airline_Web_API.ViewModels;
+using Airline_Web_API.Models;
+using AutoMapper;
 
 namespace Airline_Web_API.Services
 {
@@ -43,8 +42,11 @@ namespace Airline_Web_API.Services
                 .Where(selectedSeat => selectedSeat.BookedTicketId == bookedTicketId && selectedSeat.SeatId == seatId)
                 .FirstOrDefaultAsync();
 
-            _context.Remove(selectedSeat);
-            await _context.SaveChangesAsync();
+            if (selectedSeat != null)
+            {
+                _context.Remove(selectedSeat);
+                await _context.SaveChangesAsync();
+            }
             await SendSelectedSeatsAsync(bookedTicketId);
         }
 

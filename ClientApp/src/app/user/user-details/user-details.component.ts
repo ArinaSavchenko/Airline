@@ -6,11 +6,11 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 
 import * as moment from 'moment';
 
-import { UserService } from '../user.service';
 import { User } from '../../Models/User';
 import { ResponseModel } from '../../Models/ResponseModel';
-import { ConfirmActionDialogComponent } from '../../confirm-action-dialog/confirm-action-dialog.component';
 import { UpdateUserModel } from '../../Models/UpdateUserModel';
+import { ConfirmActionDialogComponent } from '../../confirm-action-dialog/confirm-action-dialog.component';
+import { UserService } from '../user.service';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -35,8 +35,7 @@ export class UserDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUser().subscribe(user =>
-    {
+    this.userService.getUser().subscribe(user => {
       this.user = user;
       this.userForm = this.formBuilder.group({
         firstName: new FormControl(this.user.firstName, [Validators.required, Validators.pattern(this.nameFormat)]),
@@ -72,10 +71,9 @@ export class UserDetailsComponent implements OnInit {
   }
 
   checkResult(response: ResponseModel): void {
-    if (!response.success){
+    if (!response.success) {
       this.message = response.message;
-    }
-    else {
+    } else {
       this.goBack();
     }
   }

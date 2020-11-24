@@ -68,7 +68,7 @@ export class BookTicketsComponent implements OnInit {
   buy(): void {
     this.bookedTicketsService.postBookedTicket(this.tickets).subscribe(tickets => this.showBookingResults(tickets),
       error => {
-      this.message = 'Error occurred while booking';
+        this.message = 'Error occurred while booking';
       });
   }
 

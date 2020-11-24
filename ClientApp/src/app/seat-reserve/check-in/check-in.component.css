@@ -1,14 +1,14 @@
 .infoContainer {
-    margin: 2em auto;
-    display: flex;
-    flex-direction: column;
+  margin: 2em auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .mat-raised-button {
-    margin-top: 1em;
-    font-size: 16px;
-    background-color: #bcd30b;
-    color: #ffffff;
-    margin-right: auto;
-    margin-left: auto;
+  margin-top: 1em;
+  font-size: 16px;
+  background-color: #bcd30b;
+  color: #ffffff;
+  margin-right: auto;
+  margin-left: auto;
 }
