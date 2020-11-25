@@ -22,12 +22,17 @@ export class ReservedSeatsService {
   constructor(private http: HttpClient) {
   }
 
-  getReservedSeats(bookedTicketId: number): Observable<ReservedSeat[]> {
+  getReservedAndSelectedSeats(bookedTicketId: number): Observable<ReservedSeat[]> {
     const url = `${this.reservedSeatsUrl}?bookedTicketId=${bookedTicketId}`;
     return this.http.get<ReservedSeat[]>(url);
   }
 
   reserveSeat(reservedSeat: ReservedSeat): Observable<ResponseModel> {
     return this.http.post<ResponseModel>(this.reservedSeatsUrl, reservedSeat, this.httpOptions);
+  }
+
+  getReservedSeats(bookedTicketId: number): Observable<ReservedSeat[]> {
+    const url = `${this.reservedSeatsUrl}/check?bookedTicketId=${bookedTicketId}`;
+    return this.http.get<ReservedSeat[]>(url);
   }
 }

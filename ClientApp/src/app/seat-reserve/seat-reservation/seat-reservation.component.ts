@@ -46,7 +46,6 @@ export class SeatReservationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.bookedTicketId = +this.route.snapshot.paramMap.get('id');
-
     this.bookedTicketService.getBookedTicket(this.bookedTicketId).subscribe(bookedTicket => {
       this.bookedTicketSeatType = bookedTicket.seatTypeName;
       this.flightId = bookedTicket.flightId;
@@ -65,10 +64,9 @@ export class SeatReservationComponent implements OnInit, OnDestroy {
       error => {
       });
 
-    this.reservedSeatsService.getReservedSeats(this.bookedTicketId).subscribe(reservedSeats => {
+    this.reservedSeatsService.getReservedAndSelectedSeats(this.bookedTicketId).subscribe(reservedSeats => {
       this.reservedSeats = reservedSeats;
       this.reservedSeatsSearchIsFinished = true;
-      this.isSeatWasReserved();
       this.onSchemeDraw();
     },
       error => {});
@@ -107,15 +105,6 @@ export class SeatReservationComponent implements OnInit, OnDestroy {
     } else {
       this.openSnackbar(`You cannot select ${seat.type}, please choose ${this.bookedTicketSeatType}`, 'Close', '');
     }
-  }
-
-  isSeatWasReserved(): void {
-    this.reservedSeats.forEach(seat => {
-      if (seat.bookedTicketId === this.bookedTicketId) {
-        this.seatWasReserved = true;
-        this.openSnackbar(`You've already reserved seat`, 'Go to the menu', 'goBack');
-      }
-    });
   }
 
   reserveSeat(): void {

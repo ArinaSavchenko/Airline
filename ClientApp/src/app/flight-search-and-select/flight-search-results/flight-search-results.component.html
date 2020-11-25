@@ -98,11 +98,11 @@
                 <div>Price: {{ticket.price}} $</div>
                 <div *ngIf="ticket.ticketsLeftNumber < ticketsNumber">There are no tickets left</div>
               </div>
-            </div>
-            <div class="selectButton">
-              <button mat-raised-button [disabled]="clickedInbound" class="selectButton"
-                      (click)="setInboundTicket(ticket)">Select
-              </button>
+              <div class="selectButton">
+                <button mat-raised-button [disabled]="clickedInbound" class="selectButton"
+                        (click)="setInboundTicket(ticket)">Select
+                </button>
+              </div>
             </div>
           </div>
           <div *ngIf="ticket.ticketsLeftNumber < ticketsNumber">

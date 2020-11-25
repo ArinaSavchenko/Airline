@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Airline_Web_API.Helpers;
 using Airline_Web_API.Models;
@@ -23,14 +24,21 @@ namespace Airline_Web_API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ReservedSeatViewModel>>> GetReservedSeatsByBookedTicketId([FromQuery] int bookedTicketId)
+        public async Task<ActionResult<IEnumerable<ReservedSeatViewModel>>> GetReservedAndSelectedSeatsByBookedTicketId([FromQuery] int bookedTicketId)
         {
             var reservedSeats = await _reservedSeatService.GetReservedSeatsByBookedTicketIdAsync(bookedTicketId);
 
-            if (reservedSeats == null)
-            {
-                return NoContent();
-            }
+            var selectedSeats = await _selectedSeatService.GetSelectedSeats(bookedTicketId);
+
+            selectedSeats.AddRange(reservedSeats);
+
+            return Ok(selectedSeats);
+        }
+
+        [HttpGet("check")]
+        public async Task<ActionResult<IEnumerable<ReservedSeatViewModel>>> GetReservedSeatsByBookedTicketId([FromQuery] int bookedTicketId)
+        {
+            var reservedSeats = await _reservedSeatService.GetReservedSeatsByBookedTicketIdAsync(bookedTicketId);
 
             return Ok(reservedSeats);
         }

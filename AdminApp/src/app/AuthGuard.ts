@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router, CanActivate } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { CanActivate, Router } from '@angular/router';
 
 import { JwtHelperService } from '@auth0/angular-jwt';
 
@@ -11,8 +10,8 @@ export class AuthGuard implements CanActivate {
 
   constructor(private router: Router,
               private userService: UserService,
-              private jwtHelper: JwtHelperService,
-              private dialog: MatDialog) {}
+              private jwtHelper: JwtHelperService) {
+  }
 
   canActivate(): boolean {
     const token = localStorage.getItem('token');

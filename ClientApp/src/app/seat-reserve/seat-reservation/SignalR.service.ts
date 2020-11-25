@@ -12,7 +12,7 @@ import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class SignalRService {
+export class SignalRService implements OnDestroy {
 
   url = environment.baseUrl;
   flightId: number;
@@ -71,5 +71,9 @@ export class SignalRService {
   destroy() {
     this.connection.invoke('LeaveGroup', this.flightId);
     this.connection.onclose();
+  }
+
+  ngOnDestroy() {
+    this.destroy();
   }
 }

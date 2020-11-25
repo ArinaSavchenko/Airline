@@ -7,8 +7,6 @@ import { Observable, Subject } from 'rxjs';
 
 import { Airport } from '../../Models/Airport';
 import { AirportService } from '../airport.service';
-import { PasswordsMatchValidator } from '../../Validators/PasswordsMatchValidator';
-import { TypeMatchValidator } from '../../Validators/TypeMatchValidator';
 
 @Component({
   selector: 'app-flights-search-bar',
@@ -47,8 +45,6 @@ export class FlightsSearchBarComponent implements OnInit, AfterViewChecked {
       ticketsNumber: new FormControl(1, [Validators.required, Validators.min(1),
             Validators.pattern(this.ticketsNumberFormat)])
     });
-
-    this.flightForm.setValidators(TypeMatchValidator('departureAirport', 'Airport'));
 
     this.maxDate.setDate(this.today.getDate() + this.dateInterval);
 

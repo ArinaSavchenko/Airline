@@ -8,7 +8,6 @@ import { ReservedSeat } from '../Models/ReservedSeat';
 })
 export class SeatsSchemeService {
 
-
   seatsGroupedBySectorName = {};
   seatsGroupedBySectorNumber = {};
   seatsGroupedByColumn = {};
@@ -65,7 +64,6 @@ export class SeatsSchemeService {
         }
       }
     }
-
     return array;
   }
 

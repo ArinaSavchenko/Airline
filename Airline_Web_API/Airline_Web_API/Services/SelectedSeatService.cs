@@ -8,6 +8,7 @@ using Airline_Web_API.DTOs;
 using Airline_Web_API.ViewModels;
 using Airline_Web_API.Models;
 using AutoMapper;
+using System.Collections.Generic;
 
 namespace Airline_Web_API.Services
 {
@@ -24,6 +25,27 @@ namespace Airline_Web_API.Services
             _mapper = mapper;
             _hubContext = hubContext;
             _reservedSeatsService = reservedSeatService;
+        }
+
+        public async Task<List<ReservedSeatViewModel>> GetSelectedSeats(int bookedTicketId)
+        {
+            var flightId = await _context.BookedTickets
+                .Include(bookedTicket => bookedTicket.Ticket)
+                .Where(bookedTicket => bookedTicket.Id == bookedTicketId)
+                .Select(bookedTicket => bookedTicket.Ticket.FlightId)
+                .FirstOrDefaultAsync();
+
+            var selectedSeats = await _context.SelectedSeats
+                .Include(seat => seat.BookedTicket.Ticket)
+                .Where(seat => seat.BookedTicket.Ticket.FlightId == flightId)
+                .Select(seat => new ReservedSeatViewModel
+                {
+                    BookedTicketId = seat.BookedTicketId,
+                    SeatId = seat.SeatId
+                })
+                .ToListAsync();
+
+            return selectedSeats;
         }
 
         public async Task PostSelectedSeatAsync(SeatToBeSelected model)
@@ -71,15 +93,7 @@ namespace Airline_Web_API.Services
 
             var reservedSeats = await _reservedSeatsService.GetReservedSeatsByBookedTicketIdAsync(bookedTicketId);
 
-            var selectedSeats = await _context.SelectedSeats
-                .Include(seat => seat.BookedTicket.Ticket)
-                .Where(seat => seat.BookedTicket.Ticket.FlightId == flightId)
-                .Select(seat => new ReservedSeatViewModel
-                {
-                    BookedTicketId = seat.BookedTicketId,
-                    SeatId = seat.SeatId
-                })
-                .ToListAsync();
+            var selectedSeats = await GetSelectedSeats(bookedTicketId);
 
             selectedSeats.AddRange(reservedSeats);
 
