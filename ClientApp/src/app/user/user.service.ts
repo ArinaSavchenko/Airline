@@ -55,7 +55,7 @@ export class UserService {
   }
 
   changePassword(password): Observable<ResponseModel> {
-    return this.http.put<ResponseModel>(this.usersUrl + '/update-password', password, this.httpOptions).pipe(
+    return this.http.put<ResponseModel>(this.usersUrl + '/update-password/' + password.userId, password, this.httpOptions).pipe(
       catchError(error => this.handleError(error))
     );
   }
